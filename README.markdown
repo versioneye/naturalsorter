@@ -1,4 +1,4 @@
-== NaturalSorter
+# NaturalSorter
 
 This open source project is sorting arrays in a natural way. Assume you have an string array like this here
 
@@ -17,5 +17,3 @@ Because the default sort method does not recognize the numbers in the string. Th
 "init20"
 "init30"
 "init200"
-
-
