@@ -14,7 +14,17 @@ Because the default sort method does not recognize the numbers in the string. Th
 
 `["init20", "init30", "init200"]`
 
-## How To Use - Examples
+## API
+
+This GEM has just 2 methods
+
+`Naturalsorter::Sorter.sort(array, caseinsesitive)`
+
+And this here for more advanced sorting
+
+`Naturalsorter::Sorter.sort_by_method(array, method, caseinsesitive)`
+
+## Installation 
 
 You should add this line to your Gemfile
 
@@ -24,12 +34,17 @@ and run this command in your app root directory
 
 `bundle install`
 
-Than you can use it like this: 
+## How To Use - Examples
 
-`Naturalsorter::Sorter.sort(["c400", "b5", "a1"], true)`
+After the installation you can use it like this: 
 
-The method head looks like this: 
+`Naturalsorter::Sorter.sort(["a400", "a5", "a1"], true)`
 
-`Naturalsorter::Sorter.sort(array, caseinsesitive)`
+it will return the array ["a1", "a5", "a400"]. 
 
-That's it. 
+If you have more advanced objects you want to sort, you should use the second method. Assume you have a Class User with 3 attributes: "firstname", "lastname", "age" and you want to sort an array of class Users by "firstname". 
+
+`Naturalsorter::Sorter.sort_by_method(users, "firstname", true)`
+
+that's it!
+
