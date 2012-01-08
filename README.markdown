@@ -28,7 +28,7 @@ And this here for more advanced sorting
 
 You should add this line to your Gemfile
 
-`gem 'naturalsorter', '0.0.1'`
+`gem 'naturalsorter', '0.1.0'`
 
 and run this command in your app root directory
 
