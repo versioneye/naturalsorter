@@ -48,3 +48,7 @@ If you have more advanced objects you want to sort, you should use the second me
 
 that's it!
 
+## Alan Davies
+
+This project uses internal the natcmp implementation from Alan Davies. All glorry to him for his awesome work. 
+
