@@ -32,37 +32,28 @@ class Versioncmp
     offset2 = 0;
 
     for i in 0..100
-      if offset1 >= a.length() || offset2 >= b.length() 
-        break
-      end
+      break if offset1 >= a.length() || offset2 >= b.length() 
 
       part1 = Versioncmp.getAPiece(offset1, a);
       part2 = Versioncmp.getAPiece(offset2, b);
+      
+      
       offset1 += part1.length() + 1;
       offset2 += part2.length() + 1;
 
       if ( part1.match(/^[0-9]+$/) != nil && part2.match(/^[0-9]+$/) != nil )
-        ai = part1;
-        bi = part2;
+        ai = part1.to_i;
+        bi = part2.to_i;
         result = Versioncmp.compareInt(ai, bi);
-        if result != 0
-          return result;
-        else
-          next 
-        end
+        return result if result != 0
+        next 
       elsif ( part1.match(/^[0-9]+$/) == nil && part2.match(/^[0-9]+$/) == nil )
         result = Versioncmp.compareString(part1, part2)
-        if (result != 0)
-          return result
-        else
-          next
-        end
+        return result if (result != 0)
+        next
       else
-        if (part1.match(/^[0-9]+$/) != nil && part2.match(/^[0-9]+$/) == nil)
-          return 1;
-        else
-          return -1;
-        end
+        return 1 if (part1.match(/^[0-9]+$/) != nil && part2.match(/^[0-9]+$/) == nil)
+        return -1;
       end
 	  end
 	  result = Versioncmp.checkForRC(a, b) 
@@ -122,9 +113,7 @@ class Versioncmp
   def self.getAPiece(offset, cake)
     for z in 0..100
       offsetz = offset + z
-      if offsetz > cake.length() 
-        break
-      end
+      break if offsetz > cake.length() 
       p = cake[offset..offset + z]
       if ( p.match(/^[0-9]+$/) == nil )
         break

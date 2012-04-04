@@ -107,6 +107,10 @@ describe Naturalsorter::Sorter do
     it "returns 1.0" do
       Naturalsorter::Sorter.get_newest_version("1.0", "1.0").should eql("1.0")
     end
+    it "returns 1.10" do
+      Naturalsorter::Sorter.get_newest_version("1.10", "1.8").should eql("1.10")
+    end
+    
   
   end
   
