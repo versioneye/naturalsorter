@@ -10,10 +10,23 @@ describe Naturalsorter::Sorter do
       Naturalsorter::Sorter.sort(["a400", "a5", "a1"], true).should eql(["a1", "a5", "a400"])
     end
   end
+  describe "sort_desc" do
+    it "cba is abc" do
+      Naturalsorter::Sorter.sort_desc(["c", "b", "a"], true).should eql(["c", "b", "a"])
+    end
+    it "c400b5a1 is a1b5c400" do
+      Naturalsorter::Sorter.sort_desc(["a5", "a400", "a1"], true).should eql(["a400", "a5", "a1"])
+    end
+  end
   
   describe  "sort_by_method" do
     it "c400b5a1 is a1b5c400" do
       Naturalsorter::Sorter.sort_by_method(["a400", "a5", "a1"], "to_s", true).should eql(["a1", "a5", "a400"])
+    end
+  end
+  describe  "sort_by_method_desc" do
+    it "a5 a400 a1 is a400 a5 a1" do
+      Naturalsorter::Sorter.sort_by_method_desc(["a5", "a400", "a1"], "to_s", true).should eql(["a400", "a5", "a1"])
     end
   end
   
@@ -21,43 +34,43 @@ describe Naturalsorter::Sorter do
   describe "sort_version" do
   
     it "1.1, 1.0 is 1.0, 1.1" do
-      Naturalsorter::Sorter.sort_version(["1.1", "1.0"], "asc").should eql(["1.0", "1.1"])
+      Naturalsorter::Sorter.sort_version(["1.1", "1.0"]).should eql(["1.0", "1.1"])
     end
     
     it "1.0, 1.1 is 1.0, 1.1" do
-      Naturalsorter::Sorter.sort_version(["1.0", "1.1"], "asc").should eql(["1.0", "1.1"])
+      Naturalsorter::Sorter.sort_version(["1.0", "1.1"]).should eql(["1.0", "1.1"])
     end
     
     it "4.5, 1.0 is 1.0, 4.5" do
-      Naturalsorter::Sorter.sort_version(["4.5", "1.0"], "asc").should eql(["1.0", "4.5"])
+      Naturalsorter::Sorter.sort_version(["4.5", "1.0"]).should eql(["1.0", "4.5"])
     end
     
     it "1.0, 4.5 is 1.0, 4.5" do
-      Naturalsorter::Sorter.sort_version(["1.0", "4.5"], "asc").should eql(["1.0", "4.5"])
+      Naturalsorter::Sorter.sort_version(["1.0", "4.5"]).should eql(["1.0", "4.5"])
     end
   
     it "1.2, 1.1 is 1.1, 1.2" do
-      Naturalsorter::Sorter.sort_version(["0.4", "0.1", "1.1", "1.2", "1.0"], "asc").should eql(["0.1", "0.4", "1.0", "1.1", "1.2"])
+      Naturalsorter::Sorter.sort_version(["0.4", "0.1", "1.1", "1.2", "1.0"]).should eql(["0.1", "0.4", "1.0", "1.1", "1.2"])
     end
 
     it "1.2, 1.1 is 1.1, 1.2" do
-      Naturalsorter::Sorter.sort_version(["0.4", "0.1", "1.1", "1.2", "1.0", "1.0.RC1"], "asc").should eql(["0.1", "0.4", "1.0.RC1", "1.0", "1.1", "1.2"])
+      Naturalsorter::Sorter.sort_version(     ["0.4", "0.1", "1.1", "1.2", "1.0", "1.0.RC1"]).should eql(["0.1", "0.4", "1.0.RC1", "1.0", "1.1", "1.2"])
     end
 
     it "1.2, 1.1 is 1.1, 1.2" do
-      Naturalsorter::Sorter.sort_version(["0.4", "0.1", "1.1", "1.2", "1.0", "1.0.RC1"], "desc").should eql(["1.2", "1.1", "1.0", "1.0.RC1", "0.4", "0.1"])
+      Naturalsorter::Sorter.sort_version_desc(["0.4", "0.1", "1.1", "1.2", "1.0", "1.0.RC1"]).should eql(["1.2", "1.1", "1.0", "1.0.RC1", "0.4", "0.1"])
     end
 
     it "1.2, 1.1 is 1.1, 1.2" do
-      Naturalsorter::Sorter.sort_version(["1.1", "1.2", "1.0"], "asc").should eql(["1.0", "1.1", "1.2"])
+      Naturalsorter::Sorter.sort_version(["1.1", "1.2", "1.0"]).should eql(["1.0", "1.1", "1.2"])
     end
 
     it "sort with RC" do
-      Naturalsorter::Sorter.sort_version(["1.1", "1.1.RC1"], "asc").should eql(["1.1.RC1", "1.1"])
+      Naturalsorter::Sorter.sort_version(["1.1", "1.1.RC1"]).should eql(["1.1.RC1", "1.1"])
     end
 
     it "sort with RC" do
-      Naturalsorter::Sorter.sort_version(["1.1.RC1", "1.1", "1.0"], "asc").should eql(["1.0", "1.1.RC1", "1.1"])
+      Naturalsorter::Sorter.sort_version(["1.1.RC1", "1.1", "1.0"]).should eql(["1.0", "1.1.RC1", "1.1"])
     end
 
   end
