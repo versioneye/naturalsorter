@@ -19,21 +19,25 @@ Because the default sort method does not recognize the numbers in the string. Th
 This GEM has 8 methods
 
 `Naturalsorter::Sorter.sort(array, caseinsesitive)`
+
 `Naturalsorter::Sorter.sort_desc(array, caseinsesitive)`
 
 And this here for more advanced sorting. Where you can put in a array of objects and the method which should called on every object for comparison. 
 
 `Naturalsorter::Sorter.sort_by_method(array, method, caseinsesitive)`
+
 `Naturalsorter::Sorter.sort_by_method_desc(array, method, caseinsesitive)`
 
 This methods are based on a different algo. spezially optimizied for sorting version strings. 
 
 `Naturalsorter::Sorter.sort_version(array)`
+
 `Naturalsorter::Sorter.sort_version_desc(array)`
 
 This here is again for an array with objects. 
 
 `Naturalsorter::Sorter.sort_version_by_method(array, method)`
+
 `Naturalsorter::Sorter.sort_version_by_method_desc(array)`
 
 Get newest.
