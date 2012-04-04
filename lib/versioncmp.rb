@@ -38,7 +38,6 @@ class Versioncmp
 
       part1 = Versioncmp.getAPiece(offset1, a);
       part2 = Versioncmp.getAPiece(offset2, b);
-
       offset1 += part1.length() + 1;
       offset2 += part2.length() + 1;
 
@@ -83,7 +82,6 @@ class Versioncmp
   end
   
   def self.checkForRC(a, b)
-    # p "checkForRc #{a} #{b}"
     big = String.new(a)
     small = String.new(b)
     if (a.length() < b.length())
@@ -91,10 +89,8 @@ class Versioncmp
       small = String.new(a)
     end
     if (Versioncmp.isRc(big))
-      # p " it is RC #{big}"
       bigwithoutRc = big.gsub(/\.RC[1-9]*$/, "").gsub(/\.rc[1-9]*$/, "")
       if (Versioncmp.compareString(bigwithoutRc, small) == 0)
-        # p " it is RC #{bigwithoutRc} -1"
         return Versioncmp.getRcValue(a, b)
       end
     elsif (Versioncmp.isBeta(big))

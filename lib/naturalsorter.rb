@@ -43,6 +43,22 @@ module Naturalsorter
       array.sort { |a, b| Natcmp.natcmp(a,b,caseinsesitive) }
     end
     
+    # 'Natural order' sort for an array of objects. 
+    def self.sort_by_method(array, method, caseinsesitive)
+      if (array.nil? || array.empty?)
+        return nil
+      end
+      array.sort { |a,b| Natcmp.natcmp(a.send(method),b.send(method),caseinsesitive) }
+    end
+    
+    def self.sort_desc_by_method(array, method, caseinsesitive)
+      if (array.nil? || array.empty?)
+        return nil
+      end
+      array.sort { |a, b| Natcmp.natcmp(a.send(method),b.send(method),caseinsesitive) }
+    end
+    
+    
     def self.sort_version(array, direction)
       return nil if (array.nil? || array.empty?)
       if direction.eql? "asc"
@@ -50,14 +66,6 @@ module Naturalsorter
       else
         array.sort { |a,b| Versioncmp.compare( b, a ) }
       end
-    end
-    
-    # 'Natural order' sort for an array of objects. 
-    def self.sort_by_method(array, method, caseinsesitive)
-      if (array.nil? || array.empty?)
-        return nil
-      end
-      array.sort { |a,b| Natcmp.natcmp(a.send(method),b.send(method),caseinsesitive) }
     end
     
     def self.sort_version_by_method(array, method, direction)
@@ -69,11 +77,39 @@ module Naturalsorter
       end
     end
     
-    def self.sort_desc_by_method(array, method, caseinsesitive)
-      if (array.nil? || array.empty?)
-        return nil
+    def self.get_newest_version(first, second)
+      array = [first, second]
+      array = array.sort { |a,b| Versioncmp.compare( a, b ) }
+      array.last
+    end
+    
+    def self.is_version_current?(version, current_version)
+      version = version.gsub("~>", "")
+      versions = version.split(".")
+      currents = current_version.split(".")
+      min_length = versions.size
+      if currents.size < min_length
+        min_length = currents.size
       end
-      array.sort { |a, b| Natcmp.natcmp(a.send(method),b.send(method),caseinsesitive) }
+      min_length = min_length - 2
+      if min_length < 0
+        min_length = 0
+      end      
+      (0..min_length).each do |z|
+        ver = versions[z]
+        cur = currents[z]
+        if (cur > ver)
+          return false
+        end
+      end
+      if currents.size < versions.size
+        ver = versions[min_length + 1]
+        cur = currents[min_length + 1]
+        if cur > ver
+          return false
+        end
+      end
+      true
     end
   
   end
