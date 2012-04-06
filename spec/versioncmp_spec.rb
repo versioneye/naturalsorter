@@ -42,8 +42,20 @@ describe Versioncmp do
     Versioncmp.compare("1.1-alpha1", "1.1").should eql(-1)
   end
   
+  it "smaller alpha-1" do
+    Versioncmp.compare("1.1-alpha-1", "1.1").should eql(-1)
+  end
+  
+  it "smaller alpha" do
+    Versioncmp.compare("1.1", "1.1-alpha-1").should eql(1)
+  end
+  
   it "smaller beta" do
     Versioncmp.compare("3.1-beta1", "3.1").should eql(-1)
+  end
+  
+  it "smaller beta" do
+    Versioncmp.compare("3.1-beta-1", "3.1").should eql(-1)
   end
   
   it "smaller 3.0-rc4-negotiate" do

@@ -92,20 +92,20 @@ class Versioncmp
         return Versioncmp.getRcValue(a, b)
       end
     elsif (Versioncmp.isBeta(big))
-      bigwithoutBeta = big.gsub(/\.beta[1-9]*$/i, "")
-      bigwithoutBeta = bigwithoutBeta.gsub(/\-beta[1-9]*$/i, "")
+      bigwithoutBeta = big.gsub(/\.beta.*$/i, "")
+      bigwithoutBeta = bigwithoutBeta.gsub(/\-beta.*$/i, "")
       if (Versioncmp.compareString(bigwithoutBeta, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
     elsif (Versioncmp.isAlpha(big))
-      bigwithoutAlpha = big.gsub(/\.alpha[1-9]*$/i, "")
-      bigwithoutAlpha = bigwithoutAlpha.gsub(/\-alpha[1-9]*$/i, "")
+      bigwithoutAlpha = big.gsub(/\.alpha.*$/i, "")
+      bigwithoutAlpha = bigwithoutAlpha.gsub(/\-alpha.*$/i, "")
       if (Versioncmp.compareString(bigwithoutAlpha, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
     elsif (Versioncmp.isPre(big))
-      bigwithoutPre = big.gsub(/\.pre[1-9]*$/i, "")
-      bigwithoutPre = bigwithoutPre.gsub(/\-pre[1-9]*$/i, "")
+      bigwithoutPre = big.gsub(/\.pre.*$/i, "")
+      bigwithoutPre = bigwithoutPre.gsub(/\-pre.*$/i, "")
       if (Versioncmp.compareString(bigwithoutPre, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
@@ -130,15 +130,15 @@ class Versioncmp
   end
   
   def self.isBeta(a)
-    return a.match(/.*beta[1-9]*$/i) != nil;
+    return a.match(/.*beta.*$/i) != nil;
   end
   
   def self.isAlpha(a)
-    return a.match(/.*alpha[1-9]*$/i) != nil;
+    return a.match(/.*alpha.*$/i) != nil;
   end
   
   def self.isPre(a)
-    return a.match(/.*pre[1-9]*$/i) != nil;
+    return a.match(/.*pre.*$/i) != nil;
   end
   
   def self.getAPiece(offset, cake)
