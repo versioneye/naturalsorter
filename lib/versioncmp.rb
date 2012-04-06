@@ -37,10 +37,21 @@ class Versioncmp
       part1 = Versioncmp.getAPiece(offset1, a);
       part2 = Versioncmp.getAPiece(offset2, b);  
       
+      if part1.length() == 8 && part1.match(/^[0-9]+$/) != nil && part2.length() < 8
+        return -1
+      end
+      if part2.length() == 8 && part2.match(/^[0-9]+$/) != nil && part1.length() < 8
+        return 1
+      end
+      
       offset1 += part1.length() + 1;
       offset2 += part2.length() + 1;
 
       if ( part1.match(/^[0-9]+$/) != nil && part2.match(/^[0-9]+$/) != nil )
+        
+        
+        
+        
         ai = part1.to_i;
         bi = part2.to_i;
         result = Versioncmp.compareInt(ai, bi);

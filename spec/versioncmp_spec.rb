@@ -45,5 +45,13 @@ describe Versioncmp do
   it "bigger RC than 1.0" do
     Versioncmp.compare("1.1.RC1", "1.1").should eql(-1)
   end
+  
+  it "20040121.140929 is smaller than 1.1" do 
+    Versioncmp.compare("20040121.140929", "1.1").should eql(-1)
+  end
+  
+  it "1.1 is bigger than 20040121.140929" do 
+    Versioncmp.compare("1.1", "20040121.140929").should eql(1)
+  end
 
 end
