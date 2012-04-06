@@ -35,8 +35,7 @@ class Versioncmp
       break if offset1 >= a.length() || offset2 >= b.length() 
 
       part1 = Versioncmp.getAPiece(offset1, a);
-      part2 = Versioncmp.getAPiece(offset2, b);
-      
+      part2 = Versioncmp.getAPiece(offset2, b);  
       
       offset1 += part1.length() + 1;
       offset2 += part2.length() + 1;
@@ -95,7 +94,9 @@ class Versioncmp
         return Versioncmp.getRcValue(a, b)
       end
     end
-    return Versioncmp.compareString(big, small);
+    return 1 if a.length > b.length
+    return -1 if a.length < b.length
+    return 0
   end
   
   def self.isRc(a)
