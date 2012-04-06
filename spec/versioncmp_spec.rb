@@ -54,6 +54,10 @@ describe Versioncmp do
     Versioncmp.compare("3.1-jbossorg-1", "3.1").should eql(-1)
   end
   
+  it "smaller 3.1-pre1" do
+    Versioncmp.compare("3.1-pre1", "3.1").should eql(-1)
+  end
+  
   it "bigger RC" do
     Versioncmp.compare("1.1.rc3", "1.1.rc2").should eql(1)
   end

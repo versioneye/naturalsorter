@@ -105,7 +105,7 @@ class Versioncmp
       end
     elsif (Versioncmp.isPre(big))
       bigwithoutPre = big.gsub(/\.pre[1-9]*$/i, "")
-      bigwithoutPre = bigwithoutPre..gsub(/\-pre[1-9]*$/i, "")
+      bigwithoutPre = bigwithoutPre.gsub(/\-pre[1-9]*$/i, "")
       if (Versioncmp.compareString(bigwithoutPre, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
