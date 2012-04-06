@@ -37,10 +37,10 @@ class Versioncmp
       part1 = Versioncmp.getAPiece(offset1, a);
       part2 = Versioncmp.getAPiece(offset2, b);  
       
-      if part1.length() == 8 && part1.match(/^[0-9]+$/) != nil && part2.length() < 8
+      if Versioncmp.timestamp?(part1) && part2.length() < 8
         return -1
       end
-      if part2.length() == 8 && part2.match(/^[0-9]+$/) != nil && part1.length() < 8
+      if Versioncmp.timestamp?(part2) && part1.length() < 8
         return 1
       end
       
@@ -48,10 +48,6 @@ class Versioncmp
       offset2 += part2.length() + 1;
 
       if ( part1.match(/^[0-9]+$/) != nil && part2.match(/^[0-9]+$/) != nil )
-        
-        
-        
-        
         ai = part1.to_i;
         bi = part2.to_i;
         result = Versioncmp.compareInt(ai, bi);
@@ -90,18 +86,33 @@ class Versioncmp
       small = String.new(a)
     end
     if (Versioncmp.isRc(big))
-      bigwithoutRc = big.gsub(/\.RC[1-9]*$/, "").gsub(/\.rc[1-9]*$/, "")
+      bigwithoutRc = big.gsub(/\.rc.*$/i, "")
+      bigwithoutRc = bigwithoutRc.gsub(/\-rc.*$/i, "")
       if (Versioncmp.compareString(bigwithoutRc, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
     elsif (Versioncmp.isBeta(big))
-      bigwithoutBeta = big.gsub(/\.BETA[1-9]*$/, "").gsub(/\.beta[1-9]*$/, "")
+      bigwithoutBeta = big.gsub(/\.beta[1-9]*$/i, "")
+      bigwithoutBeta = bigwithoutBeta.gsub(/\-beta[1-9]*$/i, "")
       if (Versioncmp.compareString(bigwithoutBeta, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
+    elsif (Versioncmp.isAlpha(big))
+      bigwithoutAlpha = big.gsub(/\.alpha[1-9]*$/i, "")
+      bigwithoutAlpha = bigwithoutAlpha.gsub(/\-alpha[1-9]*$/i, "")
+      if (Versioncmp.compareString(bigwithoutAlpha, small) == 0)
+        return Versioncmp.getRcValue(a, b)
+      end
     elsif (Versioncmp.isPre(big))
-      bigwithoutPre = big.gsub(/\.PRE[1-9]*$/, "").gsub(/\.pre[1-9]*$/, "")
+      bigwithoutPre = big.gsub(/\.pre[1-9]*$/i, "")
+      bigwithoutPre = bigwithoutPre..gsub(/\-pre[1-9]*$/i, "")
       if (Versioncmp.compareString(bigwithoutPre, small) == 0)
+        return Versioncmp.getRcValue(a, b)
+      end
+    elsif (Versioncmp.isJbossorg(big))
+      bigwithoutRc = big.gsub(/\.jbossorg.*$/i, "")
+      bigwithoutRc = bigwithoutRc.gsub(/\-jbossorg.*$/i, "")
+      if (Versioncmp.compareString(bigwithoutRc, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
     end
@@ -111,15 +122,23 @@ class Versioncmp
   end
   
   def self.isRc(a)
-    return a.match(/.*RC[1-9]*$/) != nil || a.match(/.*rc[1-9]*$/) != nil;
+    return a.match(/.*rc.*$/i) != nil;
+  end
+  
+  def self.isJbossorg(a)
+    return a.match(/.*jbossorg.*$/i) != nil;
   end
   
   def self.isBeta(a)
-    return a.match(/.*BETA[1-9]*$/) != nil || a.match(/.*beta[1-9]*$/) != nil;
+    return a.match(/.*beta[1-9]*$/i) != nil;
+  end
+  
+  def self.isAlpha(a)
+    return a.match(/.*alpha[1-9]*$/i) != nil;
   end
   
   def self.isPre(a)
-    return a.match(/.*PRE[1-9]*$/) != nil || a.match(/.*pre[1-9]*$/) != nil;
+    return a.match(/.*pre[1-9]*$/i) != nil;
   end
   
   def self.getAPiece(offset, cake)
@@ -141,6 +160,10 @@ class Versioncmp
   def self.getRcValue(a, b)    
     return 1 if (a.length() < b.length())
     return -1
+  end
+  
+  def self.timestamp?(part)
+    return part.length() == 8 && part.match(/^[0-9]+$/) != nil
   end
 
 end
