@@ -90,4 +90,40 @@ describe Versioncmp do
     Versioncmp.compare("1.1", "20040121.140929").should eql(1)
   end
 
+  it "1.7b2 is smaller than 1.7" do 
+    Versioncmp.compare("1.7b2", "1.7").should eql(-1)
+  end
+
+  it "1.7 is bigger than 1.7b2" do 
+    Versioncmp.compare("1.7", "1.7b2").should eql(1)
+  end
+
+  it "1.7 is bigger than 1.7rc2" do 
+    Versioncmp.compare("1.7", "1.7rc2").should eql(1)
+  end
+
+  it "1.7 is bigger than 1.7RC2" do 
+    Versioncmp.compare("1.7", "1.7RC2").should eql(1)
+  end
+
+  it "1.7 is bigger than 1.7a" do 
+    Versioncmp.compare("1.7", "1.7a").should eql(1)
+  end
+
+  it "1.7 is bigger than 1.7b" do 
+    Versioncmp.compare("1.7", "1.7b").should eql(1)
+  end
+
+  it "1.7b is bigger than 1.7a" do 
+    Versioncmp.compare("1.7", "1.7b").should eql(1)
+  end
+
+  it "1.7.1rc1 is smaller than 1.7.2" do 
+    Versioncmp.compare("1.7.1rc1", "1.7.2").should eql(-1)
+  end
+
+  it "1.7.2 is bigger than 1.7.1rc1" do 
+    Versioncmp.compare("1.7.2", "1.7.1rc1").should eql(1)
+  end
+
 end

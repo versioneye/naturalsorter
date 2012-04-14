@@ -58,6 +58,10 @@ class Versioncmp
         return result if (result != 0)
         next
       else
+        result = Versioncmp.check_jquery_versioning(part1, part2)
+        if result != nil
+          return result
+        end
         return 1 if (part1.match(/^[0-9]+$/) != nil && part2.match(/^[0-9]+$/) == nil)
         return -1;
       end
@@ -76,6 +80,30 @@ class Versioncmp
     return 0 if a.eql? b
     return -1 if a < b
     return 1
+  end
+
+  def self.check_jquery_versioning(part1, part2)
+    # --- START ---- special case for awesome jquery shitty verison numbers 
+    if ( part1.match(/^[0-9]+[a-zA-Z]+[0-9]+$/) != nil && part2.match(/^[0-9]+$/) != nil )
+      part1_1 = part1.match(/^[0-9]+/)
+      result = Versioncmp.compareInt(part1_1[0], part2)
+      if result != 0
+        return result
+      end
+      return -1
+    end
+
+    if ( part2.match(/^[0-9]+[a-zA-Z]+[0-9]+$/) != nil && part1.match(/^[0-9]+$/) != nil )
+      part2_1 = part2.match(/^[0-9]+/)
+      result = Versioncmp.compareInt(part1, part2_1[0])
+      if result != 0
+        return result
+      end
+      return 1
+    end
+
+    return nil
+    # --- END ---- special case for awesome jquery shitty verison numbers 
   end
   
   def self.checkForRC(a, b)
@@ -145,8 +173,8 @@ class Versioncmp
     for z in 0..100
       offsetz = offset + z
       break if offsetz > cake.length() 
-      p = cake[offset..offset + z]
-      if ( p.match(/^[0-9]+$/) == nil )
+      p = cake[ offset..offset + z ]
+      if ( p.match(/^\w+\.$/) != nil )
         break
       end
     end

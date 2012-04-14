@@ -49,7 +49,7 @@ Get newest.
 
 You should add this line to your Gemfile
 
-`gem 'naturalsorter', '0.3.1'`
+`gem 'naturalsorter', '0.3.4'`
 
 and run this command in your app root directory
 
