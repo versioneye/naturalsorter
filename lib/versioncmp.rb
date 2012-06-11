@@ -28,6 +28,18 @@ class Versioncmp
   # 'Natural version order' comparison of two version strings
   def self.compare(a, b)
 
+    if (!a.nil? || a.eql?("") ) && b.nil?
+      return 1
+    end
+
+    if (!b.nil? || b.eql?("")) && a.nil?
+      return -1
+    end  
+
+    if a.nil? && b.nil? 
+      return -1
+    end
+
 	  offset1 = 0;
     offset2 = 0;
 
