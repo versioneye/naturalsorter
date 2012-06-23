@@ -14,6 +14,10 @@ Because the default sort method does not recognize the numbers in the string. Th
 
 `["init20", "init30", "init200"]`
 
+## Version Sorting
+This fork contains some special algorithms to sort version numbers in a natural order. This project is used at <https://www.versioneye.com> to show versions of selected open source projects. 
+
+
 ## API
 
 This GEM has 8 methods
@@ -49,7 +53,7 @@ Get newest.
 
 You should add this line to your Gemfile
 
-`gem 'naturalsorter', '0.3.5'`
+`gem 'naturalsorter', '0.3.6'`
 
 and run this command in your app root directory
 

@@ -5,9 +5,9 @@ require "naturalsorter/version"
 Gem::Specification.new do |s|
   s.name        = "naturalsorter"
   s.version     = Naturalsorter::VERSION
-  s.authors     = ["reiz"]
+  s.authors     = ["reiz", "versioneye"]
   s.email       = ["robert.reiz@gmx.com"]
-  s.homepage    = "https://github.com/reiz/naturalsorter"
+  s.homepage    = "https://github.com/versioneye/naturalsorter"
   s.summary     = %q{Sorting arrays in natural order}
   s.description = %q{This GEM is sorting Arrays in a natural order. a2 < a10}
 
