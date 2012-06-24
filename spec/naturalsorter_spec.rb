@@ -87,6 +87,12 @@ describe Naturalsorter::Sorter do
     it "returns true" do 
       Naturalsorter::Sorter.is_version_current?("1.1.1", "1.1.9").should be_true
     end
+    it "returns true" do 
+      Naturalsorter::Sorter.is_version_current?("1.1.1", "1.1.2").should be_true
+    end
+    it "returns true" do 
+      Naturalsorter::Sorter.is_version_current?("1.1.1", "1.1.12").should be_true
+    end
     it "returns false" do 
       Naturalsorter::Sorter.is_version_current?("1.1.1", "1.2.0").should be_false
     end
@@ -98,6 +104,9 @@ describe Naturalsorter::Sorter do
     end
     it "returns false" do 
       Naturalsorter::Sorter.is_version_current?("1.1.1", "2").should be_false
+    end
+    it "returns false" do 
+      Naturalsorter::Sorter.is_version_current?("1.1", "2.0").should be_false
     end
   end
   

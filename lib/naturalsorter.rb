@@ -90,13 +90,17 @@ module Naturalsorter
       array.last
     end
     
-    def self.is_version_current?(version, current_version)
+    # This is for the GEM notaiton ~> 
+    # For example ~>1.1 fits 1.2 and 1.9 and 1.14 
+    # But not 2.0
+    def self.is_version_current?(version, newest_version)
       version = version.gsub("~>", "")
+      version = version.gsub(" " , "")
       versions = version.split(".")
-      currents = current_version.split(".")
+      newests = newest_version.split(".")
       min_length = versions.size
-      if currents.size < min_length
-        min_length = currents.size
+      if newests.size < min_length
+        min_length = newests.size
       end
       min_length = min_length - 2
       if min_length < 0
@@ -104,14 +108,14 @@ module Naturalsorter
       end      
       (0..min_length).each do |z|
         ver = versions[z]
-        cur = currents[z]
+        cur = newests[z]
         if (cur > ver)
           return false
         end
       end
-      if currents.size < versions.size
+      if newests.size < versions.size
         ver = versions[min_length + 1]
-        cur = currents[min_length + 1]
+        cur = newests[min_length + 1]
         if cur > ver
           return false
         end
