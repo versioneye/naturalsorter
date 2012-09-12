@@ -90,6 +90,31 @@ module Naturalsorter
       array.last
     end
     
+    def self.bigger?(a, b)
+      return false if a.eql?(b)
+      newest = Sorter.get_newest_version(a, b)
+      newest.eql?(a)
+    end
+    
+    def self.bigger_or_equal?(a, b)
+      return true if a.eql?(b)
+      newest = Sorter.get_newest_version(a, b)
+      newest.eql?(a)
+    end
+    
+    def self.smaller?(a, b)
+      return false if a.eql?(b)
+      newest = Sorter.get_newest_version(a, b)
+      newest.eql?(b)
+    end
+    
+    def self.smaller_or_equal?(a, b)
+      return true if a.eql?(b)
+      newest = Sorter.get_newest_version(a, b)
+      newest.eql?(b)
+    end  
+    
+    
     # This is for the GEM notaiton ~> 
     # For example ~>1.1 fits 1.2 and 1.9 and 1.14 
     # But not 2.0

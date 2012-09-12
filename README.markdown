@@ -20,8 +20,6 @@ This fork contains some special algorithms to sort version numbers in a natural 
 
 ## API
 
-This GEM has 10 methods
-
 This 2 methods are sorting a simple array of Strings. The name of the methods and the parameters are self explained. 
 
 `Naturalsorter::Sorter.sort(array, caseinsesitive)`
@@ -50,6 +48,22 @@ Get the newest version from the both given.
 
 `Naturalsorter::Sorter.get_newest_version(first, second)` 
 
+Is a bigger than b?
+
+`Naturalsorter::Sorter.bigger?(a, b)` 
+
+Is a bigger than b or equal?
+
+`Naturalsorter::Sorter.bigger_or_equal?(a, b)`
+
+Is a smaller than b?
+
+`Naturalsorter::Sorter.smaller?(a, b)`
+
+Is a smaller than b or equal?
+
+`Naturalsorter::Sorter.smaller_or_equal?(a, b)`
+
 This is for the Ruby GEM notaiton '~>'. For example '~>1.1' fits '1.2' and '1.9' and '1.14'. But not 2.0. 
 The parameter version would be for example '~>1.1' and the parameter newest_version would be the 
 current newest version of the GEM, for example "2.0". The method will return false in this case 
@@ -62,7 +76,7 @@ because '~>1.1' doesn't fit anymore the newest version.
 
 You should add this line to your Gemfile
 
-`gem 'naturalsorter', '0.3.7'`
+`gem 'naturalsorter', '0.4.7'`
 
 and run this command in your app root directory
 

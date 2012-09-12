@@ -126,8 +126,87 @@ describe Naturalsorter::Sorter do
     end
     it "returns 1.10" do
       Naturalsorter::Sorter.get_newest_version("1.10", "1.8").should eql("1.10")
-    end
+    end  
+  
+  end
+  
+  describe "bigger?" do 
     
+    it "returns true" do
+      Naturalsorter::Sorter.bigger?("1.1", "1.0").should be_true
+    end
+    it "returns true" do
+      Naturalsorter::Sorter.bigger?("2.0", "1.0").should be_true
+    end
+    it "returns true" do
+      Naturalsorter::Sorter.bigger?("2.20", "2.9").should be_true
+    end
+    it "returns false" do
+      Naturalsorter::Sorter.bigger?("2.20", "2.20").should be_false
+    end
+    it "returns false" do
+      Naturalsorter::Sorter.bigger?("2.20", "3.0").should be_false
+    end
+  
+  end
+  
+  describe "bigger_or_equal?" do 
+    
+    it "returns true" do
+      Naturalsorter::Sorter.bigger_or_equal?("1.1", "1.0").should be_true
+    end
+    it "returns true" do
+      Naturalsorter::Sorter.bigger_or_equal?("2.0", "1.0").should be_true
+    end
+    it "returns true" do
+      Naturalsorter::Sorter.bigger_or_equal?("2.20", "2.9").should be_true
+    end
+    it "returns true" do
+      Naturalsorter::Sorter.bigger_or_equal?("2.20", "2.20").should be_true
+    end
+    it "returns false" do
+      Naturalsorter::Sorter.bigger_or_equal?("2.20", "3.0").should be_false
+    end
+  
+  end
+  
+  describe "smaller?" do 
+    
+    it "returns false" do
+      Naturalsorter::Sorter.smaller?("1.1", "1.0").should be_false
+    end
+    it "returns false" do
+      Naturalsorter::Sorter.smaller?("2.0", "1.0").should be_false
+    end
+    it "returns false" do
+      Naturalsorter::Sorter.smaller?("2.20", "2.9").should be_false
+    end
+    it "returns false" do
+      Naturalsorter::Sorter.smaller?("2.20", "2.20").should be_false
+    end
+    it "returns true" do
+      Naturalsorter::Sorter.smaller?("2.20", "3.0").should be_true
+    end
+  
+  end
+  
+  describe "smaller_or_equal?" do 
+    
+    it "returns false" do
+      Naturalsorter::Sorter.smaller_or_equal?("1.1", "1.0").should be_false
+    end
+    it "returns false" do
+      Naturalsorter::Sorter.smaller_or_equal?("2.0", "1.0").should be_false
+    end
+    it "returns false" do
+      Naturalsorter::Sorter.smaller_or_equal?("2.20", "2.9").should be_false
+    end
+    it "returns true" do
+      Naturalsorter::Sorter.smaller_or_equal?("2.20", "2.20").should be_true
+    end
+    it "returns true" do
+      Naturalsorter::Sorter.smaller_or_equal?("2.20", "3.0").should be_true
+    end
   
   end
   
