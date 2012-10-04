@@ -104,6 +104,14 @@ describe ReleaseRecognizer do
 
   it "release? is false" do
     ReleaseRecognizer.release?("1.1.3A").should be_false
-  end  
+  end
+
+  it "release? is false" do
+    ReleaseRecognizer.release?("1.SNAPSHOT").should be_false
+  end
+
+  it "release? is false" do
+    ReleaseRecognizer.release?("1.snapshot").should be_false
+  end
 
 end

@@ -9,7 +9,8 @@ class ReleaseRecognizer
     !value.match(/.*alpha.*/i) and !value.match(/.*beta.*/i) and 
     !value.match(/.+a.*/i) and !value.match(/.+b.*/i) and 
     !value.match(/.*dev.*/i) and !value.match(/.*pre.*/i) and
-    !value.match(/.*rc.*/i) and !value.match(/.+SEC.*/i)
+    !value.match(/.*rc.*/i) and !value.match(/.+SEC.*/i) and 
+    !value.match(/.+SNAPSHOT.*/i)
   end
 
 end
