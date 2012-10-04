@@ -114,4 +114,12 @@ describe ReleaseRecognizer do
     ReleaseRecognizer.release?("1.snapshot").should be_false
   end
 
+  it "release? is false" do
+    ReleaseRecognizer.release?("1.M1").should be_false
+  end
+  
+  it "release? is false" do
+    ReleaseRecognizer.release?("2.0-m4").should be_false
+  end
+
 end

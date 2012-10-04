@@ -10,7 +10,7 @@ class ReleaseRecognizer
     !value.match(/.+a.*/i) and !value.match(/.+b.*/i) and 
     !value.match(/.*dev.*/i) and !value.match(/.*pre.*/i) and
     !value.match(/.*rc.*/i) and !value.match(/.+SEC.*/i) and 
-    !value.match(/.+SNAPSHOT.*/i)
+    !value.match(/.+SNAPSHOT.*/i) and !value.match(/.+M.+/i)
   end
 
 end
