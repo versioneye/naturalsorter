@@ -1,6 +1,7 @@
 require "naturalsorter/version"
 require "natcmp"
 require "versioncmp"
+require "release_recognizer"
 
 # naturalsorter.rb
 #
