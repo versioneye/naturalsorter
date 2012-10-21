@@ -26,18 +26,28 @@
 class Versioncmp
 
   # 'Natural version order' comparison of two version strings
-  def self.compare(a, b)
+  def self.compare(a_val, b_val)
 
-    if (!a.nil? || a.eql?("") ) && b.nil?
+    if (!a_val.nil? || a_val.eql?("") ) && b_val.nil?
       return 1
     end
 
-    if (!b.nil? || b.eql?("")) && a.nil?
+    if (!b_val.nil? || b_val.eql?("")) && a_val.nil?
       return -1
     end  
 
-    if a.nil? && b.nil? 
+    if a_val.nil? && b_val.nil? 
       return -1
+    end
+
+    a = String.new(a_val)
+    if a_val.match(/\.x-dev$/)
+      a = a_val.gsub("x-dev", "9999999")
+    end
+
+    b = String.new(b_val)
+    if b_val.match(/\.x-dev$/)
+      b = b_val.gsub("x-dev", "9999999")
     end
 
 	  offset1 = 0;
