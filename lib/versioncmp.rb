@@ -40,19 +40,11 @@ class Versioncmp
       return -1
     end
 
-    a = String.new(a_val)
-    if a_val.match(/\.x-dev$/)
-      a = a_val.gsub("x-dev", "9999999")
-    elsif a_val.match(/-dev$/)
-      a = a_val.gsub("-dev", ".9999999")
-    end
+    a = do_x_dev_replacements a_val
+    b = do_x_dev_replacements b_val
 
-    b = String.new(b_val)
-    if b_val.match(/\.x-dev$/)
-      b = b_val.gsub("x-dev", "9999999")
-    elsif b_val.match(/-dev$/)
-      b = b_val.gsub("-dev", ".9999999")
-    end
+    replace_leading_v( a )
+    replace_leading_v( b )
 
 	  offset1 = 0;
     offset2 = 0;
@@ -218,6 +210,22 @@ class Versioncmp
   
   def self.timestamp?(part)
     return part.length() == 8 && part.match(/^[0-9]+$/) != nil
+  end
+
+  def self.do_x_dev_replacements val 
+    new_val = String.new(val)
+    if val.match(/\.x-dev$/)
+      new_val = val.gsub("x-dev", "9999999")
+    elsif val.match(/-dev$/)
+      new_val = val.gsub("-dev", ".9999999")
+    end
+    new_val
+  end
+
+  def self.replace_leading_v val 
+    if val.match(/^v[0-9]+/)
+      val.gsub!(/^v/, "")  
+    end
   end
 
 end

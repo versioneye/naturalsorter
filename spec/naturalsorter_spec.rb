@@ -126,7 +126,25 @@ describe Naturalsorter::Sorter do
     end
     it "returns 1.10" do
       Naturalsorter::Sorter.get_newest_version("1.10", "1.8").should eql("1.10")
-    end  
+    end
+    it "returns 1.10" do
+      Naturalsorter::Sorter.get_newest_version("1.10", "v1.0").should eql("1.10")
+    end
+    it "returns v1.10" do
+      Naturalsorter::Sorter.get_newest_version("v1.10", "v1.0").should eql("v1.10")
+    end
+    it "returns v1.10" do
+      Naturalsorter::Sorter.get_newest_version("v1.10", "1.0").should eql("v1.10")
+    end
+    it "returns 1.10.x-dev" do
+      Naturalsorter::Sorter.get_newest_version("1.10.x-dev", "1.10.1").should eql("1.10.x-dev")
+    end
+    it "returns still 1.10.x-dev" do
+      Naturalsorter::Sorter.get_newest_version("1.10.x-dev", "1.10.99").should eql("1.10.x-dev")
+    end
+    it "returns still 1.11.1" do
+      Naturalsorter::Sorter.get_newest_version("1.10.x-dev", "1.11.1").should eql("1.11.1")
+    end
   
   end
   

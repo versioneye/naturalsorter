@@ -1,3 +1,3 @@
 module Naturalsorter
-  VERSION = "0.5.11"
+  VERSION = "0.6.11"
 end
