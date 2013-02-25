@@ -92,24 +92,32 @@ module Naturalsorter
     end
     
     def self.bigger?(a, b)
+      Versioncmp.replace_leading_v( a )
+      Versioncmp.replace_leading_v( b )
       return false if a.eql?(b)
       newest = Sorter.get_newest_version(a, b)
       newest.eql?(a)
     end
     
     def self.bigger_or_equal?(a, b)
+      Versioncmp.replace_leading_v( a )
+      Versioncmp.replace_leading_v( b )
       return true if a.eql?(b)
       newest = Sorter.get_newest_version(a, b)
       newest.eql?(a)
     end
     
     def self.smaller?(a, b)
+      Versioncmp.replace_leading_v( a )
+      Versioncmp.replace_leading_v( b )
       return false if a.eql?(b)
       newest = Sorter.get_newest_version(a, b)
       newest.eql?(b)
     end
     
     def self.smaller_or_equal?(a, b)
+      Versioncmp.replace_leading_v( a )
+      Versioncmp.replace_leading_v( b )
       return true if a.eql?(b)
       newest = Sorter.get_newest_version(a, b)
       newest.eql?(b)
