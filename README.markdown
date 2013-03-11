@@ -76,7 +76,7 @@ because '~>1.1' doesn't fit anymore the newest version.
 
 You should add this line to your Gemfile
 
-`gem 'naturalsorter', '0.7.11'`
+`gem 'naturalsorter', '0.7.12'`
 
 and run this command in your app root directory
 

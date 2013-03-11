@@ -21,6 +21,10 @@ describe Versioncmp do
   it "1.1.1 is bigger than 1.1" do
     Versioncmp.compare("1.1.1", "1.1").should eql(1)
   end
+
+  it "dev-master is bigger than 10.10.999" do
+    Versioncmp.compare("dev-master", "10.10.999").should eql(1)
+  end
   
   it "1.1 is smaller than 1.1.1" do
     Versioncmp.compare("1.1", "1.1.1").should eql(-1)
