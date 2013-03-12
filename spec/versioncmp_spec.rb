@@ -45,6 +45,10 @@ describe Versioncmp do
   it "smaller RC" do
     Versioncmp.compare("1.1.rc1", "1.1").should eql(-1)
   end
+
+  it "smaller RC" do
+    Versioncmp.compare("1.1.rc1", "2.0").should eql(-1)
+  end
   
   it "smaller RC" do
     Versioncmp.compare("1.1-rc1", "1.1").should eql(-1)

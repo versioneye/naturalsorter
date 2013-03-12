@@ -79,7 +79,7 @@ class Versioncmp
         return -1;
       end
     end
-    result = Versioncmp.checkForRC(a, b) 
+    result = Versioncmp.check_for_scopes(a, b) 
     return result
   end
   
@@ -100,8 +100,9 @@ class Versioncmp
     return -1
   end
   
-  # TODO. Rename it! 
-  def self.checkForRC(a, b)
+  # Scopes are alphas, betas, RCs and so on
+  #
+  def self.check_for_scopes(a, b)
     big = String.new(a)
     small = String.new(b)
     if (a.length() < b.length())
