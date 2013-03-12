@@ -1,16 +1,39 @@
 class ReleaseRecognizer
 
-  def self.release?(value)
+  def self.release? value
+    self.stable? value 
+  end
+
+  def self.stable? value
     if value.match(/.+RELEASE.*/i) or value.match(/.+BUILD.*/i) or 
       value.match(/.+FINAL.*/i) or value.match(/.+SP.*/i) or
       value.match(/.+GA.*/i) 
       return true 
     end
-    !value.match(/.*alpha.*/i) and !value.match(/.*beta.*/i) and 
-    !value.match(/.+a.*/i) and !value.match(/.+b.*/i) and 
-    !value.match(/.*dev.*/i) and !value.match(/.*pre.*/i) and
-    !value.match(/.*rc.*/i) and !value.match(/.+SEC.*/i) and 
-    !value.match(/.+SNAPSHOT.*/i) and !value.match(/.+M.+/i)
+    !self.alpha?(value) and !self.beta?(value) and 
+    !self.dev?(value) and !value.match(/.*pre.*/i) and
+    !self.rc?(value) and !value.match(/.+SEC.*/i) and 
+    !self.snapshot?(value) and !value.match(/.+M.+/i)
+  end
+
+  def self.alpha? value 
+    value.match(/.*alpha.*/i) or value.match(/.+a.*/i)
+  end
+
+  def self.beta? value 
+    value.match(/.*beta.*/i) or value.match(/.+b.*/i)
+  end
+
+  def self.dev? value 
+    value.match(/.*dev.*/i)
+  end
+
+  def self.rc? value 
+    value.match(/.*rc.*/i) 
+  end
+
+  def self.snapshot? value 
+    value.match(/.+SNAPSHOT.*/i)
   end
 
 end

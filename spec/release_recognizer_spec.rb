@@ -122,4 +122,95 @@ describe ReleaseRecognizer do
     ReleaseRecognizer.release?("2.0-m4").should be_false
   end
 
+
+
+  it "is alpha? is true" do
+    ReleaseRecognizer.alpha?("2.0.alpha").should be_true
+  end
+
+  it "is alpha? is true" do
+    ReleaseRecognizer.alpha?("2.1.0alpha").should be_true
+  end
+
+  it "is alpha? is false" do
+    ReleaseRecognizer.alpha?("2.0.1").should be_false
+  end
+
+
+
+  it "is beta? is true" do
+    ReleaseRecognizer.beta?("2.0.beta").should be_true
+  end
+
+  it "is beta? is true" do
+    ReleaseRecognizer.beta?("2.1.0beta").should be_true
+  end
+
+  it "is beta? is false" do
+    ReleaseRecognizer.beta?("2.0.1").should be_false
+  end
+
+  it "is beta? is true" do
+    ReleaseRecognizer.beta?("2.2.0-BETA2").should be_true
+  end
+  
+
+
+  it "is dev? is true" do
+    ReleaseRecognizer.dev?("dev-master").should be_true
+  end
+
+  it "is dev? is true" do
+    ReleaseRecognizer.dev?("dev-progress-helper").should be_true
+  end
+
+  it "is dev? is true" do
+    ReleaseRecognizer.dev?("dev-deprecated").should be_true
+  end
+
+  it "is dev? is true" do
+    ReleaseRecognizer.dev?("2.2.x-dev").should be_true
+  end
+
+  it "is dev? is false" do
+    ReleaseRecognizer.dev?("2.0.1").should be_false
+  end
+
+
+
+  it "is rc? is true" do
+    ReleaseRecognizer.rc?("2.0.rc").should be_true
+  end
+
+  it "is rc? is true" do
+    ReleaseRecognizer.rc?("2.1.0rc").should be_true
+  end
+
+  it "is rc? is true" do
+    ReleaseRecognizer.rc?("2.2.0-RC3").should be_true
+  end
+
+  it "is rc? is false" do
+    ReleaseRecognizer.rc?("2.0.1").should be_false
+  end
+
+
+
+  it "is snapshot? is true" do
+    ReleaseRecognizer.snapshot?("2.0.snapshot").should be_true
+  end
+
+  it "is snapshot? is true" do
+    ReleaseRecognizer.snapshot?("2.1.0snapshot").should be_true
+  end
+
+  it "is snapshot? is true" do
+    ReleaseRecognizer.snapshot?("2.2.0-snapshot3").should be_true
+  end
+
+  it "is snapshot? is false" do
+    ReleaseRecognizer.snapshot?("2.0.1").should be_false
+  end
+
+
 end
