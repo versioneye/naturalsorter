@@ -36,7 +36,7 @@ class Versioncmp
       return -1
     end  
 
-    if a_val.nil? && b_val.nil? 
+    if a_val.nil? && b_val.nil? # this case should never happen!  
       return -1
     end
 
@@ -68,11 +68,11 @@ class Versioncmp
       if ( part1.match(/^[0-9]+$/) != nil && part2.match(/^[0-9]+$/) != nil )
         ai = part1.to_i;
         bi = part2.to_i;
-        result = Versioncmp.compareInt(ai, bi);
+        result = Versioncmp.compare_int(ai, bi);
         return result if result != 0
         next 
       elsif ( part1.match(/^[0-9]+$/) == nil && part2.match(/^[0-9]+$/) == nil )
-        result = Versioncmp.compareString(part1, part2)
+        result = Versioncmp.compare_string(part1, part2)
         return result if (result != 0)
         next
       else
@@ -88,13 +88,13 @@ class Versioncmp
     return result
   end
   
-  def self.compareInt(ai, bi)
+  def self.compare_int(ai, bi)
     return -1 if (ai < bi)
     return 0 if (ai == bi)
     return 1
   end
   
-  def self.compareString(a, b)
+  def self.compare_string(a, b)
     return 0 if a.eql? b
     return -1 if a < b
     return 1
@@ -104,7 +104,7 @@ class Versioncmp
     # --- START ---- special case for awesome jquery shitty verison numbers 
     if ( part1.match(/^[0-9]+[a-zA-Z]+[0-9]+$/) != nil && part2.match(/^[0-9]+$/) != nil )
       part1_1 = part1.match(/^[0-9]+/)
-      result = Versioncmp.compareInt(part1_1[0], part2)
+      result = Versioncmp.compare_int(part1_1[0], part2)
       if result != 0
         return result
       end
@@ -113,7 +113,7 @@ class Versioncmp
 
     if ( part2.match(/^[0-9]+[a-zA-Z]+[0-9]+$/) != nil && part1.match(/^[0-9]+$/) != nil )
       part2_1 = part2.match(/^[0-9]+/)
-      result = Versioncmp.compareInt(part1, part2_1[0])
+      result = Versioncmp.compare_int(part1, part2_1[0])
       if result != 0
         return result
       end
@@ -133,32 +133,27 @@ class Versioncmp
     end
     if (ReleaseRecognizer.rc?(big))
       bigwithoutRc = big.gsub(/\.rc.*$/i, "")
-      bigwithoutRc = bigwithoutRc.gsub(/\-rc.*$/i, "")
-      if (Versioncmp.compareString(bigwithoutRc, small) == 0)
+      if (Versioncmp.compare_string(bigwithoutRc, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
     elsif (ReleaseRecognizer.beta?(big))
-      bigwithoutBeta =            big.gsub(/\.beta.*$/i, "")
-      bigwithoutBeta = bigwithoutBeta.gsub(/\-beta.*$/i, "")
-      if (Versioncmp.compareString(bigwithoutBeta, small) == 0)
+      bigwithoutBeta = big.gsub(/\.beta.*$/i, "")
+      if (Versioncmp.compare_string(bigwithoutBeta, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
     elsif (ReleaseRecognizer.alpha?(big))
-      bigwithoutAlpha =             big.gsub(/\.alpha.*$/i, "")
-      bigwithoutAlpha = bigwithoutAlpha.gsub(/\-alpha.*$/i, "")
-      if (Versioncmp.compareString(bigwithoutAlpha, small) == 0)
+      bigwithoutAlpha = big.gsub(/\.alpha.*$/i, "")
+      if (Versioncmp.compare_string(bigwithoutAlpha, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
     elsif (ReleaseRecognizer.pre?(big))
-      bigwithoutPre =           big.gsub(/\.pre.*$/i, "")
-      bigwithoutPre = bigwithoutPre.gsub(/\-pre.*$/i, "")
-      if (Versioncmp.compareString(bigwithoutPre, small) == 0)
+      bigwithoutPre = big.gsub(/\.pre.*$/i, "")
+      if (Versioncmp.compare_string(bigwithoutPre, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
     elsif (ReleaseRecognizer.jbossorg?(big))
-      bigwithoutRc =          big.gsub(/\.jbossorg.*$/i, "")
-      bigwithoutRc = bigwithoutRc.gsub(/\-jbossorg.*$/i, "")
-      if (Versioncmp.compareString(bigwithoutRc, small) == 0)
+      bigwithoutRc = big.gsub(/\.jbossorg.*$/i, "")
+      if (Versioncmp.compare_string(bigwithoutRc, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
     end
