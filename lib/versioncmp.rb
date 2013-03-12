@@ -131,32 +131,32 @@ class Versioncmp
       big = String.new(b)
       small = String.new(a)
     end
-    if (Versioncmp.isRc(big))
+    if (ReleaseRecognizer.rc?(big))
       bigwithoutRc = big.gsub(/\.rc.*$/i, "")
       bigwithoutRc = bigwithoutRc.gsub(/\-rc.*$/i, "")
       if (Versioncmp.compareString(bigwithoutRc, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
-    elsif (Versioncmp.isBeta(big))
-      bigwithoutBeta = big.gsub(/\.beta.*$/i, "")
+    elsif (ReleaseRecognizer.beta?(big))
+      bigwithoutBeta =            big.gsub(/\.beta.*$/i, "")
       bigwithoutBeta = bigwithoutBeta.gsub(/\-beta.*$/i, "")
       if (Versioncmp.compareString(bigwithoutBeta, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
-    elsif (Versioncmp.isAlpha(big))
-      bigwithoutAlpha = big.gsub(/\.alpha.*$/i, "")
+    elsif (ReleaseRecognizer.alpha?(big))
+      bigwithoutAlpha =             big.gsub(/\.alpha.*$/i, "")
       bigwithoutAlpha = bigwithoutAlpha.gsub(/\-alpha.*$/i, "")
       if (Versioncmp.compareString(bigwithoutAlpha, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
-    elsif (Versioncmp.isPre(big))
-      bigwithoutPre = big.gsub(/\.pre.*$/i, "")
+    elsif (ReleaseRecognizer.pre?(big))
+      bigwithoutPre =           big.gsub(/\.pre.*$/i, "")
       bigwithoutPre = bigwithoutPre.gsub(/\-pre.*$/i, "")
       if (Versioncmp.compareString(bigwithoutPre, small) == 0)
         return Versioncmp.getRcValue(a, b)
       end
-    elsif (Versioncmp.isJbossorg(big))
-      bigwithoutRc = big.gsub(/\.jbossorg.*$/i, "")
+    elsif (ReleaseRecognizer.jbossorg?(big))
+      bigwithoutRc =          big.gsub(/\.jbossorg.*$/i, "")
       bigwithoutRc = bigwithoutRc.gsub(/\-jbossorg.*$/i, "")
       if (Versioncmp.compareString(bigwithoutRc, small) == 0)
         return Versioncmp.getRcValue(a, b)
@@ -165,26 +165,6 @@ class Versioncmp
     return 1 if a.length > b.length
     return -1 if a.length < b.length
     return 0
-  end
-  
-  def self.isRc(a)
-    return a.match(/.*rc.*$/i) != nil;
-  end
-  
-  def self.isJbossorg(a)
-    return a.match(/.*jbossorg.*$/i) != nil;
-  end
-  
-  def self.isBeta(a)
-    return a.match(/.*beta.*$/i) != nil;
-  end
-  
-  def self.isAlpha(a)
-    return a.match(/.*alpha.*$/i) != nil;
-  end
-  
-  def self.isPre(a)
-    return a.match(/.*pre.*$/i) != nil;
   end
   
   def self.getAPiece(offset, cake)

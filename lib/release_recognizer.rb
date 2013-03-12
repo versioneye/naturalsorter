@@ -11,7 +11,7 @@ class ReleaseRecognizer
       return true 
     end
     !self.alpha?(value) and !self.beta?(value) and 
-    !self.dev?(value) and !value.match(/.*pre.*/i) and
+    !self.dev?(value) and !self.pre?(value) and
     !self.rc?(value) and !value.match(/.+SEC.*/i) and 
     !self.snapshot?(value) and !value.match(/.+M.+/i)
   end
@@ -34,6 +34,14 @@ class ReleaseRecognizer
 
   def self.snapshot? value 
     value.match(/.+SNAPSHOT.*/i)
+  end
+
+  def self.pre? value 
+    value.match(/.*pre.*$/i)
+  end
+
+  def self.jbossorg? value 
+    value.match(/.*jbossorg.*$/i)
   end
 
 end
