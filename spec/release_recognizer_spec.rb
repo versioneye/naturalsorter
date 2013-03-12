@@ -136,6 +136,18 @@ describe ReleaseRecognizer do
     ReleaseRecognizer.alpha?("2.0.1").should be_false
   end
 
+  it "is alpha? is false" do
+    ReleaseRecognizer.alpha?("2.1.0-BETA1").should be_false
+  end
+
+  it "is scoped? is true" do
+    ReleaseRecognizer.scoped?("2.1.0alpha").should be_true
+  end
+
+  it "remove_scope is right" do
+    ReleaseRecognizer.remove_scope("2.1.0alpha").should eql("2.1")
+  end
+
 
 
   it "is beta? is true" do
@@ -152,6 +164,18 @@ describe ReleaseRecognizer do
 
   it "is beta? is true" do
     ReleaseRecognizer.beta?("2.2.0-BETA2").should be_true
+  end
+
+  it "is beta? is true" do
+    ReleaseRecognizer.beta?("2.1.0-BETA1").should be_true
+  end
+
+  it "is scoped? is true" do
+    ReleaseRecognizer.scoped?("2.1.0-BETA1").should be_true
+  end
+
+  it "remove_scope is right" do
+    ReleaseRecognizer.remove_scope("2.1.0-BETA1").should eql("2.1")
   end
   
 

@@ -1,5 +1,24 @@
 class ReleaseRecognizer
 
+  def self.value_for( value )
+    return 0  if self.dev? value
+    return 2  if self.snapshot? value
+    return 3  if self.pre? value
+    return 4  if self.alpha? value
+    return 5  if self.beta? value
+    return 6  if self.rc? value
+    return 10 if self.stable? value
+    return 1
+  end
+
+  def self.compare_scopes( a, b)
+    a_val = self.value_for a 
+    b_val = self.value_for b
+    return -1 if a_val < b_val
+    return  1 if a_val > b_val
+    return 0
+  end
+
   def self.scoped? value 
     self.alpha?(value) or self.beta?(value) or 
     self.dev?(value) or self.rc?(value) or 
@@ -9,15 +28,15 @@ class ReleaseRecognizer
 
   def self.remove_scope value 
     if self.alpha? value
-      new_value = value.gsub(/\.\w*alpha.*$/i, "")
-      return new_value.gsub(/\.\w*a.*$/i, "")
+      new_value = value.gsub(/\.[\w-]*alpha.*$/i, "")
+      return new_value.gsub(/\.[\w-]*a.*$/i, "")
     elsif self.beta? value
-      new_value = value.gsub(/\.\w*beta.*$/i, "")
-      return new_value.gsub(/\.\w*b.*$/i, "")
+      new_value = value.gsub(/\.[\w-]*beta.*$/i, "")
+      return new_value.gsub(/\.[\w-]*b.*$/i, "")
     elsif self.rc? value
-      return value.gsub(/\.\w*rc.*$/i, "")
+      return value.gsub(/\.[\w-]*rc.*$/i, "")
     elsif self.pre? value
-      return value.gsub(/\.\w*pre.*$/i, "")
+      return value.gsub(/\.[\w-]*pre.*$/i, "")
     elsif self.jbossorg? value
       return value.gsub(/\.jbossorg.*$/i, "")
     elsif self.snapshot? value
@@ -43,6 +62,7 @@ class ReleaseRecognizer
   end
 
   def self.alpha? value 
+    return false if self.beta? value
     value.match(/.*alpha.*/i) or value.match(/.+a.*/i)
   end
 

@@ -26,6 +26,7 @@
 class Versioncmp
 
   # 'Natural version order' comparison of two version strings
+  #
   def self.compare(a_val, b_val)
 
     if (!a_val.nil? || a_val.eql?("") ) && b_val.nil?
@@ -36,7 +37,6 @@ class Versioncmp
       return -1
     end  
 
-    # this case should never happen!  
     if a_val.nil? && b_val.nil? 
       return -1
     end
@@ -54,7 +54,7 @@ class Versioncmp
       break if offset1 >= a.length() || offset2 >= b.length() 
 
       part1 = Versioncmp.get_a_piece_of_the_cake(offset1, a);
-      part2 = Versioncmp.get_a_piece_of_the_cake(offset2, b);  
+      part2 = Versioncmp.get_a_piece_of_the_cake(offset2, b);
       
       return -1 if Versioncmp.timestamp?(part1) && part2.length() < 8
       return  1 if Versioncmp.timestamp?(part2) && part1.length() < 8
@@ -68,7 +68,9 @@ class Versioncmp
         result = Versioncmp.compare_int(ai, bi);
         return result if result != 0
         next 
-      elsif ( part1.match(/^[0-9]+$/) == nil && part2.match(/^[0-9]+$/) == nil )
+      elsif ( !part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
+        result = double_scope_checker(a, b)
+        return result if result != 0      
         result = Versioncmp.compare_string(part1, part2)
         return result if (result != 0)
         next
@@ -95,13 +97,18 @@ class Versioncmp
     return  1
   end
 
-  def self.compare_string_length(a, b)    
-    return  1 if (a.length() < b.length())
+  def self.compare_string_length(a, b)  
+    return  0 if a.length() == b.length()
+    return  1 if a.length() <  b.length()
     return -1
   end
+
+  def self.compare_string_length_odd(a, b)  
+    return  1 if a.length > b.length
+    return -1 if a.length < b.length
+    return  0
+  end
   
-  # Scopes are alphas, betas, RCs and so on
-  #
   def self.check_for_scopes(a, b)
     big = String.new(a)
     small = String.new(b)
@@ -109,21 +116,24 @@ class Versioncmp
       big = String.new(b)
       small = String.new(a)
     end
-
-    # if ReleaseRecognizer.scoped?(big) && ReleaseRecognizer.scoped?(small)
-    #   p "test"
-    # end
-
     if (ReleaseRecognizer.scoped?(big))
       big_without_scope = ReleaseRecognizer.remove_scope big
       if (Versioncmp.compare_string(big_without_scope, small) == 0)
         return Versioncmp.compare_string_length(a, b)
       end
     end
+    self.compare_string_length_odd(a, b)  
+  end
 
-    return  1 if a.length > b.length
-    return -1 if a.length < b.length
-    return  0
+  def self.double_scope_checker(a, b)
+    if ReleaseRecognizer.scoped?(a) && ReleaseRecognizer.scoped?(b)
+      a_without_scope   = ReleaseRecognizer.remove_scope a
+      b_without_scope = ReleaseRecognizer.remove_scope b
+      if a_without_scope.eql? b_without_scope
+        return ReleaseRecognizer.compare_scopes(a, b)
+      end
+    end
+    0 
   end
   
   def self.get_a_piece_of_the_cake(offset, cake)
