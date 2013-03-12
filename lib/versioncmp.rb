@@ -41,11 +41,8 @@ class Versioncmp
       return -1
     end
 
-    a = do_x_dev_replacements a_val
-    b = do_x_dev_replacements b_val
-
-    replace_leading_v( a )
-    replace_leading_v( b )
+    a = pre_process a_val
+    b = pre_process b_val
 
     offset1 = 0;
     offset2 = 0;
@@ -83,30 +80,6 @@ class Versioncmp
     end
     result = Versioncmp.check_for_scopes(a, b) 
     return result
-  end
-  
-  def self.compare_int(ai, bi)
-    return -1 if (ai < bi)
-    return  0 if (ai == bi)
-    return  1
-  end
-  
-  def self.compare_string(a, b)
-    return  0 if a.eql? b
-    return -1 if a < b
-    return  1
-  end
-
-  def self.compare_string_length(a, b)  
-    return  0 if a.length() == b.length()
-    return  1 if a.length() <  b.length()
-    return -1
-  end
-
-  def self.compare_string_length_odd(a, b)  
-    return  1 if a.length > b.length
-    return -1 if a.length < b.length
-    return  0
   end
   
   def self.check_for_scopes(a, b)
@@ -156,7 +129,14 @@ class Versioncmp
     return part.length() == 8 && part.match(/^[0-9]+$/) != nil
   end
 
-  def self.do_x_dev_replacements val 
+  def self.pre_process val 
+    a = replace_x_dev val
+    replace_leading_v( a )
+    replace_minimum_stability( a )
+    a 
+  end
+
+  def self.replace_x_dev val 
     new_val = String.new(val)
     if val.eql?("dev-master")
       new_val = "9999999"
@@ -171,6 +151,12 @@ class Versioncmp
   def self.replace_leading_v val 
     if val.match(/^v[0-9]+/)
       val.gsub!(/^v/, "")  
+    end
+  end
+
+  def self.replace_minimum_stability val 
+    if val.match(/@.*$/)
+      val.gsub!(/@.*$/, "")  
     end
   end
 
@@ -196,6 +182,30 @@ class Versioncmp
 
     return nil
     # --- END ---- special case for awesome jquery shitty verison numbers 
+  end
+
+  def self.compare_int(ai, bi)
+    return -1 if (ai < bi)
+    return  0 if (ai == bi)
+    return  1
+  end
+  
+  def self.compare_string(a, b)
+    return  0 if a.eql? b
+    return -1 if a < b
+    return  1
+  end
+
+  def self.compare_string_length(a, b)  
+    return  0 if a.length() == b.length()
+    return  1 if a.length() <  b.length()
+    return -1
+  end
+
+  def self.compare_string_length_odd(a, b)  
+    return  1 if a.length > b.length
+    return -1 if a.length < b.length
+    return  0
   end
 
 end
