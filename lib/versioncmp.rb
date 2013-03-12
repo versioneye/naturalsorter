@@ -46,7 +46,7 @@ class Versioncmp
     replace_leading_v( a )
     replace_leading_v( b )
 
-	  offset1 = 0;
+    offset1 = 0;
     offset2 = 0;
 
     for i in 0..100
@@ -83,9 +83,9 @@ class Versioncmp
         return 1 if (part1.match(/^[0-9]+$/) != nil && part2.match(/^[0-9]+$/) == nil)
         return -1;
       end
-	  end
-	  result = Versioncmp.checkForRC(a, b) 
-	  return result
+    end
+    result = Versioncmp.checkForRC(a, b) 
+    return result
   end
   
   def self.compareInt(ai, bi)
