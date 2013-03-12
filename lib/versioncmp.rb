@@ -109,32 +109,18 @@ class Versioncmp
       big = String.new(b)
       small = String.new(a)
     end
-    if (ReleaseRecognizer.rc?(big))
-      bigwithoutRc = big.gsub(/\.rc.*$/i, "")
-      if (Versioncmp.compare_string(bigwithoutRc, small) == 0)
-        return Versioncmp.compare_string_length(a, b)
-      end
-    elsif (ReleaseRecognizer.beta?(big))
-      bigwithoutBeta = big.gsub(/\.beta.*$/i, "")
-      if (Versioncmp.compare_string(bigwithoutBeta, small) == 0)
-        return Versioncmp.compare_string_length(a, b)
-      end
-    elsif (ReleaseRecognizer.alpha?(big))
-      bigwithoutAlpha = big.gsub(/\.alpha.*$/i, "")
-      if (Versioncmp.compare_string(bigwithoutAlpha, small) == 0)
-        return Versioncmp.compare_string_length(a, b)
-      end
-    elsif (ReleaseRecognizer.pre?(big))
-      bigwithoutPre = big.gsub(/\.pre.*$/i, "")
-      if (Versioncmp.compare_string(bigwithoutPre, small) == 0)
-        return Versioncmp.compare_string_length(a, b)
-      end
-    elsif (ReleaseRecognizer.jbossorg?(big))
-      bigwithoutRc = big.gsub(/\.jbossorg.*$/i, "")
-      if (Versioncmp.compare_string(bigwithoutRc, small) == 0)
+
+    # if ReleaseRecognizer.scoped?(big) && ReleaseRecognizer.scoped?(small)
+    #   p "test"
+    # end
+
+    if (ReleaseRecognizer.scoped?(big))
+      big_without_scope = ReleaseRecognizer.remove_scope big
+      if (Versioncmp.compare_string(big_without_scope, small) == 0)
         return Versioncmp.compare_string_length(a, b)
       end
     end
+
     return  1 if a.length > b.length
     return -1 if a.length < b.length
     return  0

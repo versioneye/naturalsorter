@@ -1,5 +1,31 @@
 class ReleaseRecognizer
 
+  def self.scoped? value 
+    self.alpha?(value) or self.beta?(value) or 
+    self.dev?(value) or self.rc?(value) or 
+    self.snapshot?(value) or self.pre?(value) or 
+    self.jbossorg?(value)
+  end
+
+  def self.remove_scope value 
+    if self.alpha? value
+      new_value = value.gsub(/\.\w*alpha.*$/i, "")
+      return new_value.gsub(/\.\w*a.*$/i, "")
+    elsif self.beta? value
+      new_value = value.gsub(/\.\w*beta.*$/i, "")
+      return new_value.gsub(/\.\w*b.*$/i, "")
+    elsif self.rc? value
+      return value.gsub(/\.\w*rc.*$/i, "")
+    elsif self.pre? value
+      return value.gsub(/\.\w*pre.*$/i, "")
+    elsif self.jbossorg? value
+      return value.gsub(/\.jbossorg.*$/i, "")
+    elsif self.snapshot? value
+      return value.gsub(/\.snapshot.*$/i, "")
+    end
+    return value
+  end
+
   def self.release? value
     self.stable? value 
   end

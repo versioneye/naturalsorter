@@ -57,6 +57,10 @@ describe Versioncmp do
   it "smaller alpha" do
     Versioncmp.compare("1.1-alpha1", "1.1").should eql(-1)
   end
+
+  # it "alpha is smaller than BETA" do
+  #   Versioncmp.compare("2.1.0alpha", "2.1.0-BETA1").should eql(-1)
+  # end
   
   it "smaller alpha-1" do
     Versioncmp.compare("1.1-alpha-1", "1.1").should eql(-1)
