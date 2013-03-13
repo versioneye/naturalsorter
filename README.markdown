@@ -42,7 +42,7 @@ This here is again for an array with objects. Spezially optimizied for sorting v
 
 `Naturalsorter::Sorter.sort_version_by_method(array, method)`
 
-`Naturalsorter::Sorter.sort_version_by_method_desc(array)`
+`Naturalsorter::Sorter.sort_version_by_method_desc(array, method)`
 
 Get the newest version from the both given.
 
@@ -76,7 +76,7 @@ because '~>1.1' doesn't fit anymore the newest version.
 
 You should add this line to your Gemfile
 
-`gem 'naturalsorter', '0.7.12'`
+`gem 'naturalsorter', '1.0.0'`
 
 and run this command in your app root directory
 
