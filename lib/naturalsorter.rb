@@ -162,57 +162,5 @@ module Naturalsorter
     end
   
   end
-
-  class ReleaseRecognizer
-
-    def self.value_for( value )
-      ReleaseRecognizer.value_for value
-    end
-
-    def self.compare_scopes( a, b)
-      ReleaseRecognizer.compare_scopes(a, b)
-    end
-
-    def self.scoped? value 
-      ReleaseRecognizer.scoped? value
-    end
-
-    def self.remove_scope value 
-      ReleaseRecognizer.remove_scope value 
-    end
-
-    def self.stable? value
-      ReleaseRecognizer.stable? value
-    end
-
-    def self.alpha? value 
-      ReleaseRecognizer.alpha? value
-    end
-
-    def self.beta? value 
-      ReleaseRecognizer.beta? value
-    end
-
-    def self.dev? value 
-      ReleaseRecognizer.dev? value 
-    end
-
-    def self.rc? value 
-      ReleaseRecognizer.rc? value 
-    end
-
-    def self.snapshot? value 
-      ReleaseRecognizer.snapshot? value 
-    end
-
-    def self.pre? value 
-      ReleaseRecognizer.pre? value 
-    end
-
-    def self.jbossorg? value 
-      ReleaseRecognizer.jbossorg? value 
-    end
-
-  end
   
 end
