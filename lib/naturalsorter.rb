@@ -158,7 +158,7 @@ module Naturalsorter
     end
 
     def self.replace_minimum_stability val 
-      Sorter.replace_minimum_stability val 
+      Versioncmp.replace_minimum_stability val 
     end
   
   end
