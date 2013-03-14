@@ -78,19 +78,21 @@ class Versioncmp
         return -1;
       end
     end
-    result = Versioncmp.check_for_scopes(a, b) 
+    result = Versioncmp.check_for_tags(a, b) 
     return result
   end
   
-  def self.check_for_scopes(a, b)
+  # Tags are RC, alpha, beta, dev and so on.
+  # 
+  def self.check_for_tags(a, b)
     big = String.new(a)
     small = String.new(b)
     if (a.length() < b.length())
       big = String.new(b)
       small = String.new(a)
     end
-    if (ReleaseRecognizer.scoped?(big))
-      big_without_scope = ReleaseRecognizer.remove_scope big
+    if (VersionTagRecognizer.tagged?(big))
+      big_without_scope = VersionTagRecognizer.remove_tag big
       if (Versioncmp.compare_string(big_without_scope, small) == 0)
         return Versioncmp.compare_string_length(a, b)
       end
@@ -99,11 +101,11 @@ class Versioncmp
   end
 
   def self.double_scope_checker(a, b)
-    if ReleaseRecognizer.scoped?(a) && ReleaseRecognizer.scoped?(b)
-      a_without_scope   = ReleaseRecognizer.remove_scope a
-      b_without_scope = ReleaseRecognizer.remove_scope b
+    if VersionTagRecognizer.tagged?(a) && VersionTagRecognizer.tagged?(b)
+      a_without_scope   = VersionTagRecognizer.remove_tag a
+      b_without_scope = VersionTagRecognizer.remove_tag b
       if a_without_scope.eql? b_without_scope
-        return ReleaseRecognizer.compare_scopes(a, b)
+        return VersionTagRecognizer.compare_tags(a, b)
       end
     end
     0 
@@ -132,7 +134,7 @@ class Versioncmp
   def self.pre_process val 
     a = replace_x_dev val
     replace_leading_v( a )
-    replace_minimum_stability( a )
+    VersionTagRecognizer.remove_minimum_stability( a )
     a 
   end
 
@@ -154,11 +156,7 @@ class Versioncmp
     end
   end
 
-  def self.replace_minimum_stability val 
-    if val.match(/@.*$/)
-      val.gsub!(/@.*$/, "")  
-    end
-  end
+  
 
   def self.check_jquery_versioning(part1, part2)
     # --- START ---- special case for awesome jquery shitty verison numbers 

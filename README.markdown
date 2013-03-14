@@ -76,7 +76,7 @@ because '~>1.1' doesn't fit anymore the newest version.
 
 You should add this line to your Gemfile
 
-`gem 'naturalsorter', '1.0.1'`
+`gem 'naturalsorter', '2.0.0'`
 
 and run this command in your app root directory
 
@@ -88,7 +88,7 @@ After the installation you can use it like this:
 
 `Naturalsorter::Sorter.sort(["a400", "a5", "a1"], true)`
 
-it will return the array ["a1", "a5", "a400"]. 
+it will return the array ["a1", "a5", "a400"]. The second paramter is for "caseinsesitive".
 
 If you have more advanced objects you want to sort, you should use the second method. Assume you have a Class User with 3 attributes: "firstname", "lastname", "age" and you want to sort an array of class Users by "firstname". 
 

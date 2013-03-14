@@ -1,7 +1,7 @@
 require "naturalsorter/version"
 require "natcmp"
 require "versioncmp"
-require "release_recognizer"
+require "version_tag_recognizer"
 
 # naturalsorter.rb
 #
@@ -158,7 +158,7 @@ module Naturalsorter
     end
 
     def self.replace_minimum_stability val 
-      Versioncmp.replace_minimum_stability val 
+      VersionTagRecognizer.remove_minimum_stability val 
     end
   
   end
