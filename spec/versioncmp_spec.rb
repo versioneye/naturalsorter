@@ -150,4 +150,8 @@ describe Versioncmp do
     Versioncmp.compare("1.7.2", "1.7.1rc1").should eql(1)
   end
 
+  it "99.0-does-not-exist is smaller than 1.7.1" do 
+    Versioncmp.compare("99.0-does-not-exist", "1.7.1").should eql(-1)
+  end
+
 end

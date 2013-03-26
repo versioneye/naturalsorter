@@ -133,9 +133,16 @@ class Versioncmp
 
   def self.pre_process val 
     a = replace_x_dev val
-    replace_leading_v( a )
-    VersionTagRecognizer.remove_minimum_stability( a )
+    replace_leading_v a 
+    replace_99_does_not_exist a
+    VersionTagRecognizer.remove_minimum_stability a 
     a 
+  end
+
+  def self.replace_99_does_not_exist val 
+    if val.eql?("99.0-does-not-exist")
+      val.gsub!("99.0-does-not-exist", "0.0.0")
+    end
   end
 
   def self.replace_x_dev val 
