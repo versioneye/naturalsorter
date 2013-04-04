@@ -32,6 +32,10 @@ describe Naturalsorter::Sorter do
   
   
   describe "sort_version" do
+
+    it "1.1 is 1.1" do
+      Naturalsorter::Sorter.sort_version(["1.1"]).should eql(["1.1"])
+    end
   
     it "1.1, 1.0 is 1.0, 1.1" do
       Naturalsorter::Sorter.sort_version(["1.1", "1.0"]).should eql(["1.0", "1.1"])

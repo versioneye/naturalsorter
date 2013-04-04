@@ -34,30 +34,28 @@ module Naturalsorter
       if (array.nil? || array.empty?)
         return nil
       end
-      array.sort { |a,b| Natcmp.natcmp(a,b,caseinsesitive) }
+      array.sort { |a,b| Natcmp.natcmp(a, b, caseinsesitive) }
     end
     
     def self.sort_desc(array, caseinsesitive)
       if (array.nil? || array.empty?)
         return nil
       end
-      array.sort { |a, b| Natcmp.natcmp(b,a,caseinsesitive) }
+      array.sort { |a, b| Natcmp.natcmp(b, a, caseinsesitive) }
     end
     
     
     # 'Natural order' sort for an array of objects. 
     def self.sort_by_method(array, method, caseinsesitive)
-      if (array.nil? || array.empty?)
-        return nil
-      end
-      array.sort { |a,b| Natcmp.natcmp(a.send(method),b.send(method),caseinsesitive) }
+      return nil if (array.nil? || array.empty?)
+      return nil if array.length == 1  
+      array.sort { |a,b| Natcmp.natcmp( a.send(method), b.send(method), caseinsesitive) }
     end
     
     def self.sort_by_method_desc(array, method, caseinsesitive)
-      if (array.nil? || array.empty?)
-        return nil
-      end
-      array.sort { |a, b| Natcmp.natcmp(b.send(method),a.send(method),caseinsesitive) }
+      return nil if (array.nil? || array.empty?)
+      return nil if array.length == 1  
+      array.sort { |a, b| Natcmp.natcmp(b.send(method), a.send(method), caseinsesitive) }
     end    
     
     
@@ -75,11 +73,13 @@ module Naturalsorter
     
     def self.sort_version_by_method(array, method)
       return nil if (array.nil? || array.empty?)
+      return nil if array.length == 1 
       array.sort { |a,b| Versioncmp.compare(a.send(method), b.send(method)) }
     end
     
     def self.sort_version_by_method_desc(array, method)
       return nil if (array.nil? || array.empty?)
+      return nil if array.length == 1 
       array.sort { |a,b| Versioncmp.compare(b.send(method), a.send(method)) }
     end
     
