@@ -135,6 +135,7 @@ class Versioncmp
     a = replace_x_dev val
     replace_leading_v a 
     replace_99_does_not_exist a
+    replace_timestamps a 
     VersionTagRecognizer.remove_minimum_stability a 
     a 
   end
@@ -142,6 +143,18 @@ class Versioncmp
   def self.replace_99_does_not_exist val 
     if val.eql?("99.0-does-not-exist")
       val.gsub!("99.0-does-not-exist", "0.0.0")
+    end
+  end
+
+  # Some glory Java Devs used the timestamp as version string
+  # http://www.versioneye.com/package/commons-beanutils--commons-beanutils
+  # Ganz grosses Kino
+  #
+  def self.replace_timestamps val
+    if val.match(/^[0-9]{8}$/)
+      val.gsub!(/^[0-9]{8}$/, "0.0.0")
+    elsif val.match(/^[0-9]{8}.[0-9]{6}$/) 
+      val.gsub!(/^[0-9]{8}.[0-9]{6}$/, "0.0.0")
     end
   end
 

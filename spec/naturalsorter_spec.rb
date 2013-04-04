@@ -36,6 +36,10 @@ describe Naturalsorter::Sorter do
     it "1.1 is 1.1" do
       Naturalsorter::Sorter.sort_version(["1.1"]).should eql(["1.1"])
     end
+
+    it "1.1 is bigger than 20030211.134440" do
+      Naturalsorter::Sorter.sort_version(["1.1", "20030211.134440"]).should eql(["20030211.134440", "1.1"])
+    end
   
     it "1.1, 1.0 is 1.0, 1.1" do
       Naturalsorter::Sorter.sort_version(["1.1", "1.0"]).should eql(["1.0", "1.1"])
@@ -156,6 +160,12 @@ describe Naturalsorter::Sorter do
     
     it "returns true" do
       Naturalsorter::Sorter.bigger?("1.1", "1.0").should be_true
+    end
+    it "returns true" do
+      Naturalsorter::Sorter.bigger?("1.1", "20030211.134440").should be_true
+    end
+    it "returns true" do
+      Naturalsorter::Sorter.bigger?("1.1", "20030211").should be_true
     end
     it "returns true" do
       Naturalsorter::Sorter.bigger?("2.0", "1.0").should be_true
