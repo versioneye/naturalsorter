@@ -1,5 +1,7 @@
 # NaturalSorter
 
+[![Build Status](https://travis-ci.org/versioneye/naturalsorter.png)](https://travis-ci.org/versioneye/naturalsorter)
+
 ## The Mission
 
 This open source project is sorting arrays in a natural way. Assume you have an string array like this here
