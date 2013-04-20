@@ -80,7 +80,7 @@ because '~>1.1' doesn't fit anymore the newest version.
 
 You should add this line to your Gemfile
 
-`gem 'naturalsorter', '2.0.4'`
+`gem 'naturalsorter', '2.0.5'`
 
 and run this command in your app root directory
 
