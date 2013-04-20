@@ -1,6 +1,8 @@
 # NaturalSorter
 
 [![Build Status](https://travis-ci.org/versioneye/naturalsorter.png)](https://travis-ci.org/versioneye/naturalsorter)
+[![Dependency Status](http://www.versioneye.com/package/naturalsorter/badge.png)](http://www.versioneye.com/package/naturalsorter)
+
 
 ## The Mission
 
