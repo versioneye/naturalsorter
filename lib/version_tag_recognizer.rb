@@ -28,10 +28,14 @@ class VersionTagRecognizer
   end
 
   def self.tagged? value 
-    self.alpha?(value) or self.beta?(value) or 
-    self.dev?(value) or self.rc?(value) or 
-    self.snapshot?(value) or self.pre?(value) or 
-    self.jbossorg?(value)
+    return true if self.alpha?(value) 
+    return true if self.beta?(value)
+    return true if self.dev?(value) 
+    return true if self.rc?(value) 
+    return true if self.snapshot?(value) 
+    return true if self.pre?(value) 
+    return true if self.jbossorg?(value)
+    return false 
   end
 
   def self.remove_tag value 
