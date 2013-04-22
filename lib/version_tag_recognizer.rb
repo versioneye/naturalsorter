@@ -58,25 +58,23 @@ class VersionTagRecognizer
   end
 
   def self.remove_minimum_stability val 
-    if val.match(/@.*$/)
-      val.gsub!(/@.*$/, "")  
-    end
+    val.gsub!(/@.*$/, "") if val.match(/@.*$/)
   end
 
   def self.does_it_fit_stability?( version_number, stability )
-    return true if (stability.casecmp( A_STABILITY_STABLE ) == 0)   &&   self.stable?( version_number )
+    return true if (stability.casecmp( A_STABILITY_STABLE )   == 0) &&   self.stable?( version_number )
       
-    return true if (stability.casecmp( A_STABILITY_PRE ) == 0)      && ( self.stable?( version_number ) || self.pre?( version_number ) )
+    return true if (stability.casecmp( A_STABILITY_PRE )      == 0) && ( self.stable?( version_number ) || self.pre?( version_number ) )
       
-    return true if (stability.casecmp( A_STABILITY_RC ) == 0)       && ( self.stable?( version_number ) || self.rc?( version_number ) ) 
+    return true if (stability.casecmp( A_STABILITY_RC )       == 0) && ( self.stable?( version_number ) || self.rc?( version_number ) ) 
       
-    return true if (stability.casecmp( A_STABILITY_BETA ) == 0)     && ( self.stable?( version_number ) || self.rc?( version_number ) || self.beta?( version_number ) )
+    return true if (stability.casecmp( A_STABILITY_BETA )     == 0) && ( self.stable?( version_number ) || self.rc?( version_number ) || self.beta?( version_number ) )
       
-    return true if (stability.casecmp( A_STABILITY_ALPHA ) == 0)    && ( self.stable?( version_number ) || self.rc?( version_number ) || self.beta?( version_number ) || self.alpha?( version_number ) )
+    return true if (stability.casecmp( A_STABILITY_ALPHA )    == 0) && ( self.stable?( version_number ) || self.rc?( version_number ) || self.beta?( version_number ) || self.alpha?( version_number ) )
 
     return true if (stability.casecmp( A_STABILITY_SNAPSHOT ) == 0) && ( self.stable?( version_number ) || self.rc?( version_number ) || self.pre?( version_number ) || self.beta?( version_number ) || self.alpha?( version_number ) || self.snapshot?( version_number )  )
 
-    return true if  stability.casecmp( A_STABILITY_DEV ) == 0 
+    return true if (stability.casecmp( A_STABILITY_DEV )      == 0) 
       
     return false 
   end
@@ -114,9 +112,10 @@ class VersionTagRecognizer
     return true if value.match(/.+FINAL.*/i) 
     return true if value.match(/.+SP.*/i) 
     return true if value.match(/.+GA.*/i) 
-    !self.alpha?(value) and !self.beta?(value) and 
-    !self.dev?(value) and !self.pre?(value) and
-    !self.rc?(value) and !value.match(/.+SEC.*/i) and 
+    
+    !self.alpha?(value)    and !self.beta?(value)       and 
+    !self.dev?(value)      and !self.pre?(value)        and
+    !self.rc?(value)       and !value.match(/.+SEC.*/i) and 
     !self.snapshot?(value) and !value.match(/.+M.+/i)
   end
 
