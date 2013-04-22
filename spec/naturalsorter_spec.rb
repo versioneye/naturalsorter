@@ -12,10 +12,10 @@ describe Naturalsorter::Sorter do
   end
   describe "sort_desc" do
     it "cba is abc" do
-      Naturalsorter::Sorter.sort_desc(["c", "b", "a"], true).should eql(["c", "b", "a"])
+      Naturalsorter::Sorter.sort(["c", "b", "a"],      true, false).should eql(["c", "b", "a"])
     end
     it "c400b5a1 is a1b5c400" do
-      Naturalsorter::Sorter.sort_desc(["a5", "a400", "a1"], true).should eql(["a400", "a5", "a1"])
+      Naturalsorter::Sorter.sort(["a5", "a400", "a1"], true, false).should eql(["a400", "a5", "a1"])
     end
   end
   
@@ -26,7 +26,7 @@ describe Naturalsorter::Sorter do
   end
   describe  "sort_by_method_desc" do
     it "a5 a400 a1 is a400 a5 a1" do
-      Naturalsorter::Sorter.sort_by_method_desc(["a5", "a400", "a1"], "to_s", true).should eql(["a400", "a5", "a1"])
+      Naturalsorter::Sorter.sort_by_method(["a5", "a400", "a1"], "to_s", true, false).should eql(["a400", "a5", "a1"])
     end
   end
   
@@ -66,15 +66,15 @@ describe Naturalsorter::Sorter do
     end
 
     it "1.2, 1.1 is 1.1, 1.2" do
-      Naturalsorter::Sorter.sort_version_desc(["0.4", "0.1", "1.1", "1.2", "1.0", "1.0.RC1"]).should eql(["1.2", "1.1", "1.0", "1.0.RC1", "0.4", "0.1"])
+      Naturalsorter::Sorter.sort_version(["0.4", "0.1", "1.1", "1.2", "1.0", "1.0.RC1"], false).should eql(["1.2", "1.1", "1.0", "1.0.RC1", "0.4", "0.1"])
     end
     
     it "1.2, 1.1 is 1.1, 1.2" do
-      Naturalsorter::Sorter.sort_version_desc(["0.4", "0.1", "1.1", "1.1.1", "1.2", "1.2.1", "1.0", "1.0.RC1"]).should eql(["1.2.1", "1.2", "1.1.1", "1.1", "1.0", "1.0.RC1", "0.4", "0.1"])
+      Naturalsorter::Sorter.sort_version(["0.4", "0.1", "1.1", "1.1.1", "1.2", "1.2.1", "1.0", "1.0.RC1"], false).should eql(["1.2.1", "1.2", "1.1.1", "1.1", "1.0", "1.0.RC1", "0.4", "0.1"])
     end
     
     it "sorts this to the end 20040121.140929" do
-      Naturalsorter::Sorter.sort_version_desc(["0.4", "0.1", "20040121.140929", "1.1.1", "1.2", "1.2.1", "1.0", "1.0.RC1"]).should eql(["1.2.1", "1.2", "1.1.1", "1.0", "1.0.RC1", "0.4", "0.1", "20040121.140929"])
+      Naturalsorter::Sorter.sort_version(["0.4", "0.1", "20040121.140929", "1.1.1", "1.2", "1.2.1", "1.0", "1.0.RC1"], false).should eql(["1.2.1", "1.2", "1.1.1", "1.0", "1.0.RC1", "0.4", "0.1", "20040121.140929"])
     end
 
     it "1.2, 1.1 is 1.1, 1.2" do

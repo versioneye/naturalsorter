@@ -29,57 +29,45 @@ module Naturalsorter
   
   class Sorter
   
-    # 'Natural order' sort for an simple string array
-    def self.sort(array, caseinsesitive)
+    def self.sort(array, caseinsesitive = false , asc = true )
       return array if (array.nil? || array.empty?)
-      array.sort { |a,b| Natcmp.natcmp(a, b, caseinsesitive) }
+      if asc 
+        return array.sort { |a, b| Natcmp.natcmp(a, b, caseinsesitive) }
+      else 
+        return array.sort { |a, b| Natcmp.natcmp(b, a, caseinsesitive) }
+      end 
     end
-    
-    def self.sort_desc(array, caseinsesitive)
-      return array if (array.nil? || array.empty?)
-      array.sort { |a, b| Natcmp.natcmp(b, a, caseinsesitive) }
-    end
-    
     
     # 'Natural order' sort for an array of objects. 
-    def self.sort_by_method(array, method, caseinsesitive)
-      return array if (array.nil? || array.empty?)
-      return array if array.length == 1  
-      array.sort { |a,b| Natcmp.natcmp( a.send(method), b.send(method), caseinsesitive) }
-    end
-    
-    def self.sort_by_method_desc(array, method, caseinsesitive)
-      return array if (array.nil? || array.empty?)
-      return array if array.length == 1  
-      array.sort { |a, b| Natcmp.natcmp(b.send(method), a.send(method), caseinsesitive) }
-    end    
-    
-    
-    def self.sort_version(array)
-      return array if (array.nil? || array.empty?)
-      array.sort { |a,b| Versioncmp.compare( a, b ) }
-    end
-    
-    def self.sort_version_desc(array)
-      return array if (array.nil? || array.empty?)
-      array.sort { |a,b| Versioncmp.compare( b, a ) }
+    def self.sort_by_method(array, method, caseinsesitive = false, asc = true)
+      return array if (array.nil? || array.empty? || array.length == 1)
+      if asc 
+        array.sort { |a,b| Natcmp.natcmp( a.send(method), b.send(method), caseinsesitive) }
+      else
+        array.sort { |a, b| Natcmp.natcmp(b.send(method), a.send(method), caseinsesitive) }  
+      end   
     end
     
     
-    
-    def self.sort_version_by_method(array, method)
-      return array if (array.nil? || array.empty?)
-      return array if array.length == 1 
-      array.sort { |a,b| Versioncmp.compare(a.send(method), b.send(method)) }
-    end
-    
-    def self.sort_version_by_method_desc(array, method)
-      return array if (array.nil? || array.empty?)
-      return array if array.length == 1 
-      array.sort { |a,b| Versioncmp.compare(b.send(method), a.send(method)) }
+    def self.sort_version(array, asc = true)
+      return array if (array.nil? || array.empty? || array.length == 1)
+      if asc 
+        array.sort { |a,b| Versioncmp.compare( a, b ) }
+      else 
+        array.sort { |a,b| Versioncmp.compare( b, a ) }  
+      end
     end
     
     
+    def self.sort_version_by_method(array, method, asc = true )
+      return array if (array.nil? || array.empty? || array.length == 1 )
+      if asc 
+        array.sort { |a,b| Versioncmp.compare(a.send(method), b.send(method)) }
+      else 
+        array.sort { |a,b| Versioncmp.compare(b.send(method), a.send(method)) }  
+      end 
+    end
+  
     
     def self.get_newest_version(first, second)
       array = [first, second]
