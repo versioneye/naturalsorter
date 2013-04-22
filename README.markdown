@@ -1,9 +1,9 @@
 # NaturalSorter
 
-
-[![Build Status](https://travis-ci.org/versioneye/naturalsorter.png)](https://travis-ci.org/versioneye/naturalsorter)
-[![Dependency Status](http://www.versioneye.com/package/naturalsorter/badge.png)](http://www.versioneye.com/package/naturalsorter)
 [![Gem Version](https://badge.fury.io/rb/naturalsorter.png)](http://badge.fury.io/rb/naturalsorter)
+[![Dependency Status](http://www.versioneye.com/package/naturalsorter/badge.png)](http://www.versioneye.com/package/naturalsorter)
+[![Build Status](https://travis-ci.org/versioneye/naturalsorter.png)](https://travis-ci.org/versioneye/naturalsorter)
+[![Code Climate](https://codeclimate.com/github/versioneye/naturalsorter.png)](https://codeclimate.com/github/versioneye/naturalsorter)
 
 
 ## The Mission
