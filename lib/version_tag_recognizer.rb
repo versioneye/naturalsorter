@@ -109,11 +109,11 @@ class VersionTagRecognizer
   end
 
   def self.stable? value
-    if value.match(/.+RELEASE.*/i) or value.match(/.+BUILD.*/i) or 
-      value.match(/.+FINAL.*/i) or value.match(/.+SP.*/i) or
-      value.match(/.+GA.*/i) 
-      return true 
-    end
+    return true if value.match(/.+RELEASE.*/i) 
+    return true if value.match(/.+BUILD.*/i) 
+    return true if value.match(/.+FINAL.*/i) 
+    return true if value.match(/.+SP.*/i) 
+    return true if value.match(/.+GA.*/i) 
     !self.alpha?(value) and !self.beta?(value) and 
     !self.dev?(value) and !self.pre?(value) and
     !self.rc?(value) and !value.match(/.+SEC.*/i) and 
