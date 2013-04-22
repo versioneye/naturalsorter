@@ -28,27 +28,19 @@ This fork contains some special algorithms to sort version numbers in a natural 
 
 This 2 methods are sorting a simple array of Strings. The name of the methods and the parameters are self explained. 
 
-`Naturalsorter::Sorter.sort(array, caseinsesitive)`
-
-`Naturalsorter::Sorter.sort_desc(array, caseinsesitive)`
+`Naturalsorter::Sorter.sort(array, caseinsesitive = false, asc = true)`
 
 And this here is for more advanced sorting. Where you can put in a array of objects and the method which should called on every object for comparison. 
 
-`Naturalsorter::Sorter.sort_by_method(array, method, caseinsesitive)`
-
-`Naturalsorter::Sorter.sort_by_method_desc(array, method, caseinsesitive)`
+`Naturalsorter::Sorter.sort_by_method(array, method, caseinsesitive = false, asc = true)`
 
 This methods are based on a different algo. Spezially optimizied for sorting version strings. 
 
-`Naturalsorter::Sorter.sort_version(array)`
-
-`Naturalsorter::Sorter.sort_version_desc(array)`
+`Naturalsorter::Sorter.sort_version(array, asc = true)`
 
 This here is again for an array with objects. Spezially optimizied for sorting version strings. 
 
-`Naturalsorter::Sorter.sort_version_by_method(array, method)`
-
-`Naturalsorter::Sorter.sort_version_by_method_desc(array, method)`
+`Naturalsorter::Sorter.sort_version_by_method(array, method, asc = true )`
 
 Get the newest version from the both given.
 
