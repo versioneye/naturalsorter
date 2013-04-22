@@ -29,17 +29,12 @@ class Versioncmp
   #
   def self.compare(a_val, b_val)
 
-    if (!a_val.nil? || a_val.eql?("") ) && b_val.nil?
-      return 1
-    end
+    a_empty = a_val.nil? || a_val.empty? 
+    b_empty = b_val.nil? || b_val.empty? 
 
-    if (!b_val.nil? || b_val.eql?("")) && a_val.nil?
-      return -1
-    end  
-
-    if a_val.nil? && b_val.nil? 
-      return -1
-    end
+    return 0 if a_empty && b_empty
+    return 1 if (a_empty == false) && b_empty
+    return -1 if (b_empty == false) && a_empty
 
     a = pre_process a_val
     b = pre_process b_val
