@@ -62,20 +62,20 @@ class VersionTagRecognizer
   end
 
   def self.does_it_fit_stability?( version_number, stability )
-    return true if (stability.casecmp( A_STABILITY_STABLE )   == 0) &&   self.stable?( version_number )
-      
-    return true if (stability.casecmp( A_STABILITY_PRE )      == 0) && ( self.stable?( version_number ) || self.pre?( version_number ) )
-      
-    return true if (stability.casecmp( A_STABILITY_RC )       == 0) && ( self.stable?( version_number ) || self.rc?( version_number ) ) 
-      
-    return true if (stability.casecmp( A_STABILITY_BETA )     == 0) && ( self.stable?( version_number ) || self.rc?( version_number ) || self.beta?( version_number ) )
-      
-    return true if (stability.casecmp( A_STABILITY_ALPHA )    == 0) && ( self.stable?( version_number ) || self.rc?( version_number ) || self.beta?( version_number ) || self.alpha?( version_number ) )
+    stable   = self.stable?( version_number )
+    pre      = stable || self.pre?( version_number )
+    rc       = stable || self.rc?( version_number )
+    beta     = rc     || self.beta?( version_number )
+    alpha    = beta   || self.alpha?( version_number )
+    snapshot = alpha  || self.pre?( version_number ) || self.snapshot?( version_number ) 
 
-    return true if (stability.casecmp( A_STABILITY_SNAPSHOT ) == 0) && ( self.stable?( version_number ) || self.rc?( version_number ) || self.pre?( version_number ) || self.beta?( version_number ) || self.alpha?( version_number ) || self.snapshot?( version_number )  )
-
+    return true if (stability.casecmp( A_STABILITY_STABLE )   == 0) && stable
+    return true if (stability.casecmp( A_STABILITY_PRE )      == 0) && pre 
+    return true if (stability.casecmp( A_STABILITY_RC )       == 0) && rc 
+    return true if (stability.casecmp( A_STABILITY_BETA )     == 0) && beta 
+    return true if (stability.casecmp( A_STABILITY_ALPHA )    == 0) && alpha
+    return true if (stability.casecmp( A_STABILITY_SNAPSHOT ) == 0) && snapshot
     return true if (stability.casecmp( A_STABILITY_DEV )      == 0) 
-      
     return false 
   end
 
