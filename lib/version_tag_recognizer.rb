@@ -64,47 +64,21 @@ class VersionTagRecognizer
   end
 
   def self.does_it_fit_stability?( version_number, stability )
-    if stability.casecmp( A_STABILITY_STABLE ) == 0
-      if self.stable?( version_number )
-        return true 
-      end
-    elsif stability.casecmp( A_STABILITY_PRE ) == 0
-      if self.stable?( version_number ) || 
-         self.pre?( version_number )
-        return true 
-      end
-    elsif stability.casecmp( A_STABILITY_RC ) == 0
-      if self.stable?( version_number ) || 
-         self.rc?( version_number )
-        return true 
-      end
-    elsif stability.casecmp( A_STABILITY_BETA ) == 0
-      if self.stable?( version_number ) || 
-         self.rc?( version_number ) ||
-         self.beta?( version_number )
-        return true 
-      end
-    elsif stability.casecmp( A_STABILITY_ALPHA ) == 0 
-      if self.stable?( version_number ) || 
-         self.rc?( version_number ) ||
-         self.beta?( version_number ) || 
-         self.alpha?( version_number )
-        return true 
-      end
-    elsif stability.casecmp( A_STABILITY_SNAPSHOT ) == 0 
-      if self.stable?( version_number ) || 
-         self.rc?( version_number ) ||
-         self.pre?( version_number ) ||
-         self.beta?( version_number ) || 
-         self.alpha?( version_number ) || 
-         self.snapshot?( version_number ) 
-        return true 
-      end
-    elsif stability.casecmp( A_STABILITY_DEV ) == 0 
-      return true 
-    else  
-      return false 
-    end
+    return true if (stability.casecmp( A_STABILITY_STABLE ) == 0)   &&   self.stable?( version_number )
+      
+    return true if (stability.casecmp( A_STABILITY_PRE ) == 0)      && ( self.stable?( version_number ) || self.pre?( version_number ) )
+      
+    return true if (stability.casecmp( A_STABILITY_RC ) == 0)       && ( self.stable?( version_number ) || self.rc?( version_number ) ) 
+      
+    return true if (stability.casecmp( A_STABILITY_BETA ) == 0)     && ( self.stable?( version_number ) || self.rc?( version_number ) || self.beta?( version_number ) )
+      
+    return true if (stability.casecmp( A_STABILITY_ALPHA ) == 0)    && ( self.stable?( version_number ) || self.rc?( version_number ) || self.beta?( version_number ) || self.alpha?( version_number ) )
+
+    return true if (stability.casecmp( A_STABILITY_SNAPSHOT ) == 0) && ( self.stable?( version_number ) || self.rc?( version_number ) || self.pre?( version_number ) || self.beta?( version_number ) || self.alpha?( version_number ) || self.snapshot?( version_number )  )
+
+    return true if  stability.casecmp( A_STABILITY_DEV ) == 0 
+      
+    return false 
   end
 
   def self.stability_tag_for( version )
