@@ -74,6 +74,11 @@ module Naturalsorter
       array = array.sort { |a,b| Versioncmp.compare( a, b ) }
       array.last
     end
+
+    def self.get_newest(a, b)
+      Versioncmp.replace_leading_vs a, b 
+      Sorter.get_newest_version(a, b)
+    end
     
     def self.bigger?(a, b)
       return false if a.eql?( b )
@@ -86,23 +91,16 @@ module Naturalsorter
       newest = self.get_newest a, b
       newest.eql?( b )
     end
-
-    def self.get_newest(a, b)
-      Versioncmp.replace_leading_vs a, b 
-      Sorter.get_newest_version(a, b)
-    end
     
     def self.bigger_or_equal?(a, b)
-      Versioncmp.replace_leading_vs a, b 
       return true if a.eql?(b)
-      newest = Sorter.get_newest_version(a, b)
+      newest = self.get_newest a, b
       newest.eql?(a)
     end
     
     def self.smaller_or_equal?(a, b)
-      Versioncmp.replace_leading_vs a, b 
       return true if a.eql?(b)
-      newest = Sorter.get_newest_version(a, b)
+      newest = self.get_newest a, b
       newest.eql?(b)
     end  
 
