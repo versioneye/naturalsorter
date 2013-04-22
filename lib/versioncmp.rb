@@ -171,12 +171,13 @@ class Versioncmp
   end
 
   def self.replace_leading_v val 
-    if val.match(/^v[0-9]+/)
-      val.gsub!(/^v/, "")  
-    end
+    val.gsub!(/^v/, "") if val.match(/^v[0-9]+/)
   end
 
-  
+  def self.replace_leading_vs a, b 
+    self.replace_leading_v a 
+    self.replace_leading_v b
+  end
 
   def self.check_jquery_versioning(part1, part2)
     # --- START ---- special case for awesome jquery shitty verison numbers 

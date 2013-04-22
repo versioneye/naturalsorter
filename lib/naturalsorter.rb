@@ -76,36 +76,36 @@ module Naturalsorter
     end
     
     def self.bigger?(a, b)
-      Versioncmp.replace_leading_v( a )
-      Versioncmp.replace_leading_v( b )
-      return false if a.eql?(b)
-      newest = Sorter.get_newest_version(a, b)
-      newest.eql?(a)
+      return false if a.eql?( b )
+      newest = self.get_newest a, b
+      newest.eql?( a )
+    end
+
+    def self.smaller?(a, b)
+      return false if b.eql?( a )
+      newest = self.get_newest a, b
+      newest.eql?( b )
+    end
+
+    def self.get_newest(a, b)
+      Versioncmp.replace_leading_vs a, b 
+      Sorter.get_newest_version(a, b)
     end
     
     def self.bigger_or_equal?(a, b)
-      Versioncmp.replace_leading_v( a )
-      Versioncmp.replace_leading_v( b )
+      Versioncmp.replace_leading_vs a, b 
       return true if a.eql?(b)
       newest = Sorter.get_newest_version(a, b)
       newest.eql?(a)
     end
     
-    def self.smaller?(a, b)
-      Versioncmp.replace_leading_v( a )
-      Versioncmp.replace_leading_v( b )
-      return false if a.eql?(b)
-      newest = Sorter.get_newest_version(a, b)
-      newest.eql?(b)
-    end
-    
     def self.smaller_or_equal?(a, b)
-      Versioncmp.replace_leading_v( a )
-      Versioncmp.replace_leading_v( b )
+      Versioncmp.replace_leading_vs a, b 
       return true if a.eql?(b)
       newest = Sorter.get_newest_version(a, b)
       newest.eql?(b)
     end  
+
     
     
     # This is for the GEM notaiton ~> 
