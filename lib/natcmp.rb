@@ -61,10 +61,10 @@ def self.natcmp(str1, str2, caseInsensitive=false)
 
         case (num1 <=> num2)
           when -1 then return -1
-          when 1 then return 1
+          when  1 then return  1
         end
       when -1 then return -1
-      when 1 then return 1
+      when  1 then return  1
     end # case
 
   end # while
