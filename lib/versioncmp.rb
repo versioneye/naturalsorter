@@ -143,7 +143,7 @@ class Versioncmp
 
   # Some glory Java Devs used the timestamp as version string
   # http://www.versioneye.com/package/commons-beanutils--commons-beanutils
-  # Ganz grosses Kino
+  # Ganz grosses Kino !
   #
   def self.replace_timestamps val
     if val.match(/^[0-9]{8}$/)
@@ -206,8 +206,7 @@ class Versioncmp
 
   def self.compare_string(a, b)
     return  0 if a.eql? b
-    return -1 if a < b
-    return  1
+    return Natcmp.natcmp(a, b)
   end
 
   def self.compare_string_length(a, b)
