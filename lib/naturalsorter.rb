@@ -26,49 +26,49 @@ require "version_tag_recognizer"
 # 3. This notice may not be removed or altered from any source distribution.
 
 module Naturalsorter
-  
+
   class Sorter
-  
+
     def self.sort(array, caseinsesitive = false , asc = true )
       return array if (array.nil? || array.empty?)
-      if asc 
+      if asc
         return array.sort { |a, b| Natcmp.natcmp(a, b, caseinsesitive) }
-      else 
-        return array.sort { |a, b| Natcmp.natcmp(b, a, caseinsesitive) }
-      end 
-    end
-    
-    # 'Natural order' sort for an array of objects. 
-    def self.sort_by_method(array, method, caseinsesitive = false, asc = true)
-      return array if (array.nil? || array.empty? || array.length == 1)
-      if asc 
-        array.sort { |a,b| Natcmp.natcmp( a.send(method), b.send(method), caseinsesitive) }
       else
-        array.sort { |a, b| Natcmp.natcmp(b.send(method), a.send(method), caseinsesitive) }  
-      end   
-    end
-    
-    
-    def self.sort_version(array, asc = true)
-      return array if (array.nil? || array.empty? || array.length == 1)
-      if asc 
-        array.sort { |a,b| Versioncmp.compare( a, b ) }
-      else 
-        array.sort { |a,b| Versioncmp.compare( b, a ) }  
+        return array.sort { |a, b| Natcmp.natcmp(b, a, caseinsesitive) }
       end
     end
-    
-    
+
+    # 'Natural order' sort for an array of objects.
+    def self.sort_by_method(array, method, caseinsesitive = false, asc = true)
+      return array if (array.nil? || array.empty? || array.length == 1)
+      if asc
+        array.sort { |a,b| Natcmp.natcmp( a.send(method), b.send(method), caseinsesitive) }
+      else
+        array.sort { |a, b| Natcmp.natcmp(b.send(method), a.send(method), caseinsesitive) }
+      end
+    end
+
+
+    def self.sort_version(array, asc = true)
+      return array if (array.nil? || array.empty? || array.length == 1)
+      if asc
+        array.sort { |a,b| Versioncmp.compare( a, b ) }
+      else
+        array.sort { |a,b| Versioncmp.compare( b, a ) }
+      end
+    end
+
+
     def self.sort_version_by_method(array, method, asc = true )
       return array if (array.nil? || array.empty? || array.length == 1 )
-      if asc 
+      if asc
         array.sort { |a,b| Versioncmp.compare(a.send(method), b.send(method)) }
-      else 
-        array.sort { |a,b| Versioncmp.compare(b.send(method), a.send(method)) }  
-      end 
+      else
+        array.sort { |a,b| Versioncmp.compare(b.send(method), a.send(method)) }
+      end
     end
-  
-    
+
+
     def self.get_newest_version(first, second)
       array = [first, second]
       array = array.sort { |a,b| Versioncmp.compare( a, b ) }
@@ -76,10 +76,10 @@ module Naturalsorter
     end
 
     def self.get_newest(a, b)
-      Versioncmp.replace_leading_vs a, b 
+      Versioncmp.replace_leading_vs a, b
       Sorter.get_newest_version(a, b)
     end
-    
+
     def self.bigger?(a, b)
       return false if a.eql?( b )
       newest = self.get_newest a, b
@@ -91,23 +91,23 @@ module Naturalsorter
       newest = self.get_newest a, b
       newest.eql?( b )
     end
-    
+
     def self.bigger_or_equal?(a, b)
       return true if a.eql?(b)
       newest = self.get_newest a, b
       newest.eql?(a)
     end
-    
+
     def self.smaller_or_equal?(a, b)
       return true if a.eql?(b)
       newest = self.get_newest a, b
       newest.eql?(b)
-    end  
+    end
 
-    
-    
-    # This is for the GEM notaiton ~> 
-    # For example ~>1.1 fits 1.2 and 1.9 and 1.14 
+
+
+    # This is for the GEM notaiton ~>
+    # For example ~>1.1 fits 1.2 and 1.9 and 1.14
     # But not 2.0
     def self.is_version_current?(version, newest_version)
       version = version.gsub("~>", "")
@@ -121,7 +121,7 @@ module Naturalsorter
       min_length = min_length - 2
       if min_length < 0
         min_length = 0
-      end      
+      end
       (0..min_length).each do |z|
         ver = versions[z]
         cur = newests[z]
@@ -139,10 +139,10 @@ module Naturalsorter
       true
     end
 
-    def self.replace_minimum_stability val 
-      VersionTagRecognizer.remove_minimum_stability val 
+    def self.replace_minimum_stability val
+      VersionTagRecognizer.remove_minimum_stability val
     end
-  
+
   end
-  
+
 end

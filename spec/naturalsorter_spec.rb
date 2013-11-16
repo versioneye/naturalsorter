@@ -81,6 +81,10 @@ describe Naturalsorter::Sorter do
       Naturalsorter::Sorter.sort_version(["1.1", "1.2", "1.0"]).should eql(["1.0", "1.1", "1.2"])
     end
 
+    it "sort alphas and betas" do
+      Naturalsorter::Sorter.sort_version(["1.0.2", "1.0.1-b", "1.0.1-a"]).should eql(["1.0.1-a", "1.0.1-b", "1.0.2"])
+    end
+
     it "sort with RC" do
       Naturalsorter::Sorter.sort_version(["1.1", "1.1.RC1"]).should eql(["1.1.RC1", "1.1"])
     end
