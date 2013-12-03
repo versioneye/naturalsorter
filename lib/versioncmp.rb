@@ -43,12 +43,8 @@ class Versioncmp
     offset2 = 0;
 
     for i in 0..100
-      if offset1 >= a.length
-        a += ".0"
-      end
-      if offset2 >= b.length
-        b += ".0"
-      end
+      a += ".0" if offset1 >= a.length
+      b += ".0" if offset2 >= b.length
 
       part1 = Versioncmp.get_a_piece_of_the_cake offset1, a
       part2 = Versioncmp.get_a_piece_of_the_cake offset2, b
@@ -60,30 +56,48 @@ class Versioncmp
       offset2 += part2.length() + 1;
 
       if ( part1.match(/^[0-9]+$/) && part2.match(/^[0-9]+$/) )
-        ai = part1.to_i;
-        bi = part2.to_i;
-        result = Versioncmp.compare_int(ai, bi);
-        return result if result != 0
+        result = self.compare_numbers part1, part2
+        return result if !result.nil?
         next
       elsif ( !part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
-        result = double_scope_checker(a, b)
-        return result if result != 0
-        result = Versioncmp.compare_string(part1, part2)
-        return result if (result != 0)
+        result = self.compare_strings a, b, part1, part2
+        return result if !result.nil?
         next
       else
-        result = Versioncmp.check_jquery_versioning(part1, part2)
-        return result if result != nil
-        return  1 if ( part1.eql?("0") && part2.match(/^[a-zA-Z]+/) )
-        return -1 if ( part2.eql?("0") && part1.match(/^[a-zA-Z]+/) )
-        return -1 if ( part1.eql?("0") && part2.match(/^[1-9]+[-_a-zA-Z]+/) )
-        return  1 if ( part2.eql?("0") && part1.match(/^[1-9]+[-_a-zA-Z]+/) )
-        return  1 if ( part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
-        return -1;
+        result = self.compare_specia_cases part1, part2
+        return result if !result.nil?
+        next
       end
     end
     result = Versioncmp.check_for_tags(a, b)
     return result
+  end
+
+  def self.compare_numbers part1, part2
+    ai = part1.to_i;
+    bi = part2.to_i;
+    result = Versioncmp.compare_int(ai, bi);
+    return result if result == 1 || result == -1
+    return nil
+  end
+
+  def self.compare_strings a, b, part1, part2
+    result = double_scope_checker(a, b)
+    return result if result == 1 || result == -1
+    result = Versioncmp.compare_string(part1, part2)
+    return result if result == 1 || result == -1
+    return nil
+  end
+
+  def self.compare_specia_cases part1, part2
+    result = Versioncmp.check_jquery_versioning(part1, part2)
+    return result if result != nil
+    return  1 if ( part1.eql?("0") && part2.match(/^[a-zA-Z]+/) )
+    return -1 if ( part2.eql?("0") && part1.match(/^[a-zA-Z]+/) )
+    return -1 if ( part1.eql?("0") && part2.match(/^[1-9]+[-_a-zA-Z]+/) )
+    return  1 if ( part2.eql?("0") && part1.match(/^[1-9]+[-_a-zA-Z]+/) )
+    return  1 if ( part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
+    return -1;
   end
 
   # Tags are RC, alpha, beta, dev and so on.
