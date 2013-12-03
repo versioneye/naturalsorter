@@ -31,41 +31,29 @@ module Naturalsorter
 
     def self.sort(array, caseinsesitive = false , asc = true )
       return array if (array.nil? || array.empty?)
-      if asc
-        return array.sort { |a, b| Natcmp.natcmp(a, b, caseinsesitive) }
-      else
-        return array.sort { |a, b| Natcmp.natcmp(b, a, caseinsesitive) }
-      end
+      return array.sort { |a, b| Natcmp.natcmp(a, b, caseinsesitive) } if asc
+      return array.sort { |a, b| Natcmp.natcmp(b, a, caseinsesitive) }
     end
 
     # 'Natural order' sort for an array of objects.
     def self.sort_by_method(array, method, caseinsesitive = false, asc = true)
       return array if (array.nil? || array.empty? || array.length == 1)
-      if asc
-        array.sort { |a,b| Natcmp.natcmp( a.send(method), b.send(method), caseinsesitive) }
-      else
-        array.sort { |a, b| Natcmp.natcmp(b.send(method), a.send(method), caseinsesitive) }
-      end
+      return array.sort { |a, b| Natcmp.natcmp( a.send(method), b.send(method), caseinsesitive) } if asc
+      return array.sort { |a, b| Natcmp.natcmp(b.send(method), a.send(method), caseinsesitive) }
     end
 
 
     def self.sort_version(array, asc = true)
       return array if (array.nil? || array.empty? || array.length == 1)
-      if asc
-        array.sort { |a,b| Versioncmp.compare( a, b ) }
-      else
-        array.sort { |a,b| Versioncmp.compare( b, a ) }
-      end
+      return array.sort { |a,b| Versioncmp.compare( a, b ) } if asc
+      return array.sort { |a,b| Versioncmp.compare( b, a ) }
     end
 
 
     def self.sort_version_by_method(array, method, asc = true )
       return array if (array.nil? || array.empty? || array.length == 1 )
-      if asc
-        array.sort { |a,b| Versioncmp.compare(a.send(method), b.send(method)) }
-      else
-        array.sort { |a,b| Versioncmp.compare(b.send(method), a.send(method)) }
-      end
+      return array.sort { |a,b| Versioncmp.compare(a.send(method), b.send(method)) } if asc
+      return array.sort { |a,b| Versioncmp.compare(b.send(method), a.send(method)) }
     end
 
 

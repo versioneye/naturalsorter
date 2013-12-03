@@ -43,10 +43,15 @@ class Versioncmp
     offset2 = 0;
 
     for i in 0..100
-      break if offset1 >= a.length() || offset2 >= b.length()
+      if offset1 >= a.length
+        a += ".0"
+      end
+      if offset2 >= b.length
+        b += ".0"
+      end
 
-      part1 = Versioncmp.get_a_piece_of_the_cake(offset1, a);
-      part2 = Versioncmp.get_a_piece_of_the_cake(offset2, b);
+      part1 = Versioncmp.get_a_piece_of_the_cake offset1, a
+      part2 = Versioncmp.get_a_piece_of_the_cake offset2, b
 
       return -1 if Versioncmp.timestamp?(part1) && part2.length() < 8
       return  1 if Versioncmp.timestamp?(part2) && part1.length() < 8
@@ -69,7 +74,11 @@ class Versioncmp
       else
         result = Versioncmp.check_jquery_versioning(part1, part2)
         return result if result != nil
-        return  1 if (part1.match(/^[0-9]+$/) && part2.match(/^[0-9]+$/) == nil)
+        return  1 if ( part1.eql?("0") && part2.match(/^[a-zA-Z]+/) )
+        return -1 if ( part2.eql?("0") && part1.match(/^[a-zA-Z]+/) )
+        return -1 if ( part1.eql?("0") && part2.match(/^[1-9]+[-_a-zA-Z]+/) )
+        return  1 if ( part2.eql?("0") && part1.match(/^[1-9]+[-_a-zA-Z]+/) )
+        return  1 if ( part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
         return -1;
       end
     end
@@ -80,10 +89,10 @@ class Versioncmp
   # Tags are RC, alpha, beta, dev and so on.
   #
   def self.check_for_tags(a, b)
-    big = String.new(a)
+    big   = String.new(a)
     small = String.new(b)
     if (a.length() < b.length())
-      big = String.new(b)
+      big   = String.new(b)
       small = String.new(a)
     end
     if (VersionTagRecognizer.tagged?(big))
@@ -127,12 +136,12 @@ class Versioncmp
   end
 
   def self.pre_process val
-    a = replace_x_dev val
-    replace_leading_v a
-    replace_99_does_not_exist a
-    replace_timestamps a
-    VersionTagRecognizer.remove_minimum_stability a
-    a
+    cleaned_version = replace_x_dev val
+    replace_leading_v cleaned_version
+    replace_99_does_not_exist cleaned_version
+    replace_timestamps cleaned_version
+    VersionTagRecognizer.remove_minimum_stability cleaned_version
+    cleaned_version
   end
 
   def self.replace_99_does_not_exist val
