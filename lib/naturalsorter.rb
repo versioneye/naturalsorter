@@ -29,17 +29,17 @@ module Naturalsorter
 
   class Sorter
 
-    def self.sort(array, caseinsesitive = false , asc = true )
+    def self.sort(array, caseinsensitive = false , asc = true )
       return array if (array.nil? || array.empty?)
-      return array.sort { |a, b| Natcmp.natcmp(a, b, caseinsesitive) } if asc
-      return array.sort { |a, b| Natcmp.natcmp(b, a, caseinsesitive) }
+      return array.sort { |a, b| Natcmp.natcmp(a, b, caseinsensitive) } if asc
+      return array.sort { |a, b| Natcmp.natcmp(b, a, caseinsensitive) }
     end
 
     # 'Natural order' sort for an array of objects.
-    def self.sort_by_method(array, method, caseinsesitive = false, asc = true)
+    def self.sort_by_method(array, method, caseinsensitive = false, asc = true)
       return array if (array.nil? || array.empty? || array.length == 1)
-      return array.sort { |a, b| Natcmp.natcmp( a.send(method), b.send(method), caseinsesitive) } if asc
-      return array.sort { |a, b| Natcmp.natcmp(b.send(method), a.send(method), caseinsesitive) }
+      return array.sort { |a, b| Natcmp.natcmp( a.send(method), b.send(method), caseinsensitive) } if asc
+      return array.sort { |a, b| Natcmp.natcmp(b.send(method), a.send(method), caseinsensitive) }
     end
 
 

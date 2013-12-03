@@ -28,11 +28,11 @@ This fork contains some special algorithms to sort version numbers in a natural 
 
 These 2 methods are sorting a simple array of Strings. The name of the methods and the parameters are self explained.
 
-`Naturalsorter::Sorter.sort(array, caseinsesitive = false, asc = true)`
+`Naturalsorter::Sorter.sort(array, caseinsensitive = false, asc = true)`
 
 And this here is for more advanced sorting. Where you can put in a array of objects and the method which should called on every object for comparison.
 
-`Naturalsorter::Sorter.sort_by_method(array, method, caseinsesitive = false, asc = true)`
+`Naturalsorter::Sorter.sort_by_method(array, method, caseinsensitive = false, asc = true)`
 
 These methods are based on a different algorithm. Especially optimized for sorting version strings.
 
@@ -86,7 +86,7 @@ After the installation you can use it like this:
 
 `Naturalsorter::Sorter.sort(["a400", "a5", "a1"], true)`
 
-it will return the array ["a1", "a5", "a400"]. The second parameter is for "caseinsesitive".
+it will return the array ["a1", "a5", "a400"]. The second parameter is for "caseinsensitive".
 
 If you have more advanced objects you want to sort, you should use the second method. Assume you have a Class User with 3 attributes: "firstname", "lastname", "age" and you want to sort an array of class Users by "firstname".
 
