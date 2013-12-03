@@ -33,45 +33,47 @@ class Versioncmp
     b_empty = b_val.nil? || b_val.empty?
 
     return  0 if  a_empty && b_empty
+    return  0 if  a_val.eql?( b_val )
     return  1 if (a_empty == false) && b_empty
     return -1 if (b_empty == false) && a_empty
 
     a = pre_process a_val
     b = pre_process b_val
 
-    offset1 = 0;
-    offset2 = 0;
+    offsets = [0, 0]
 
-    for i in 0..100
-      a += ".0" if offset1 >= a.length
-      b += ".0" if offset2 >= b.length
-
-      part1 = Versioncmp.get_a_piece_of_the_cake offset1, a
-      part2 = Versioncmp.get_a_piece_of_the_cake offset2, b
-
-      return -1 if Versioncmp.timestamp?(part1) && part2.length() < 8
-      return  1 if Versioncmp.timestamp?(part2) && part1.length() < 8
-
-      offset1 += part1.length() + 1;
-      offset2 += part2.length() + 1;
-
-      if ( part1.match(/^[0-9]+$/) && part2.match(/^[0-9]+$/) )
-        result = self.compare_numbers part1, part2
-        return result if !result.nil?
-        next
-      elsif ( !part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
-        result = self.compare_strings a, b, part1, part2
-        return result if !result.nil?
-        next
-      else
-        result = self.compare_specia_cases part1, part2
-        return result if !result.nil?
-        next
-      end
+    for i in 0..20
+      result = self.check_the_slice a, b, offsets
+      next if result.nil?
+      return result if result == 1 || result == -1
     end
     result = Versioncmp.check_for_tags(a, b)
     return result
   end
+
+
+  def self.check_the_slice a, b, offsets
+    a += ".0" if offsets[0] >= a.length
+    b += ".0" if offsets[0] >= b.length
+
+    part1 = Versioncmp.get_a_piece_of_the_cake offsets[0], a
+    part2 = Versioncmp.get_a_piece_of_the_cake offsets[0], b
+
+    return -1 if Versioncmp.timestamp?(part1) && part2.length() < 8
+    return  1 if Versioncmp.timestamp?(part2) && part1.length() < 8
+
+    offsets[0] += part1.length() + 1;
+    offsets[1] += part2.length() + 1;
+
+    if ( part1.match(/^[0-9]+$/) && part2.match(/^[0-9]+$/) )
+      return self.compare_numbers part1, part2
+    elsif ( !part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
+      return self.compare_strings a, b, part1, part2
+    else
+      return self.compare_specia_cases part1, part2
+    end
+  end
+
 
   def self.compare_numbers part1, part2
     ai = part1.to_i;
@@ -81,6 +83,7 @@ class Versioncmp
     return nil
   end
 
+
   def self.compare_strings a, b, part1, part2
     result = double_scope_checker(a, b)
     return result if result == 1 || result == -1
@@ -88,6 +91,7 @@ class Versioncmp
     return result if result == 1 || result == -1
     return nil
   end
+
 
   def self.compare_specia_cases part1, part2
     result = Versioncmp.check_jquery_versioning(part1, part2)
@@ -99,6 +103,7 @@ class Versioncmp
     return  1 if ( part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
     return -1;
   end
+
 
   # Tags are RC, alpha, beta, dev and so on.
   #
@@ -118,6 +123,7 @@ class Versioncmp
     self.compare_string_length_odd(a, b)
   end
 
+
   def self.double_scope_checker(a, b)
     if VersionTagRecognizer.tagged?(a) && VersionTagRecognizer.tagged?(b)
       a_without_scope = VersionTagRecognizer.remove_tag a
@@ -128,6 +134,7 @@ class Versioncmp
     end
     0
   end
+
 
   def self.get_a_piece_of_the_cake(offset, cake)
     for z in 0..100
@@ -145,9 +152,11 @@ class Versioncmp
     return piece
   end
 
+
   def self.timestamp?(part)
     return part.length() == 8 && part.match(/^[0-9]+$/) != nil
   end
+
 
   def self.pre_process val
     cleaned_version = replace_x_dev val
@@ -158,11 +167,13 @@ class Versioncmp
     cleaned_version
   end
 
+
   def self.replace_99_does_not_exist val
     if val.eql?("99.0-does-not-exist")
       val.gsub!("99.0-does-not-exist", "0.0.0")
     end
   end
+
 
   # Some glory Java Devs used the timestamp as version string
   # http://www.versioneye.com/package/commons-beanutils--commons-beanutils
@@ -176,6 +187,7 @@ class Versioncmp
     end
   end
 
+
   def self.replace_x_dev val
     new_val = String.new(val)
     if val.eql?("dev-master")
@@ -188,14 +200,17 @@ class Versioncmp
     new_val
   end
 
+
   def self.replace_leading_v val
     val.gsub!(/^v/, "") if val.match(/^v[0-9]+/)
   end
+
 
   def self.replace_leading_vs a, b
     self.replace_leading_v a
     self.replace_leading_v b
   end
+
 
   def self.check_jquery_versioning(part1, part2)
     # --- START ---- special case for awesome jquery shitty verison numbers
@@ -221,22 +236,26 @@ class Versioncmp
     # --- END ---- special case for awesome jquery shitty verison numbers
   end
 
+
   def self.compare_int(ai, bi)
     return -1 if (ai < bi)
     return  0 if (ai == bi)
     return  1
   end
 
+
   def self.compare_string(a, b)
     return  0 if a.eql? b
     return Natcmp.natcmp(a, b)
   end
+
 
   def self.compare_string_length(a, b)
     return  0 if a.length() == b.length()
     return  1 if a.length() <  b.length()
     return -1
   end
+
 
   def self.compare_string_length_odd(a, b)
     return  1 if a.length > b.length
