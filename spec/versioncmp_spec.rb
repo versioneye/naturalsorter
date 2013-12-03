@@ -158,4 +158,8 @@ describe Versioncmp do
     Versioncmp.compare("2.2.1-b03", "2.2").should eql(1)
   end
 
+  it "3.0.0 is equal to 3.0" do
+    Versioncmp.compare("3.0.0", "3.0").should eql(1)
+  end
+
 end

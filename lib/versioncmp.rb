@@ -40,10 +40,11 @@ class Versioncmp
     a = pre_process a_val
     b = pre_process b_val
 
+    ab = [a, b]
     offsets = [0, 0]
 
     for i in 0..20
-      result = self.check_the_slice a, b, offsets
+      result = self.check_the_slice ab, offsets
       next if result.nil?
       return result if result == 1 || result == -1
     end
@@ -52,12 +53,12 @@ class Versioncmp
   end
 
 
-  def self.check_the_slice a, b, offsets
-    a += ".0" if offsets[0] >= a.length
-    b += ".0" if offsets[0] >= b.length
+  def self.check_the_slice ab, offsets
+    ab[0] += ".0" if offsets[0] >= ab[0].length
+    ab[1] += ".0" if offsets[0] >= ab[1].length
 
-    part1 = Versioncmp.get_a_piece_of_the_cake offsets[0], a
-    part2 = Versioncmp.get_a_piece_of_the_cake offsets[0], b
+    part1 = Versioncmp.get_a_piece_of_the_cake offsets[0], ab[0]
+    part2 = Versioncmp.get_a_piece_of_the_cake offsets[0], ab[1]
 
     return -1 if Versioncmp.timestamp?(part1) && part2.length() < 8
     return  1 if Versioncmp.timestamp?(part2) && part1.length() < 8
@@ -68,7 +69,7 @@ class Versioncmp
     if ( part1.match(/^[0-9]+$/) && part2.match(/^[0-9]+$/) )
       return self.compare_numbers part1, part2
     elsif ( !part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
-      return self.compare_strings a, b, part1, part2
+      return self.compare_strings ab[0], ab[1], part1, part2
     else
       return self.compare_specia_cases part1, part2
     end
@@ -153,7 +154,7 @@ class Versioncmp
   end
 
 
-  def self.timestamp?(part)
+  def self.timestamp? part
     return part.length() == 8 && part.match(/^[0-9]+$/) != nil
   end
 
