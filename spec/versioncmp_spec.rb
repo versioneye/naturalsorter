@@ -38,6 +38,18 @@ describe Versioncmp do
     Versioncmp.compare("1.1", "1.1").should eql(0)
   end
 
+  it "equal" do
+    Versioncmp.compare("1.0", "1.0.0").should eql(0)
+  end
+
+  it "1.0.0 is smaller than 1.0.*" do
+    Versioncmp.compare("1.0.0", "1.0.*").should eql(-1)
+  end
+
+  it "1.0 is smaller than 1.0.*" do
+    Versioncmp.compare("1.0.0", "1.0.*").should eql(-1)
+  end
+
   it "equal RC" do
     Versioncmp.compare("1.1.RC1", "1.1.RC1").should eql(0)
   end
@@ -159,7 +171,7 @@ describe Versioncmp do
   end
 
   it "3.0.0 is equal to 3.0" do
-    Versioncmp.compare("3.0.0", "3.0").should eql(1)
+    Versioncmp.compare("3.0.0", "3.0").should eql(0)
   end
 
 end

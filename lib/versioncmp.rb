@@ -34,8 +34,8 @@ class Versioncmp
 
     return  0 if  a_empty && b_empty
     return  0 if  a_val.eql?( b_val )
-    return  1 if (a_empty == false) && b_empty
-    return -1 if (b_empty == false) && a_empty
+    return  1 if (a_empty == false) && (b_empty == true )
+    return -1 if (b_empty == false) && (a_empty == true )
 
     a = pre_process a_val
     b = pre_process b_val
@@ -43,7 +43,10 @@ class Versioncmp
     ab = [a, b]
     offsets = [0, 0]
 
-    for i in 0..20
+    max_length = a_val.length
+    max_length = b_val.length if b_val.length > max_length
+
+    for i in 0..max_length
       result = self.check_the_slice ab, offsets
       next if result.nil?
       return result if result == 1 || result == -1
@@ -121,7 +124,7 @@ class Versioncmp
         return Versioncmp.compare_string_length(a, b)
       end
     end
-    self.compare_string_length_odd(a, b)
+    0
   end
 
 
@@ -141,14 +144,12 @@ class Versioncmp
     for z in 0..100
       offsetz = offset + z
       break if offsetz > cake.length()
+
       p = cake[ offset..offset + z ]
-      if ( p.match(/^\w+\.$/) != nil )
-        break
-      end
+      break if ( p.match(/^\w+\.$/) != nil )
     end
-    if z > 0
-      z = z - 1
-    end
+
+    z = z - 1 if z > 0
     piece = cake[offset..offset + z ]
     return piece
   end
@@ -161,6 +162,7 @@ class Versioncmp
 
   def self.pre_process val
     cleaned_version = replace_x_dev val
+    cleaned_version = replace_wildcards cleaned_version
     replace_leading_v cleaned_version
     replace_99_does_not_exist cleaned_version
     replace_timestamps cleaned_version
@@ -186,6 +188,13 @@ class Versioncmp
     elsif val.match(/^[0-9]{8}.[0-9]{6}$/)
       val.gsub!(/^[0-9]{8}.[0-9]{6}$/, "0.0.0")
     end
+  end
+
+
+  def self.replace_wildcards val
+    new_val = String.new(val)
+    new_val = "9999999" if val.match(/\.\*$/)
+    new_val
   end
 
 
@@ -255,13 +264,6 @@ class Versioncmp
     return  0 if a.length() == b.length()
     return  1 if a.length() <  b.length()
     return -1
-  end
-
-
-  def self.compare_string_length_odd(a, b)
-    return  1 if a.length > b.length
-    return -1 if a.length < b.length
-    return  0
   end
 
 end

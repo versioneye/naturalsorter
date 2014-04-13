@@ -20,6 +20,18 @@ Because the default sort method does not recognize the numbers in the string. Th
 
 `["init20", "init30", "init200"]`
 
+
+## Installation
+
+You should add this line to your Gemfile
+
+`gem 'naturalsorter', '2.0.9'`
+
+and run this command in your app root directory
+
+`bundle install`
+
+
 ## Version Sorting
 This fork contains some special algorithms to sort version numbers in a natural order. This project is used at <https://www.versioneye.com> to show versions of selected open source projects.
 
@@ -69,16 +81,6 @@ because '~>1.1' doesn't fit anymore the newest version.
 
 `Naturalsorter::Sorter.is_version_current?(version, newest_version)`
 
-
-## Installation
-
-You should add this line to your Gemfile
-
-`gem 'naturalsorter', '2.0.8'`
-
-and run this command in your app root directory
-
-`bundle install`
 
 ## How To Use - Examples
 
