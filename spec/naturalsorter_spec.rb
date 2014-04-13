@@ -220,6 +220,12 @@ describe Naturalsorter::Sorter do
       Naturalsorter::Sorter.bigger_or_equal?("2.20", "2.20").should be_true
     end
     it "returns true" do
+      Naturalsorter::Sorter.bigger_or_equal?("2.20", "2.20.0").should be_true
+    end
+    it "returns true" do
+      Naturalsorter::Sorter.bigger_or_equal?("2.20", "2.20").should be_true
+    end
+    it "returns true" do
       Naturalsorter::Sorter.bigger_or_equal?("v3.2.0", "3.2.0").should be_true
     end
     it "returns true" do
@@ -248,6 +254,12 @@ describe Naturalsorter::Sorter do
     it "returns true" do
       Naturalsorter::Sorter.smaller?("2.20", "3.0").should be_true
     end
+    it "returns false" do
+      Naturalsorter::Sorter.smaller?("2.0", "2.0").should be_false
+    end
+    it "returns false" do
+      Naturalsorter::Sorter.smaller?("2.0", "2.0.0").should be_false
+    end
 
   end
 
@@ -261,6 +273,12 @@ describe Naturalsorter::Sorter do
     end
     it "returns false" do
       Naturalsorter::Sorter.smaller_or_equal?("2.20", "2.9").should be_false
+    end
+    it "returns false" do
+      Naturalsorter::Sorter.smaller_or_equal?("2.20", "2.20").should be_true
+    end
+    it "returns false" do
+      Naturalsorter::Sorter.smaller_or_equal?("2.20.0", "2.20").should be_true
     end
     it "returns true" do
       Naturalsorter::Sorter.smaller_or_equal?("2.20", "2.20").should be_true

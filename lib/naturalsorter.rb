@@ -70,24 +70,28 @@ module Naturalsorter
 
     def self.bigger?(a, b)
       return false if a.eql?( b )
+      return false if Versioncmp.compare(a, b) == 0
       newest = self.get_newest a, b
       newest.eql?( a )
     end
 
     def self.smaller?(a, b)
       return false if b.eql?( a )
+      return false if Versioncmp.compare(a, b) == 0
       newest = self.get_newest a, b
       newest.eql?( b )
     end
 
     def self.bigger_or_equal?(a, b)
       return true if a.eql?(b)
+      return true if Versioncmp.compare(a, b) == 0
       newest = self.get_newest a, b
       newest.eql?(a)
     end
 
     def self.smaller_or_equal?(a, b)
       return true if a.eql?(b)
+      return true if Versioncmp.compare(a, b) == 0
       newest = self.get_newest a, b
       newest.eql?(b)
     end

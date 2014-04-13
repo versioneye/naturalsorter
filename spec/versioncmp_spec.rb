@@ -174,4 +174,8 @@ describe Versioncmp do
     Versioncmp.compare("3.0.0", "3.0").should eql(0)
   end
 
+  it "3.0 is equal to 3.0.0" do
+    Versioncmp.compare("3.0", "3.0.0").should eql(0)
+  end
+
 end
