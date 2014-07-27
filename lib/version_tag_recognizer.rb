@@ -7,6 +7,7 @@ class VersionTagRecognizer
   A_STABILITY_ALPHA = "alpha"
   A_STABILITY_SNAPSHOT = "SNAPSHOT"
   A_STABILITY_DEV = "dev"
+  A_STABILITY_BUILD = "BUILD"
 
   def self.value_for( value )
     return 0  if self.dev? value
@@ -20,25 +21,25 @@ class VersionTagRecognizer
   end
 
   def self.compare_tags( a, b)
-    a_val = self.value_for a 
+    a_val = self.value_for a
     b_val = self.value_for b
     return -1 if a_val < b_val
     return  1 if a_val > b_val
     return 0
   end
 
-  def self.tagged? value 
-    return true if self.alpha?(value) 
+  def self.tagged? value
+    return true if self.alpha?(value)
     return true if self.beta?(value)
-    return true if self.dev?(value) 
-    return true if self.rc?(value) 
-    return true if self.snapshot?(value) 
-    return true if self.pre?(value) 
+    return true if self.dev?(value)
+    return true if self.rc?(value)
+    return true if self.snapshot?(value)
+    return true if self.pre?(value)
     return true if self.jbossorg?(value)
-    return false 
+    return false
   end
 
-  def self.remove_tag value 
+  def self.remove_tag value
     if self.alpha? value
       new_value = value.gsub(/\.[\w-]*alpha.*$/i, "")
       return new_value.gsub(/\.[\w-]*a.*$/i, "")
@@ -57,7 +58,7 @@ class VersionTagRecognizer
     return value
   end
 
-  def self.remove_minimum_stability val 
+  def self.remove_minimum_stability val
     val.gsub!(/@.*$/, "") if val.match(/@.*$/)
   end
 
@@ -67,23 +68,23 @@ class VersionTagRecognizer
     rc       = stable || self.rc?( version_number )
     beta     = rc     || self.beta?( version_number )
     alpha    = beta   || self.alpha?( version_number )
-    snapshot = alpha  || self.pre?( version_number ) || self.snapshot?( version_number ) 
+    snapshot = alpha  || self.pre?( version_number ) || self.snapshot?( version_number )
 
     return true if (stability.casecmp( A_STABILITY_STABLE )   == 0) && stable
-    return true if (stability.casecmp( A_STABILITY_PRE )      == 0) && pre 
-    return true if (stability.casecmp( A_STABILITY_RC )       == 0) && rc 
-    return true if (stability.casecmp( A_STABILITY_BETA )     == 0) && beta 
+    return true if (stability.casecmp( A_STABILITY_PRE )      == 0) && pre
+    return true if (stability.casecmp( A_STABILITY_RC )       == 0) && rc
+    return true if (stability.casecmp( A_STABILITY_BETA )     == 0) && beta
     return true if (stability.casecmp( A_STABILITY_ALPHA )    == 0) && alpha
     return true if (stability.casecmp( A_STABILITY_SNAPSHOT ) == 0) && snapshot
-    return true if (stability.casecmp( A_STABILITY_DEV )      == 0) 
-    return false 
+    return true if (stability.casecmp( A_STABILITY_DEV )      == 0)
+    return false
   end
 
   def self.stability_tag_for( version )
     if version.match(/@.*$/)
       spliti = version.split("@")
       return spliti[1]
-    else 
+    else
       if self.stable? version
         return A_STABILITY_STABLE
       elsif self.pre? version
@@ -99,52 +100,56 @@ class VersionTagRecognizer
       else
         return A_STABILITY_DEV
       end
-    end 
+    end
   end
 
   def self.release? value
-    self.stable? value 
+    self.stable? value
   end
 
   def self.stable? value
-    return true if value.match(/.+RELEASE.*/i) 
-    return true if value.match(/.+BUILD.*/i) 
-    return true if value.match(/.+FINAL.*/i) 
-    return true if value.match(/.+SP.*/i) 
-    return true if value.match(/.+GA.*/i) 
-    
-    !self.alpha?(value)    and !self.beta?(value)       and 
+    return true if value.match(/.+RELEASE.*/i)
+    return true if value.match(/.+FINAL.*/i)
+    return true if value.match(/.+SP.*/i)
+    return true if value.match(/.+GA.*/i)
+
+    !self.alpha?(value)    and !self.beta?(value)       and
     !self.dev?(value)      and !self.pre?(value)        and
-    !self.rc?(value)       and !value.match(/.+SEC.*/i) and 
-    !self.snapshot?(value) and !value.match(/.+M.+/i)
+    !self.rc?(value)       and !value.match(/.+SEC.*/i) and
+    !self.snapshot?(value) and !value.match(/.+M.+/i)   and
+    !self.build?(value)
   end
 
-  def self.alpha? value 
+  def self.alpha? value
     return false if self.beta? value
     value.match(/.*alpha.*/i) or value.match(/.+a.*/i)
   end
 
-  def self.beta? value 
+  def self.beta? value
     value.match(/.*beta.*/i) or value.match(/.+b.*/i)
   end
 
-  def self.dev? value 
+  def self.dev? value
     value.match(/.*dev.*/i)
   end
 
-  def self.rc? value 
-    value.match(/.*rc.*/i) 
+  def self.rc? value
+    value.match(/.*rc.*/i)
   end
 
-  def self.snapshot? value 
+  def self.snapshot? value
     value.match(/.+SNAPSHOT.*/i)
   end
 
-  def self.pre? value 
+  def self.build? value
+    value.match(/.+build.*/i)
+  end
+
+  def self.pre? value
     value.match(/.*pre.*$/i)
   end
 
-  def self.jbossorg? value 
+  def self.jbossorg? value
     value.match(/.*jbossorg.*$/i)
   end
 

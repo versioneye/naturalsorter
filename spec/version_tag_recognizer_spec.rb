@@ -1,7 +1,7 @@
 require "naturalsorter"
 
 describe VersionTagRecognizer do
-  
+
   it "release? is true" do
     VersionTagRecognizer.release?("1.1").should be_true
   end
@@ -27,11 +27,11 @@ describe VersionTagRecognizer do
   end
 
   it "release? is true" do
-    VersionTagRecognizer.release?("3.2.0.BUILD").should be_true
+    VersionTagRecognizer.release?("3.2.0.BUILD").should be_false
   end
 
   it "release? is true" do
-    VersionTagRecognizer.release?("3.2.0buiLd").should be_true
+    VersionTagRecognizer.release?("3.2.0buiLd").should be_false
   end
 
   it "release? is true" do
@@ -100,7 +100,7 @@ describe VersionTagRecognizer do
 
   it "release? is false" do
     VersionTagRecognizer.release?("1.1.3a").should be_false
-  end  
+  end
 
   it "release? is false" do
     VersionTagRecognizer.release?("1.1.3A").should be_false
@@ -117,7 +117,7 @@ describe VersionTagRecognizer do
   it "release? is false" do
     VersionTagRecognizer.release?("1.M1").should be_false
   end
-  
+
   it "release? is false" do
     VersionTagRecognizer.release?("2.0-m4").should be_false
   end
@@ -144,7 +144,7 @@ describe VersionTagRecognizer do
     VersionTagRecognizer.tagged?("2.1.0alpha").should be_true
   end
 
-  
+
 
   it "remove_tag is right" do
     VersionTagRecognizer.remove_tag("2.1.0alpha").should eql("2.1")
@@ -188,7 +188,7 @@ describe VersionTagRecognizer do
   it "remove_tag is right" do
     VersionTagRecognizer.remove_tag("2.1.0-BETA1").should eql("2.1")
   end
-  
+
 
 
   it "is dev? is true" do
@@ -248,92 +248,92 @@ describe VersionTagRecognizer do
   end
 
 
-  it "returns the right value for dev" do 
+  it "returns the right value for dev" do
     VersionTagRecognizer.value_for("1.1.1-dev").should eql(0)
-  end 
-  it "returns the right value for snapshot" do 
+  end
+  it "returns the right value for snapshot" do
     VersionTagRecognizer.value_for("1.1.1-SNAPSHOT").should eql(2)
-  end 
-  it "returns the right value for alpha" do 
+  end
+  it "returns the right value for alpha" do
     VersionTagRecognizer.value_for("1.1.1-alpha").should eql(3)
-  end 
-  it "returns the right value for beta" do 
+  end
+  it "returns the right value for beta" do
     VersionTagRecognizer.value_for("1.1.1-beta").should eql(4)
-  end 
-  it "returns the right value for rc" do 
+  end
+  it "returns the right value for rc" do
     VersionTagRecognizer.value_for("1.1.1-rc").should eql(5)
-  end 
-  it "returns the right value for pre" do 
+  end
+  it "returns the right value for pre" do
     VersionTagRecognizer.value_for("1.1.1-pre").should eql(6)
-  end 
-  it "returns the right value for stable" do 
+  end
+  it "returns the right value for stable" do
     VersionTagRecognizer.value_for("1.1.1").should eql(10)
-  end 
+  end
 
 
 
-  it "returns compares right for alpha and beta" do 
+  it "returns compares right for alpha and beta" do
     VersionTagRecognizer.compare_tags("1.1.1-alpha", "1.1.1-beta").should eql(-1)
-  end 
-  it "returns compares right for beta and alpha" do 
+  end
+  it "returns compares right for beta and alpha" do
     VersionTagRecognizer.compare_tags("1.1.1-beta", "1.1.1-alpha").should eql(1)
-  end 
-  it "returns compares right for alpha and alpha" do 
+  end
+  it "returns compares right for alpha and alpha" do
     VersionTagRecognizer.compare_tags("1.1.1-alpha", "1.1.1-alpha").should eql(0)
-  end 
-  it "returns compares right for RC and stable" do 
+  end
+  it "returns compares right for RC and stable" do
     VersionTagRecognizer.compare_tags("1.1.1-RC", "1.1.1").should eql(-1)
-  end 
-  it "returns compares right for stable and dev" do 
+  end
+  it "returns compares right for stable and dev" do
     VersionTagRecognizer.compare_tags("1.1.1", "1.1.x-dev").should eql(1)
-  end 
+  end
 
 
 
-  it "does fit stability" do 
+  it "does fit stability" do
     VersionTagRecognizer.does_it_fit_stability?( "2.2.1", "stable" ).should be_true
-  end 
-  it "does not fit stability" do 
+  end
+  it "does not fit stability" do
     VersionTagRecognizer.does_it_fit_stability?( "2.2.1-BETA", "stable" ).should be_false
-  end 
-  it "does fit stability" do 
+  end
+  it "does fit stability" do
     VersionTagRecognizer.does_it_fit_stability?( "2.2.1-BETA", "alpha" ).should be_true
-  end 
-  it "does fit stability" do 
+  end
+  it "does fit stability" do
     VersionTagRecognizer.does_it_fit_stability?( "2.2.1-BETA", "beta" ).should be_true
-  end 
-  it "does fit stability" do 
+  end
+  it "does fit stability" do
     VersionTagRecognizer.does_it_fit_stability?( "2.2.x-dev", "dev" ).should be_true
-  end 
-  it "does not fit stability" do 
+  end
+  it "does not fit stability" do
     VersionTagRecognizer.does_it_fit_stability?( "2.2.x-dev", "alpha" ).should be_false
-  end 
-  it "does not fit stability" do 
+  end
+  it "does not fit stability" do
     VersionTagRecognizer.does_it_fit_stability?( "2.2.x-dev", "RC" ).should be_false
-  end 
-  it "does fit stability" do 
+  end
+  it "does fit stability" do
     VersionTagRecognizer.does_it_fit_stability?( "2.2.1-RC", "RC" ).should be_true
-  end 
+  end
 
 
 
-  it "stability_tag_for returns right" do 
+  it "stability_tag_for returns right" do
     VersionTagRecognizer.stability_tag_for( "2.2.1").should eql(VersionTagRecognizer::A_STABILITY_STABLE)
   end
-  it "stability_tag_for returns right" do 
+  it "stability_tag_for returns right" do
     VersionTagRecognizer.stability_tag_for( "2.2.1-RC").should eql(VersionTagRecognizer::A_STABILITY_RC)
-  end 
-  it "stability_tag_for returns right" do 
+  end
+  it "stability_tag_for returns right" do
     VersionTagRecognizer.stability_tag_for( "2.2.1-BETA1").should eql(VersionTagRecognizer::A_STABILITY_BETA)
-  end 
-  it "stability_tag_for returns right" do 
+  end
+  it "stability_tag_for returns right" do
     VersionTagRecognizer.stability_tag_for( "2.2.1-alpha").should eql(VersionTagRecognizer::A_STABILITY_ALPHA)
-  end 
-  it "stability_tag_for returns right" do 
+  end
+  it "stability_tag_for returns right" do
     VersionTagRecognizer.stability_tag_for( "2.2.x-dev").should eql(VersionTagRecognizer::A_STABILITY_DEV)
-  end  
-  
-  
+  end
+
+
 
 
 end
