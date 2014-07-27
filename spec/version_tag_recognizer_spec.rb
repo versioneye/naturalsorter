@@ -248,6 +248,11 @@ describe VersionTagRecognizer do
   end
 
 
+  it 'is a build' do
+    VersionTagRecognizer.build?("1.3.0-build.2921+sha.02c0ed2").should be_true
+  end
+
+
   it "returns the right value for dev" do
     VersionTagRecognizer.value_for("1.1.1-dev").should eql(0)
   end
@@ -295,6 +300,12 @@ describe VersionTagRecognizer do
   end
   it "does not fit stability" do
     VersionTagRecognizer.does_it_fit_stability?( "2.2.1-BETA", "stable" ).should be_false
+  end
+  it "does not fit stability" do
+    VersionTagRecognizer.does_it_fit_stability?( "1.3.0-build.2921+sha.02c0ed2", "stable" ).should be_false
+  end
+  it "does not fit stability" do
+    VersionTagRecognizer.does_it_fit_stability?( "1.3.0-build.2809+sha.94bcc03", "stable" ).should be_false
   end
   it "does fit stability" do
     VersionTagRecognizer.does_it_fit_stability?( "2.2.1-BETA", "alpha" ).should be_true
