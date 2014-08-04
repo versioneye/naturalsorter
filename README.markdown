@@ -4,6 +4,7 @@
 [![Dependency Status](http://www.versioneye.com/package/naturalsorter/badge.png)](http://www.versioneye.com/package/naturalsorter)
 [![Build Status](https://travis-ci.org/versioneye/naturalsorter.png)](https://travis-ci.org/versioneye/naturalsorter)
 [![Code Climate](https://codeclimate.com/github/versioneye/naturalsorter.png)](https://codeclimate.com/github/versioneye/naturalsorter)
+[![Bountysource](https://www.bountysource.com/badge/tracker?tracker_id=157523)](https://www.bountysource.com/trackers/157523-versioneye-naturalsorter?utm_source=157523&utm_medium=shield&utm_campaign=TRACKER_BADGE)
 
 
 ## The Mission
