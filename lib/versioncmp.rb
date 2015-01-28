@@ -166,6 +166,7 @@ class Versioncmp
     replace_leading_v cleaned_version
     replace_99_does_not_exist cleaned_version
     replace_timestamps cleaned_version
+    replace_groovy cleaned_version
     VersionTagRecognizer.remove_minimum_stability cleaned_version
     cleaned_version
   end
@@ -174,6 +175,12 @@ class Versioncmp
   def self.replace_99_does_not_exist val
     if val.eql?("99.0-does-not-exist")
       val.gsub!("99.0-does-not-exist", "0.0.0")
+    end
+  end
+
+  def self.replace_groovy val
+    if val.match(/\-groovy\-/)
+      val.gsub!("-groovy-", ".")
     end
   end
 

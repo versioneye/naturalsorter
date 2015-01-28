@@ -14,6 +14,10 @@ describe Versioncmp do
     Versioncmp.compare("1.1.5", "1.1-dev").should eql(-1)
   end
 
+  it "smaler" do
+    Versioncmp.compare("0.3", "0.7-groovy-2.0").should eql(-1)
+  end
+
   it "bigger" do
     Versioncmp.compare("1.1", "1.0").should eql(1)
   end
