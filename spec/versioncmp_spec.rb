@@ -182,4 +182,16 @@ describe Versioncmp do
     Versioncmp.compare("3.0", "3.0.0").should eql(0)
   end
 
+  it "3.1-SNAPSHOT is equal to 3.1-SNAPSHOT" do
+    Versioncmp.compare("3.1-SNAPSHOT", "3.1-SNAPSHOT").should eql(0)
+  end
+
+  it "3.1-SNAPSHOT is smaller than 3.2-SNAPSHOT" do
+    Versioncmp.compare("3.1-SNAPSHOT", "3.2-SNAPSHOT").should eql(-1)
+  end
+
+  it "3.1 is smaller than 3.2-SNAPSHOT" do
+    Versioncmp.compare("3.1", "3.2-SNAPSHOT").should eql(-1)
+  end
+
 end

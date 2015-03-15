@@ -163,6 +163,7 @@ class Versioncmp
   def self.pre_process val
     cleaned_version = replace_x_dev val
     cleaned_version = replace_wildcards cleaned_version
+    replace_snapshot cleaned_version
     replace_leading_v cleaned_version
     replace_99_does_not_exist cleaned_version
     replace_timestamps cleaned_version
@@ -181,6 +182,12 @@ class Versioncmp
   def self.replace_groovy val
     if val.match(/\-groovy\-/)
       val.gsub!("-groovy-", ".")
+    end
+  end
+
+  def self.replace_snapshot val 
+    if val.match(/\-SNAPSHOT/)
+      val.gsub!("-SNAPSHOT", "")
     end
   end
 
