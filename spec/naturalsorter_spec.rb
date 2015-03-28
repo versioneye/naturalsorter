@@ -12,6 +12,9 @@ describe Naturalsorter::Sorter do
     it "c400b5a1 is a1b5c400" do
       Naturalsorter::Sorter.sort(["a400", "a5", "a1"], true).should eql(["a1", "a5", "a400"])
     end
+    it "cba is abc" do
+      Naturalsorter::Sorter.sort(["1.5.2", "1.4.4", "1.5.2-patch"], true).should eql(["1.4.4", "1.5.2", "1.5.2-patch"])
+    end
   end
   describe "sort_desc" do
     it "cba is abc" do

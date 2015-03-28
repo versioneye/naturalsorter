@@ -8,6 +8,8 @@ class VersionTagRecognizer
   A_STABILITY_SNAPSHOT = "SNAPSHOT"
   A_STABILITY_DEV = "dev"
   A_STABILITY_BUILD = "BUILD"
+  A_STABILITY_PATCH = "patch"
+
 
   def self.value_for( value )
     return 0  if self.dev? value
@@ -17,6 +19,7 @@ class VersionTagRecognizer
     return 5  if self.rc? value
     return 6  if self.pre? value
     return 10 if self.stable? value
+    return 11 if self.patch? value
     return 1
   end
 
@@ -87,6 +90,8 @@ class VersionTagRecognizer
     else
       if self.stable? version
         return A_STABILITY_STABLE
+      elsif self.patch? version 
+        return A_STABILITY_PATCH
       elsif self.pre? version
         return A_STABILITY_PRE
       elsif self.rc? version
@@ -112,12 +117,17 @@ class VersionTagRecognizer
     return true if value.match(/.+FINAL.*/i)
     return true if value.match(/.+SP.*/i)
     return true if value.match(/.+GA.*/i)
+    return true if value.match(/.+patch.*/i)
 
     !self.alpha?(value)    and !self.beta?(value)       and
     !self.dev?(value)      and !self.pre?(value)        and
     !self.rc?(value)       and !value.match(/.+SEC.*/i) and
     !self.snapshot?(value) and !value.match(/.+M.+/i)   and
     !self.build?(value)
+  end
+
+  def self.patch? value
+    value.match(/.*patch.*/i)
   end
 
   def self.alpha? value
