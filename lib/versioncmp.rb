@@ -100,6 +100,9 @@ class Versioncmp
   def self.compare_specia_cases part1, part2
     result = Versioncmp.check_jquery_versioning(part1, part2)
     return result if result != nil
+
+    digit = part1 if part1.match(/\d/)
+    return -1 if ( part1.match(/\d/) && part2.match(/#{digit}\S*patch\S*/) )
     return  1 if ( part1.eql?("0") && part2.match(/^[a-zA-Z]+/) )
     return -1 if ( part2.eql?("0") && part1.match(/^[a-zA-Z]+/) )
     return -1 if ( part1.eql?("0") && part2.match(/^[1-9]+[-_a-zA-Z]+/) )

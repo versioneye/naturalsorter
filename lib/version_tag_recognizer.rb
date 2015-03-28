@@ -32,6 +32,7 @@ class VersionTagRecognizer
   end
 
   def self.tagged? value
+    return true if self.patch?(value)
     return true if self.alpha?(value)
     return true if self.beta?(value)
     return true if self.dev?(value)
@@ -43,7 +44,9 @@ class VersionTagRecognizer
   end
 
   def self.remove_tag value
-    if self.alpha? value
+    if self.patch? value
+      return value.gsub(/\.patch.*$/i, "")
+    elsif self.alpha? value
       new_value = value.gsub(/\.[\w-]*alpha.*$/i, "")
       return new_value.gsub(/\.[\w-]*a.*$/i, "")
     elsif self.beta? value
@@ -66,6 +69,7 @@ class VersionTagRecognizer
   end
 
   def self.does_it_fit_stability?( version_number, stability )
+    patch    = self.patch?( version_number )
     stable   = self.stable?( version_number )
     pre      = stable || self.pre?( version_number )
     rc       = stable || self.rc?( version_number )
@@ -73,6 +77,7 @@ class VersionTagRecognizer
     alpha    = beta   || self.alpha?( version_number )
     snapshot = alpha  || self.pre?( version_number ) || self.snapshot?( version_number )
 
+    return true if (stability.casecmp( A_STABILITY_PATCH )    == 0) && patch
     return true if (stability.casecmp( A_STABILITY_STABLE )   == 0) && stable
     return true if (stability.casecmp( A_STABILITY_PRE )      == 0) && pre
     return true if (stability.casecmp( A_STABILITY_RC )       == 0) && rc
@@ -117,7 +122,7 @@ class VersionTagRecognizer
     return true if value.match(/.+FINAL.*/i)
     return true if value.match(/.+SP.*/i)
     return true if value.match(/.+GA.*/i)
-    return true if value.match(/.+patch.*/i)
+    return true if value.match(/.*patch.*/i)
 
     !self.alpha?(value)    and !self.beta?(value)       and
     !self.dev?(value)      and !self.pre?(value)        and

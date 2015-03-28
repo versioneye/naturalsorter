@@ -194,4 +194,8 @@ describe Versioncmp do
     Versioncmp.compare("3.1", "3.2-SNAPSHOT").should eql(-1)
   end
 
+  it "1.5.2 is smaller than 1.5.2-patch1" do
+    Versioncmp.compare("1.5.2", "1.5.2-patch1").should eql(-1)
+  end
+
 end
