@@ -29,6 +29,9 @@ describe Naturalsorter::Sorter do
     it "c400b5a1 is a1b5c400" do
       Naturalsorter::Sorter.sort_by_method(["a400", "a5", "a1"], "to_s", true).should eql(["a1", "a5", "a400"])
     end
+    it "1.5.2 is lower than 1.5.2-patch" do
+      Naturalsorter::Sorter.sort_by_method(["1.5.2-patch", "1.5.2", "1.4.4"], "to_s", true).should eql(["1.4.4", "1.5.2", "1.5.2-patch"])
+    end
   end
   describe  "sort_by_method_desc" do
     it "a5 a400 a1 is a400 a5 a1" do
@@ -115,6 +118,16 @@ describe Naturalsorter::Sorter do
       Naturalsorter::Sorter.sort_version(["2.1.0-beta11", "2.1.0-beta9"]).should eql(["2.1.0-beta9", "2.1.0-beta11"])
     end
 
+    it "1.5.2-patch is bigger than 1.5.2" do
+      Naturalsorter::Sorter.sort_version(["1.5.2", "1.4.4", "1.5.2-patch"]).should eql(["1.4.4", "1.5.2", "1.5.2-patch"])
+    end
+
+  end
+
+  describe "sort_version_by_method" do
+    it "1.5.2-patch is bigger than 1.5.2" do
+      Naturalsorter::Sorter.sort_version_by_method(["1.5.2", "1.4.4", "1.4.2", "1.5.2-patch2", "1.5.2-patch1"], 'to_s').should eql(["1.4.2", "1.4.4", "1.5.2", "1.5.2-patch1", "1.5.2-patch2"])
+    end
   end
 
   describe "is_version_current?" do
