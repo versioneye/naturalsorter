@@ -117,6 +117,9 @@ class Versioncmp
     return  1 if ( part2.eql?("0") && part1.match(/^[1-9]+[-_a-zA-Z]+/) )
     return  1 if ( part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
     return -1;
+  rescue => e 
+    p e.message 
+    return -1 
   end
 
 
