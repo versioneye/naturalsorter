@@ -122,6 +122,14 @@ describe VersionTagRecognizer do
     VersionTagRecognizer.release?("2.0-m4").should be_falsey
   end
 
+  it "release? is false" do
+    VersionTagRecognizer.release?("dev-garbage-collection-configuration").should be_falsey
+  end
+
+  it "release? is false" do
+    VersionTagRecognizer.release?("garbage-collection-configuration-dev").should be_falsey
+  end
+
 
 
   it "is alpha? is true" do
@@ -344,6 +352,12 @@ describe VersionTagRecognizer do
     VersionTagRecognizer.stability_tag_for( "2.2.x-dev").should eql(VersionTagRecognizer::A_STABILITY_DEV)
   end
 
+
+  it "stability_tag_for returns false" do
+    VersionTagRecognizer.stability_tag_for( "dev-garbage-collection-configuration").should eql(VersionTagRecognizer::A_STABILITY_DEV)
+  end
+
+  
 
 
 

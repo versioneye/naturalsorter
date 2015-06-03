@@ -93,6 +93,8 @@ class VersionTagRecognizer
       spliti = version.split("@")
       return spliti[1]
     else
+      return A_STABILITY_DEV if version.match(/\Adev-/i) || version.match(/-dev\z/i)
+      
       if self.stable? version
         return A_STABILITY_STABLE
       elsif self.patch? version 
@@ -118,6 +120,8 @@ class VersionTagRecognizer
   end
 
   def self.stable? value
+    return false if value.match(/\Adev-/i) || value.match(/-dev\z/i)
+
     return true if value.match(/.+RELEASE.*/i)
     return true if value.match(/.+FINAL.*/i)
     return true if value.match(/.+SP.*/i)
