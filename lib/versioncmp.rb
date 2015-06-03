@@ -228,9 +228,11 @@ class Versioncmp
 
   def self.replace_x_dev val
     new_val = String.new(val)
-    if val.eql?("dev-master")
+    if val.eql?("dev-master") || val.eql?("dev-develop")
       new_val = "9999999"
-    elsif val.match(/\.x-dev$/)
+    elsif val.match(/\Adev-/i)
+      new_val = "9999999"
+    elsif val.match(/\.x-dev$/i)
       new_val = val.gsub("x-dev", "9999999")
     elsif val.match(/-dev$/)
       new_val = val.gsub("-dev", ".9999999")

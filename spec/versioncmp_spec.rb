@@ -198,4 +198,16 @@ describe Versioncmp do
     Versioncmp.compare("1.5.2", "1.5.2-patch1").should eql(-1)
   end
 
+  it "dev-master is bigger than 1.0.0" do
+    Versioncmp.compare("dev-master", "1.0.0").should eql(1)
+  end
+
+  it "dev-develop is bigger than 1.0.0" do
+    Versioncmp.compare("dev-develop", "1.0.0").should eql(1)
+  end
+
+  it "dev-something is bigger than 1.0.0" do
+    Versioncmp.compare("dev-something", "1.0.0").should eql(1)
+  end
+
 end
