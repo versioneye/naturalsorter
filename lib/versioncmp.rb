@@ -74,7 +74,7 @@ class Versioncmp
     elsif ( !part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
       return self.compare_strings ab[0], ab[1], part1, part2
     else
-      return self.compare_specia_cases part1, part2
+      return self.compare_special_cases part1, part2
     end
   end
 
@@ -97,9 +97,9 @@ class Versioncmp
   end
 
 
-  def self.compare_specia_cases part1, part2
+  def self.compare_special_cases part1, part2
     result = Versioncmp.check_jquery_versioning(part1, part2)
-    return result if result != nil
+    return result if !result.to_s.strip.empty?
     
     digit = part1 if part1.match(/\d/)
     return -1 if ( part1.match(/\d/) && part2.match(/#{digit}\S*patch\S*/) )
@@ -110,16 +110,41 @@ class Versioncmp
     if ( part1.match(/#\S*patch\S*/) && part2.match(/\S*patch\S*/) ) 
       return compare_string(part1, part2)
     end
-    
+
     return  1 if ( part1.eql?("0") && part2.match(/^[a-zA-Z]+/) )
     return -1 if ( part2.eql?("0") && part1.match(/^[a-zA-Z]+/) )
     return -1 if ( part1.eql?("0") && part2.match(/^[1-9]+[-_a-zA-Z]+/) )
     return  1 if ( part2.eql?("0") && part1.match(/^[1-9]+[-_a-zA-Z]+/) )
-    return  1 if ( part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
+
+    pm1 = part1.match(/\A[0-9]+\z/)
+    pm2 = part2.match(/\A(\d+)(\w+)\z/i)
+    return  1 if ( pm1 && pm2 && pm2[1].eql?(part1) &&  VersionTagRecognizer.stable?(pm2[2]) )
+    return -1 if ( pm1 && pm2 && pm2[1].eql?(part1) && !VersionTagRecognizer.stable?(pm2[2]) )
+
+    pm1 = part1.match(/\A(\d+)-(\w+)\z/i)
+    pm2 = part2.match(/\A\d+\z/i)
+    return 1 if try_to_i_bigger( pm1, pm2, part2 )
+    return 1 if pm2 && pm1 && pm1[1].eql?(part2) && VersionTagRecognizer.stable?(pm1[2]) 
+
+    pm1 = part1.match(/\A\d+\z/i)
+    pm2 = part2.match(/\A(\d+)-(\w+)\z/i)
+    return  1 if try_to_i_bigger( pm1, pm2, part2 )
+    return -1 if pm1 && pm2 && pm2[1].eql?(part1) && VersionTagRecognizer.stable?(pm2[2]) 
+
+    return  1 if ( part1.match(/\A[0-9]+\z/) && !part2.match(/\A[0-9]+\z/) )
+
     return -1;
   rescue => e 
     p e.message 
+    p e.backtrace.join("\n")
     return -1 
+  end
+
+
+  def self.try_to_i_bigger pm1, pm2, part2 
+    pm2 && pm1 && pm1[1].to_i > part2.to_i 
+  rescue => e 
+    false 
   end
 
 
