@@ -54,6 +54,16 @@ describe Versioncmp do
     Versioncmp.compare("2.3.d-b01", "2.3.1").should eql(-1)
   end
 
+    
+  it "2.18.1 is bigger than 2.18-20141019" do
+    Versioncmp.compare("2.18.1", "2.18-20141019").should eql(1)
+  end
+
+  it "2.18-20141019 is smaller than 2.18.1" do
+    Versioncmp.compare("2.18-20141019", "2.18.1").should eql(-1)
+  end
+
+
   it "1.1 is smaller than 1.1.1" do
     Versioncmp.compare("1.1", "1.1.1").should eql(-1)
   end

@@ -40,6 +40,14 @@ class Versioncmp
     a = pre_process a_val
     b = pre_process b_val
 
+    am = a.match(/\A(\d+\.\d+)\.\d+\z/i)
+    bm = b.match(/\A(\d+\.\d+)-\w+\z/i)
+    return  1 if am && bm && am[1].eql?(bm[1])
+
+    am = a.match(/\A(\d+\.\d+)-\w+\z/i)
+    bm = b.match(/\A(\d+\.\d+)\.\d+\z/i)
+    return -1 if am && bm && am[1].eql?(bm[1])
+
     ab = [a, b]
     offsets = [0, 0]
 
