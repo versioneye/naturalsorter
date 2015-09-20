@@ -108,14 +108,14 @@ class Versioncmp
   def self.compare_special_cases part1, part2
     result = Versioncmp.check_jquery_versioning(part1, part2)
     return result if !result.to_s.strip.empty?
-    
+
     digit = part1 if part1.match(/\d/)
     return -1 if ( part1.match(/\d/) && part2.match(/#{digit}\S*patch\S*/) )
 
     digit = part2 if part2.match(/\d/)
     return  1 if ( part2.match(/\d/) && part1.match(/#{digit}\S*patch\S*/) )
-    
-    if ( part1.match(/#\S*patch\S*/) && part2.match(/\S*patch\S*/) ) 
+
+    if ( part1.match(/#\S*patch\S*/) && part2.match(/\S*patch\S*/) )
       return compare_string(part1, part2)
     end
 
@@ -132,27 +132,27 @@ class Versioncmp
     pm1 = part1.match(/\A(\d+)-(\w+)\z/i)
     pm2 = part2.match(/\A\d+\z/i)
     return 1 if try_to_i_bigger( pm1, pm2, part2 )
-    return 1 if pm2 && pm1 && pm1[1].eql?(part2) && VersionTagRecognizer.stable?(pm1[2]) 
+    return 1 if pm2 && pm1 && pm1[1].eql?(part2) && VersionTagRecognizer.stable?(pm1[2])
 
     pm1 = part1.match(/\A\d+\z/i)
     pm2 = part2.match(/\A(\d+)-(\w+)\z/i)
     return  1 if try_to_i_bigger( pm1, pm2, part2 )
-    return -1 if pm1 && pm2 && pm2[1].eql?(part1) && VersionTagRecognizer.stable?(pm2[2]) 
+    return -1 if pm1 && pm2 && pm2[1].eql?(part1) && VersionTagRecognizer.stable?(pm2[2])
 
     return  1 if ( part1.match(/\A[0-9]+\z/) && !part2.match(/\A[0-9]+\z/) )
 
     return -1;
-  rescue => e 
-    p e.message 
+  rescue => e
+    p e.message
     p e.backtrace.join("\n")
-    return -1 
+    return -1
   end
 
 
-  def self.try_to_i_bigger pm1, pm2, part2 
-    pm2 && pm1 && pm1[1].to_i > part2.to_i 
-  rescue => e 
-    false 
+  def self.try_to_i_bigger pm1, pm2, part2
+    pm2 && pm1 && pm1[1].to_i > part2.to_i
+  rescue => e
+    false
   end
 
 
@@ -232,7 +232,7 @@ class Versioncmp
     end
   end
 
-  def self.replace_snapshot val 
+  def self.replace_snapshot val
     if val.match(/\-SNAPSHOT/)
       val.gsub!("-SNAPSHOT", "")
     end
@@ -261,8 +261,10 @@ class Versioncmp
 
   def self.replace_x_dev val
     new_val = String.new(val)
-    if val.eql?("dev-master") || val.eql?("dev-develop")
-      new_val = "9999999"
+    if val.eql?("dev-master")
+      new_val = "99999999999"
+    elsif val.eql?("dev-develop")
+      new_val = "9999999999"
     elsif val.match(/\Adev-/i)
       new_val = "9999999"
     elsif val.match(/\.x-dev$/i)

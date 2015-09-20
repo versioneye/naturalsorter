@@ -94,10 +94,10 @@ class VersionTagRecognizer
       return spliti[1]
     else
       return A_STABILITY_DEV if version.match(/\Adev-/i) || version.match(/-dev\z/i)
-      
+
       if self.stable? version
         return A_STABILITY_STABLE
-      elsif self.patch? version 
+      elsif self.patch? version
         return A_STABILITY_PATCH
       elsif self.pre? version
         return A_STABILITY_PRE

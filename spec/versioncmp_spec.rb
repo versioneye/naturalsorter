@@ -41,7 +41,7 @@ describe Versioncmp do
   it "3.5.5 is smaller than 3.5.5-1 " do
     Versioncmp.compare("3.5.5", "3.5.5-1").should eql(-1)
   end
-  
+
   it "2.3.1-b01 is bigger than 2.3.1" do
     Versioncmp.compare("2.3.1-b01", "2.3.1").should eql(1)
   end
@@ -54,7 +54,7 @@ describe Versioncmp do
     Versioncmp.compare("2.3.d-b01", "2.3.1").should eql(-1)
   end
 
-    
+
   it "2.18.1 is bigger than 2.18-20141019" do
     Versioncmp.compare("2.18.1", "2.18-20141019").should eql(1)
   end
@@ -230,6 +230,10 @@ describe Versioncmp do
 
   it "dev-master is bigger than 1.0.0" do
     Versioncmp.compare("dev-master", "1.0.0").should eql(1)
+  end
+
+  it "dev-master is bigger than dev-support_old" do
+    Versioncmp.compare("dev-master", "dev-support_old").should eql(1)
   end
 
   it "dev-develop is bigger than 1.0.0" do
