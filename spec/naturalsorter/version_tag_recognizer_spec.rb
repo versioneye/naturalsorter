@@ -358,8 +358,5 @@ describe VersionTagRecognizer do
     VersionTagRecognizer.stability_tag_for( "dev-garbage-collection-configuration").should eql(VersionTagRecognizer::A_STABILITY_DEV)
   end
 
-  
-
-
 
 end
