@@ -1,3 +1,4 @@
+require 'spec_helper'
 require "naturalsorter"
 
 describe Versioncmp do
