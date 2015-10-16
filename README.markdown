@@ -3,6 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/naturalsorter.png)](http://badge.fury.io/rb/naturalsorter)
 [![Dependency Status](http://www.versioneye.com/package/naturalsorter/badge.png)](http://www.versioneye.com/package/naturalsorter)
 [![Build Status](https://travis-ci.org/versioneye/naturalsorter.png)](https://travis-ci.org/versioneye/naturalsorter)
+[![Coverage Status](https://coveralls.io/repos/versioneye/naturalsorter/badge.svg?branch=master&service=github)](https://coveralls.io/github/versioneye/naturalsorter?branch=master)
 [![Code Climate](https://codeclimate.com/github/versioneye/naturalsorter.png)](https://codeclimate.com/github/versioneye/naturalsorter)
 [![Bountysource](https://www.bountysource.com/badge/tracker?tracker_id=157523)](https://www.bountysource.com/trackers/157523-versioneye-naturalsorter?utm_source=157523&utm_medium=shield&utm_campaign=TRACKER_BADGE)
 
