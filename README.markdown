@@ -1,7 +1,7 @@
 # NaturalSorter
 
 [![Gem Version](https://badge.fury.io/rb/naturalsorter.png)](http://badge.fury.io/rb/naturalsorter)
-[![Dependency Status](http://www.versioneye.com/package/naturalsorter/badge.png)](http://www.versioneye.com/package/naturalsorter)
+[![Dependency Status](https://www.versioneye.com/ruby/naturalsorter/badge?style=flat)](https://www.versioneye.com/ruby/naturalsorter)
 [![Build Status](https://travis-ci.org/versioneye/naturalsorter.png)](https://travis-ci.org/versioneye/naturalsorter)
 [![Coverage Status](https://coveralls.io/repos/versioneye/naturalsorter/badge.svg?branch=master&service=github)](https://coveralls.io/github/versioneye/naturalsorter?branch=master)
 [![Code Climate](https://codeclimate.com/github/versioneye/naturalsorter.png)](https://codeclimate.com/github/versioneye/naturalsorter)
