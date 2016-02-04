@@ -27,7 +27,7 @@ Because the default sort method does not recognize the numbers in the string. Th
 
 You should add this line to your Gemfile
 
-`gem 'naturalsorter', '3.0.11'`
+`gem 'naturalsorter', '3.0.13'`
 
 and run this command in your app root directory
 
@@ -35,13 +35,13 @@ and run this command in your app root directory
 
 ## Testing
 
-This project has a lot of test cases and a test coverage above 90%. To run the tests you need to have installed Ruby 2.X. To install the test dependencies run this in the root directory:  
+This project has a lot of test cases and a test coverage above 90%. To run the tests you need to have installed Ruby 2.X. To install the test dependencies run this in the root directory:
 
 ```
 bundle install
 ```
 
-To execute the tests run this in the root directory: 
+To execute the tests run this in the root directory:
 
 ```
 rspec

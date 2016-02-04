@@ -71,6 +71,9 @@ class Versioncmp
     part1 = Versioncmp.get_a_piece_of_the_cake offsets[0], ab[0]
     part2 = Versioncmp.get_a_piece_of_the_cake offsets[0], ab[1]
 
+    part1 = '' if part1.nil?
+    part2 = '' if part2.nil?
+
     return -1 if Versioncmp.timestamp?(part1) && part2.length() < 8
     return  1 if Versioncmp.timestamp?(part2) && part1.length() < 8
 
