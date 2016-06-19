@@ -28,6 +28,34 @@ describe Versioncmp do
   end
 
   it "bigger" do
+    expect( Versioncmp.compare("5.0.1", "5.0.1-BETA")).to eql(1)
+  end
+
+  it "bigger" do
+    expect( Versioncmp.compare("5.0.1", "5.0.1-SNAPSHOT")).to eql(1)
+  end
+
+  it "bigger" do
+    expect( Versioncmp.compare("5.0.1", "5.0.1-beta")).to eql(1)
+  end
+
+  it "bigger" do
+    expect( Versioncmp.compare("5.0.1", "5.0.1-alpha")).to eql(1)
+  end
+
+  it "bigger" do
+    expect( Versioncmp.compare("5.0.1", "5.0.1-RC1")).to eql(1)
+  end
+
+  it "bigger" do
+    expect( Versioncmp.compare("5.0.1", "5.0.1-RC-1")).to eql(1)
+  end
+
+  it "bigger" do
+    expect( Versioncmp.compare("5.0.1", "5.0.1-alpha-1")).to eql(1)
+  end
+
+  it "bigger" do
     expect( Versioncmp.compare("1.1", "1.0")).to eql(1)
   end
 

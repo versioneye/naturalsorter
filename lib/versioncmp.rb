@@ -29,13 +29,25 @@ class Versioncmp
   #
   def self.compare(a_val, b_val)
 
-    a_empty = a_val.nil? || a_val.empty?
-    b_empty = b_val.nil? || b_val.empty?
+    a_empty = a_val.to_s.empty?
+    b_empty = b_val.to_s.empty?
 
     return  0 if  a_empty && b_empty
     return  0 if  a_val.eql?( b_val )
     return  1 if (a_empty == false) && (b_empty == true )
     return -1 if (b_empty == false) && (a_empty == true )
+
+    return  1 if b_val.length > a_val.length && b_val.match(/\A#{a_val}-SNAPSHOT/i)
+    return -1 if a_val.length > b_val.length && a_val.match(/\A#{a_val}-SNAPSHOT/i)
+
+    return  1 if b_val.length > a_val.length && b_val.match(/\A#{a_val}-BETA.*/i)
+    return -1 if a_val.length > b_val.length && a_val.match(/\A#{a_val}-BETA.*/i)
+
+    return  1 if b_val.length > a_val.length && b_val.match(/\A#{a_val}-alpha.*/i)
+    return -1 if a_val.length > b_val.length && a_val.match(/\A#{a_val}-alpha.*/i)
+
+    return  1 if b_val.length > a_val.length && b_val.match(/\A#{a_val}-rc.*/i)
+    return -1 if a_val.length > b_val.length && a_val.match(/\A#{a_val}-rc.*/i)
 
     a = pre_process a_val
     b = pre_process b_val
