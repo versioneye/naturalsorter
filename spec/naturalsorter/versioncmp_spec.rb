@@ -23,6 +23,14 @@ describe Versioncmp do
     expect( Versioncmp.compare("1.1", "1.0")).to eql(1)
   end
 
+  it "bigger" do
+    expect( Versioncmp.compare("2.5", "2.0-beta-1")).to eql(1)
+  end
+
+  it "bigger" do
+    expect( Versioncmp.compare("2.3", "2.0-beta-1")).to eql(1)
+  end
+
   it "1.1.1 is bigger than 1.1" do
     expect( Versioncmp.compare("1.1.1", "1.1")).to eql(1)
   end
