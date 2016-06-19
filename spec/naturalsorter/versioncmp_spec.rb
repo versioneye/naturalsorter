@@ -56,6 +56,18 @@ describe Versioncmp do
   end
 
   it "bigger" do
+    expect( Versioncmp.compare("3.10-beta2", "3.9")).to eql(1)
+  end
+
+  it "bigger" do
+    expect( Versioncmp.compare("3.10-beta2", "3.10-beta1")).to eql(1)
+  end
+
+  it "bigger" do
+    expect( Versioncmp.compare("3.0.2-FINAL", "3.0.1-FINAL")).to eql(1)
+  end
+
+  it "bigger" do
     expect( Versioncmp.compare("1.1", "1.0")).to eql(1)
   end
 
