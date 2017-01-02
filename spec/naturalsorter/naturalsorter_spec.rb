@@ -123,6 +123,10 @@ describe Naturalsorter::Sorter do
       expect( Naturalsorter::Sorter.sort_version(["1.5.2", "1.4.4", "1.5.2-patch"])).to eql(["1.4.4", "1.5.2", "1.5.2-patch"])
     end
 
+    it "3.0.1u2 is bigger than 3.0.1" do
+      expect( Naturalsorter::Sorter.sort_version(["3.0.1u2", "3.0.1"])).to eql(["3.0.1", "3.0.1u2"])
+    end
+
   end
 
   describe "sort_version_by_method" do

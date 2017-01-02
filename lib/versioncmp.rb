@@ -49,6 +49,9 @@ class Versioncmp
     return  1 if b_val.length > a_val.length && b_val.match(/\A#{a_val}-rc.*/i)
     return -1 if a_val.length > b_val.length && a_val.match(/\A#{a_val}-rc.*/i)
 
+    return -1 if b_val.length > a_val.length && b_val.match(/\A#{a_val}u\d/i)
+    return  1 if a_val.length > b_val.length && a_val.match(/\A#{b_val}u\d/i)
+
     a = pre_process a_val
     b = pre_process b_val
 

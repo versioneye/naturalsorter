@@ -45,6 +45,7 @@ module Naturalsorter
 
     def self.sort_version(array, asc = true)
       return array if (array.nil? || array.empty? || array.length == 1)
+      return array if (array[0].nil? || array[1].nil?)
       return array.sort { |a,b| Versioncmp.compare( a, b ) } if asc
       return array.sort { |a,b| Versioncmp.compare( b, a ) }
     end

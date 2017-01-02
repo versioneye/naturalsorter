@@ -27,7 +27,7 @@ Because the default sort method does not recognize the numbers in the string. Th
 
 You should add this line to your Gemfile
 
-`gem 'naturalsorter', '3.0.14'`
+`gem 'naturalsorter', '3.0.15'`
 
 and run this command in your app root directory
 
