@@ -84,6 +84,10 @@ describe VersionTagRecognizer do
   end
 
   it "release? is false" do
+    expect( VersionTagRecognizer.release?("3.0.0.CR1")).to be_falsey
+  end
+
+  it "release? is false" do
     expect( VersionTagRecognizer.release?("2.0.x-dev")).to be_falsey
   end
 

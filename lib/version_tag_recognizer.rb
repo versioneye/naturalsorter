@@ -153,7 +153,7 @@ class VersionTagRecognizer
   end
 
   def self.rc? value
-    value.match(/.*rc.*/i)
+    value.match(/.*rc.*/i) || value.match(/.*cr.*/i)
   end
 
   def self.snapshot? value
