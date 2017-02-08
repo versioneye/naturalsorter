@@ -301,4 +301,8 @@ describe Versioncmp do
     expect( Versioncmp.compare("dev-something", "1.0.0")).to eql(1)
   end
 
+  it "3.21.0-GA is bigger than 3.22.0-CR1" do
+    expect( Versioncmp.compare("3.21.0-GA", "3.21.0-CR1")).to eql(1)
+  end
+
 end
