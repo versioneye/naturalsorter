@@ -135,6 +135,14 @@ describe VersionTagRecognizer do
     expect( VersionTagRecognizer.release?("garbage-collection-configuration-dev")).to be_falsey
   end
 
+  it "release? is false" do
+    expect( VersionTagRecognizer.release?("2.0.0-preview-final")).to be_falsey
+  end
+
+  it "release? is false" do
+    expect( VersionTagRecognizer.release?("2.0.0-preview2-final")).to be_falsey
+  end
+
 
 
   it "is alpha? is true" do

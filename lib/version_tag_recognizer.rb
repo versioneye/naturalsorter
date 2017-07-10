@@ -9,6 +9,7 @@ class VersionTagRecognizer
   A_STABILITY_DEV = "dev"
   A_STABILITY_BUILD = "BUILD"
   A_STABILITY_PATCH = "patch"
+  A_STABILITY_PREVIEW = "preview"
 
 
   def self.value_for( value )
@@ -121,6 +122,7 @@ class VersionTagRecognizer
 
   def self.stable? value
     return false if value.match(/\Adev-/i) || value.match(/-dev\z/i)
+    return false if self.preview?( value )
 
     return true if value.match(/.+RELEASE.*/i)
     return true if value.match(/.+FINAL.*/i)
@@ -170,6 +172,10 @@ class VersionTagRecognizer
 
   def self.jbossorg? value
     value.match(/.*jbossorg.*$/i)
+  end
+
+  def self.preview? value
+    value.match(/-preview\d+-/i) || value.match(/-preview-/i)
   end
 
 end
