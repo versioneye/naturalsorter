@@ -222,7 +222,7 @@ class Versioncmp
 
   def self.timestamp? part
     return false if part.to_s.empty?
-    return part.length() == 8 && part.match(/^[0-9]+$/) != nil
+    return part.length() == 9 && part.match(/^[0-9]+$/) != nil
   end
 
 

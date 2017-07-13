@@ -23,6 +23,10 @@ describe Versioncmp do
     expect( Versioncmp.compare("0.6-groovy-1.8-rc1", "0.6-groovy-1.8")).to eql(-1)
   end
 
+  it "smaler" do
+    expect( Versioncmp.compare("0.5.25", "0.5.20170404")).to eql(-1)
+  end
+
   it "bigger" do
     expect( Versioncmp.compare("0.6-groovy-1.7", "0.6-groovy-1.7-rc1")).to eql(1)
   end
@@ -77,6 +81,10 @@ describe Versioncmp do
 
   it "bigger" do
     expect( Versioncmp.compare("2.3", "2.0-beta-1")).to eql(1)
+  end
+
+  it "bigger" do
+    expect( Versioncmp.compare("0.5.20170404", "0.5.25")).to eql(1)
   end
 
   it "1.1.1 is bigger than 1.1" do
