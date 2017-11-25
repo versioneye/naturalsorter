@@ -141,6 +141,14 @@ describe Versioncmp do
     expect( Versioncmp.compare("1.0", "1.0.0")).to eql(0)
   end
 
+  it "equal" do
+    expect( Versioncmp.compare("3.3.1.Final", "3.3.1.Final-redhat-1")).to eql(0)
+  end
+
+  it "equal" do
+    expect( Versioncmp.compare("3.3.1.Final", "3.3.1.Final-RedHat-33")).to eql(0)
+  end
+
   it "1.0.0 is smaller than 1.0.*" do
     expect( Versioncmp.compare("1.0.0", "1.0.*")).to eql(-1)
   end

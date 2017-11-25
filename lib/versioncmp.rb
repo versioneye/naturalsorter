@@ -234,6 +234,7 @@ class Versioncmp
     replace_99_does_not_exist cleaned_version
     replace_timestamps cleaned_version
     replace_groovy cleaned_version
+    replace_redhatx cleaned_version
     VersionTagRecognizer.remove_minimum_stability cleaned_version
     cleaned_version
   end
@@ -254,6 +255,12 @@ class Versioncmp
   def self.replace_snapshot val
     if val.match(/\-SNAPSHOT/)
       val.gsub!("-SNAPSHOT", "")
+    end
+  end
+
+  def self.replace_redhatx val
+    if val.match(/\-redhat\-[0-9]+$/i)
+      val.gsub!(/\-redhat\-[0-9]+$/i, "")
     end
   end
 
