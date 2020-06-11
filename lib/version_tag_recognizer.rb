@@ -69,25 +69,33 @@ class VersionTagRecognizer
     val.gsub!(/@.*$/, "") if val.match(/@.*$/)
   end
 
-  def self.does_it_fit_stability?( version_number, stability )
-    patch    = self.patch?( version_number )
-    stable   = self.stable?( version_number )
-    pre      = stable || self.pre?( version_number )
-    rc       = stable || self.rc?( version_number )
-    beta     = rc     || self.beta?( version_number )
-    alpha    = beta   || self.alpha?( version_number )
-    snapshot = alpha  || self.pre?( version_number ) || self.snapshot?( version_number )
 
-    return true if (stability.casecmp( A_STABILITY_PATCH )    == 0) && patch
-    return true if (stability.casecmp( A_STABILITY_STABLE )   == 0) && stable
-    return true if (stability.casecmp( A_STABILITY_PRE )      == 0) && pre
-    return true if (stability.casecmp( A_STABILITY_RC )       == 0) && rc
-    return true if (stability.casecmp( A_STABILITY_BETA )     == 0) && beta
-    return true if (stability.casecmp( A_STABILITY_ALPHA )    == 0) && alpha
+  def self.does_it_fit_stability?( version_number, stability )
+    patch = self.patch?( version_number )
+    return true if (stability.casecmp( A_STABILITY_PATCH ) == 0) && patch
+
+    stable = self.stable?( version_number )
+    return true if (stability.casecmp( A_STABILITY_STABLE ) == 0) && stable
+
+    pre = stable || self.pre?( version_number )
+    return true if (stability.casecmp( A_STABILITY_PRE ) == 0) && pre
+
+    rc = stable || self.rc?( version_number )
+    return true if (stability.casecmp( A_STABILITY_RC ) == 0) && rc
+
+    beta = rc || self.beta?( version_number )
+    return true if (stability.casecmp( A_STABILITY_BETA ) == 0) && beta
+
+    alpha = beta || self.alpha?( version_number )
+    return true if (stability.casecmp( A_STABILITY_ALPHA ) == 0) && alpha
+
+    snapshot = alpha || self.pre?( version_number ) || self.snapshot?( version_number )
     return true if (stability.casecmp( A_STABILITY_SNAPSHOT ) == 0) && snapshot
     return true if (stability.casecmp( A_STABILITY_DEV )      == 0)
+    
     return false
   end
+
 
   def self.stability_tag_for( version )
     if version.match(/@.*$/)
