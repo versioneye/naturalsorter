@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
   # s.add_runtime_dependency "rest-client"
-  s.add_development_dependency "rspec", "3.2.0"
-  s.add_development_dependency "coveralls", "0.8.3"
-  s.add_development_dependency "simplecov", "0.10.0"
+  s.add_development_dependency "rspec", "3.9.0"
+  s.add_development_dependency "coveralls", "0.8.23"
+  s.add_development_dependency "simplecov", "0.16.1"
 end
