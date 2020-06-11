@@ -297,6 +297,31 @@ describe VersionTagRecognizer do
   end
 
 
+  it "returns the right value for stable" do
+    expect( VersionTagRecognizer.value_for_key(VersionTagRecognizer::A_STABILITY_STABLE)).to eql(10)
+  end
+  it "returns the right value for patch" do
+    expect( VersionTagRecognizer.value_for_key(VersionTagRecognizer::A_STABILITY_PATCH)).to eql(11)
+  end
+  it "returns the right value for pre" do
+    expect( VersionTagRecognizer.value_for_key(VersionTagRecognizer::A_STABILITY_PRE)).to eql(6)
+  end
+  it "returns the right value for rc" do
+    expect( VersionTagRecognizer.value_for_key(VersionTagRecognizer::A_STABILITY_RC)).to eql(5)
+  end
+  it "returns the right value for beta" do
+    expect( VersionTagRecognizer.value_for_key(VersionTagRecognizer::A_STABILITY_BETA)).to eql(4)
+  end
+  it "returns the right value for alpha" do
+    expect( VersionTagRecognizer.value_for_key(VersionTagRecognizer::A_STABILITY_ALPHA)).to eql(3)
+  end
+  it "returns the right value for snapshot" do
+    expect( VersionTagRecognizer.value_for_key(VersionTagRecognizer::A_STABILITY_SNAPSHOT)).to eql(2)
+  end
+  it "returns the right value for dev" do
+    expect( VersionTagRecognizer.value_for_key(VersionTagRecognizer::A_STABILITY_DEV)).to eql(0)
+  end
+
 
   it "returns compares right for alpha and beta" do
     expect( VersionTagRecognizer.compare_tags("1.1.1-alpha", "1.1.1-beta")).to eql(-1)
@@ -333,6 +358,9 @@ describe VersionTagRecognizer do
   end
   it "does fit stability" do
     expect( VersionTagRecognizer.does_it_fit_stability?( "2.2.1-BETA", "beta" )).to be_truthy
+  end
+  it "does fit stability" do
+    expect( VersionTagRecognizer.does_it_fit_stability?( "2.2.1-alpha", "beta" )).to be_falsey
   end
   it "does fit stability" do
     expect( VersionTagRecognizer.does_it_fit_stability?( "2.2.x-dev", "dev" )).to be_truthy

@@ -24,12 +24,24 @@ class VersionTagRecognizer
     return 1
   end
 
+  def self.value_for_key( value )
+    return 0  if A_STABILITY_DEV.eql? value
+    return 2  if A_STABILITY_SNAPSHOT.eql? value
+    return 3  if A_STABILITY_ALPHA.eql? value
+    return 4  if A_STABILITY_BETA.eql? value
+    return 5  if A_STABILITY_RC.eql? value
+    return 6  if A_STABILITY_PRE.eql? value
+    return 10 if A_STABILITY_STABLE.eql? value
+    return 11 if A_STABILITY_PATCH.eql? value
+    return 1
+  end
+
   def self.compare_tags( a, b)
     a_val = self.value_for a
     b_val = self.value_for b
     return -1 if a_val < b_val
     return  1 if a_val > b_val
-    return 0
+    return  0
   end
 
   def self.tagged? value
