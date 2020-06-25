@@ -287,7 +287,7 @@ class Versioncmp
 
   def self.replace_x_dev val
     new_val = String.new(val)
-    if val.eql?("dev-master")
+    if ['dev-master', 'master', 'trunk'].include?( val )
       new_val = "99999999999"
     elsif val.eql?("dev-develop")
       new_val = "9999999999"

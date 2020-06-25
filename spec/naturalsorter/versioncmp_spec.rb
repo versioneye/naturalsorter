@@ -95,6 +95,14 @@ describe Versioncmp do
     expect( Versioncmp.compare("dev-master", "10.10.999")).to eql(1)
   end
 
+  it "master is bigger than 10.10.999" do
+    expect( Versioncmp.compare("master", "10.10.999")).to eql(1)
+  end
+
+  it "trunk is bigger than 10.10.999" do
+    expect( Versioncmp.compare("trunk", "10.10.999")).to eql(1)
+  end
+
   it "2.2.x-dev is bigger than 2.2.1" do
     expect( Versioncmp.compare("2.2.x-dev", "2.2.1")).to eql(1)
   end
