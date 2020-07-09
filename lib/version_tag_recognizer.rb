@@ -141,6 +141,7 @@ class VersionTagRecognizer
   end
 
   def self.stable? value
+    return true if value.to_s.empty?
     return false if value.match(/\Adev-/i) || value.match(/-dev\z/i)
     return false if self.preview?( value )
 

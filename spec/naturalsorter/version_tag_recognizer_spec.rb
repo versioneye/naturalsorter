@@ -3,6 +3,11 @@ require "naturalsorter"
 
 describe VersionTagRecognizer do
 
+  it "release? is true for nil" do
+    # if nill we assume the latest stable version.
+    expect( VersionTagRecognizer.release?(nil)).to be_truthy
+  end
+
   it "release? is true" do
     expect( VersionTagRecognizer.release?("1.1")).to be_truthy
   end
