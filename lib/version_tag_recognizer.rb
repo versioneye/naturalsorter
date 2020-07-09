@@ -110,11 +110,11 @@ class VersionTagRecognizer
 
 
   def self.stability_tag_for( version )
-    if version.match(/@.*$/)
+    if version.to_s.match(/@.*$/)
       spliti = version.split("@")
       return spliti[1]
     else
-      return A_STABILITY_DEV if version.match(/\Adev-/i) || version.match(/-dev\z/i)
+      return A_STABILITY_DEV if version.to_s.match(/\Adev-/i) || version.to_s.match(/-dev\z/i)
 
       if self.stable? version
         return A_STABILITY_STABLE
@@ -159,44 +159,44 @@ class VersionTagRecognizer
   end
 
   def self.patch? value
-    value.match(/.*patch.*/i)
+    value.to_s.match(/.*patch.*/i)
   end
 
   def self.alpha? value
     return false if self.beta? value
-    value.match(/.*alpha.*/i) or value.match(/.+a.*/i)
+    value.to_s.match(/.*alpha.*/i) or value.to_s.match(/.+a.*/i)
   end
 
   def self.beta? value
-    value.match(/.*beta.*/i) or value.match(/.+b.*/i)
+    value.to_s.match(/.*beta.*/i) or value.to_s.match(/.+b.*/i)
   end
 
   def self.dev? value
-    value.match(/.*dev.*/i)
+    value.to_s.match(/.*dev.*/i)
   end
 
   def self.rc? value
-    value.match(/.*rc.*/i) || value.match(/.*cr.*/i)
+    value.to_s.match(/.*rc.*/i) || value.to_s.match(/.*cr.*/i)
   end
 
   def self.snapshot? value
-    value.match(/.+SNAPSHOT.*/i)
+    value.to_s.match(/.+SNAPSHOT.*/i)
   end
 
   def self.build? value
-    value.match(/.+build.*/i)
+    value.to_s.match(/.+build.*/i)
   end
 
   def self.pre? value
-    value.match(/.*pre.*$/i)
+    value.to_s.match(/.*pre.*$/i)
   end
 
   def self.jbossorg? value
-    value.match(/.*jbossorg.*$/i)
+    value.to_s.match(/.*jbossorg.*$/i)
   end
 
   def self.preview? value
-    value.match(/-preview\d+-/i) || value.match(/-preview-/i)
+    value.to_s.match(/-preview\d+-/i) || value.to_s.match(/-preview-/i)
   end
 
 end
