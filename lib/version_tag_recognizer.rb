@@ -78,7 +78,7 @@ class VersionTagRecognizer
   end
 
   def self.remove_minimum_stability val
-    val.gsub!(/@.*$/, "") if val.match(/@.*$/)
+    val.gsub!(/@.*$/, "") if val.to_s.match(/@.*$/)
   end
 
 
@@ -142,7 +142,7 @@ class VersionTagRecognizer
 
   def self.stable? value
     return true if value.to_s.empty?
-    return false if value.to_s.match(/\Adev-/i) || value.match(/-dev\z/i)
+    return false if value.to_s.match(/\Adev-/i) || value.to_s.match(/-dev\z/i)
     return false if self.preview?( value )
 
     return true if value.to_s.match(/.+RELEASE.*/i)
@@ -153,8 +153,8 @@ class VersionTagRecognizer
 
     !self.alpha?(value)    and !self.beta?(value)       and
     !self.dev?(value)      and !self.pre?(value)        and
-    !self.rc?(value)       and !value.match(/.+SEC.*/i) and
-    !self.snapshot?(value) and !value.match(/.+M.+/i)   and
+    !self.rc?(value)       and !value.to_s.match(/.+SEC.*/i) and
+    !self.snapshot?(value) and !value.to_s.match(/.+M.+/i)   and
     !self.build?(value)
   end
 

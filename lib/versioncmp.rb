@@ -33,34 +33,34 @@ class Versioncmp
     b_empty = b_val.to_s.empty?
 
     return  0 if  a_empty && b_empty
-    return  0 if  a_val.eql?( b_val )
+    return  0 if  a_val.to_s.eql?( b_val.to_s )
     return  1 if (a_empty == false) && (b_empty == true )
     return -1 if (b_empty == false) && (a_empty == true )
 
-    return  1 if b_val.length > a_val.length && b_val.match(/\A#{a_val}-SNAPSHOT/i)
-    return -1 if a_val.length > b_val.length && a_val.match(/\A#{a_val}-SNAPSHOT/i)
+    return  1 if b_val.length > a_val.length && b_val.to_s.match(/\A#{a_val}-SNAPSHOT/i)
+    return -1 if a_val.length > b_val.length && a_val.to_s.match(/\A#{a_val}-SNAPSHOT/i)
 
-    return  1 if b_val.length > a_val.length && b_val.match(/\A#{a_val}-BETA.*/i)
-    return -1 if a_val.length > b_val.length && a_val.match(/\A#{a_val}-BETA.*/i)
+    return  1 if b_val.length > a_val.length && b_val.to_s.match(/\A#{a_val}-BETA.*/i)
+    return -1 if a_val.length > b_val.length && a_val.to_s.match(/\A#{a_val}-BETA.*/i)
 
-    return  1 if b_val.length > a_val.length && b_val.match(/\A#{a_val}-alpha.*/i)
-    return -1 if a_val.length > b_val.length && a_val.match(/\A#{a_val}-alpha.*/i)
+    return  1 if b_val.length > a_val.length && b_val.to_s.match(/\A#{a_val}-alpha.*/i)
+    return -1 if a_val.length > b_val.length && a_val.to_s.match(/\A#{a_val}-alpha.*/i)
 
-    return  1 if b_val.length > a_val.length && b_val.match(/\A#{a_val}-rc.*/i)
-    return -1 if a_val.length > b_val.length && a_val.match(/\A#{a_val}-rc.*/i)
+    return  1 if b_val.length > a_val.length && b_val.to_s.match(/\A#{a_val}-rc.*/i)
+    return -1 if a_val.length > b_val.length && a_val.to_s.match(/\A#{a_val}-rc.*/i)
 
-    return -1 if b_val.length > a_val.length && b_val.match(/\A#{a_val}u\d/i)
-    return  1 if a_val.length > b_val.length && a_val.match(/\A#{b_val}u\d/i)
+    return -1 if b_val.length > a_val.length && b_val.to_s.match(/\A#{a_val}u\d/i)
+    return  1 if a_val.length > b_val.length && a_val.to_s.match(/\A#{b_val}u\d/i)
 
     a = pre_process a_val
     b = pre_process b_val
 
-    am = a.match(/\A(\d+\.\d+)\.\d+\z/i)
-    bm = b.match(/\A(\d+\.\d+)-\w+\z/i)
+    am = a.to_s.match(/\A(\d+\.\d+)\.\d+\z/i)
+    bm = b.to_s.match(/\A(\d+\.\d+)-\w+\z/i)
     return  1 if am && bm && am[1].eql?(bm[1])
 
-    am = a.match(/\A(\d+\.\d+)-\w+\z/i)
-    bm = b.match(/\A(\d+\.\d+)\.\d+\z/i)
+    am = a.to_s.match(/\A(\d+\.\d+)-\w+\z/i)
+    bm = b.to_s.match(/\A(\d+\.\d+)\.\d+\z/i)
     return -1 if am && bm && am[1].eql?(bm[1])
 
     ab = [a, b]
@@ -95,9 +95,9 @@ class Versioncmp
     offsets[0] += part1.length() + 1;
     offsets[1] += part2.length() + 1;
 
-    if ( part1.match(/^[0-9]+$/) && part2.match(/^[0-9]+$/) )
+    if ( part1.to_s.match(/^[0-9]+$/) && part2.to_s.match(/^[0-9]+$/) )
       return self.compare_numbers part1, part2
-    elsif ( !part1.match(/^[0-9]+$/) && !part2.match(/^[0-9]+$/) )
+    elsif ( !part1.to_s.match(/^[0-9]+$/) && !part2.to_s.match(/^[0-9]+$/) )
       return self.compare_strings ab[0], ab[1], part1, part2
     else
       return self.compare_special_cases part1, part2
@@ -127,33 +127,33 @@ class Versioncmp
     result = Versioncmp.check_jquery_versioning(part1, part2)
     return result if !result.to_s.strip.empty?
 
-    digit = part1 if part1.match(/\d/)
-    return -1 if ( part1.match(/\d/) && part2.match(/#{digit}\S*patch\S*/) )
+    digit = part1 if part1.to_s.match(/\d/)
+    return -1 if ( part1.to_s.match(/\d/) && part2.to_s.match(/#{digit}\S*patch\S*/) )
 
-    digit = part2 if part2.match(/\d/)
-    return  1 if ( part2.match(/\d/) && part1.match(/#{digit}\S*patch\S*/) )
+    digit = part2 if part2.to_s.match(/\d/)
+    return  1 if ( part2.to_s.match(/\d/) && part1.to_s.match(/#{digit}\S*patch\S*/) )
 
-    if ( part1.match(/#\S*patch\S*/) && part2.match(/\S*patch\S*/) )
+    if ( part1.to_s.match(/#\S*patch\S*/) && part2.to_s.match(/\S*patch\S*/) )
       return compare_string(part1, part2)
     end
 
-    return  1 if ( part1.eql?("0") && part2.match(/^[a-zA-Z]+/) )
-    return -1 if ( part2.eql?("0") && part1.match(/^[a-zA-Z]+/) )
-    return -1 if ( part1.eql?("0") && part2.match(/^[1-9]+[-_a-zA-Z]+/) )
-    return  1 if ( part2.eql?("0") && part1.match(/^[1-9]+[-_a-zA-Z]+/) )
+    return  1 if ( part1.eql?("0") && part2.to_s.match(/^[a-zA-Z]+/) )
+    return -1 if ( part2.eql?("0") && part1.to_s.match(/^[a-zA-Z]+/) )
+    return -1 if ( part1.eql?("0") && part2.to_s.match(/^[1-9]+[-_a-zA-Z]+/) )
+    return  1 if ( part2.eql?("0") && part1.to_s.match(/^[1-9]+[-_a-zA-Z]+/) )
 
-    pm1 = part1.match(/\A[0-9]+\z/)
-    pm2 = part2.match(/\A(\d+)(\w+)\z/i)
+    pm1 = part1.to_s.match(/\A[0-9]+\z/)
+    pm2 = part2.to_s.match(/\A(\d+)(\w+)\z/i)
     return  1 if ( pm1 && pm2 && pm2[1].eql?(part1) &&  VersionTagRecognizer.stable?(pm2[2]) )
     return -1 if ( pm1 && pm2 && pm2[1].eql?(part1) && !VersionTagRecognizer.stable?(pm2[2]) )
 
-    pm1 = part1.match(/\A(\d+)-(\w+)\z/i)
-    pm2 = part2.match(/\A\d+\z/i)
+    pm1 = part1.to_s.match(/\A(\d+)-(\w+)\z/i)
+    pm2 = part2.to_s.match(/\A\d+\z/i)
     return 1 if try_to_i_bigger( pm1, pm2, part2 )
     return 1 if pm2 && pm1 && pm1[1].eql?(part2) && VersionTagRecognizer.stable?(pm1[2])
 
-    pm1 = part1.match(/\A\d+\z/i)
-    pm2 = part2.match(/\A(\d+)-(\w+)\z/i)
+    pm1 = part1.to_s.match(/\A\d+\z/i)
+    pm2 = part2.to_s.match(/\A(\d+)-(\w+)\z/i)
     return  1 if try_to_i_bigger( pm1, pm2, part2 )
     return -1 if pm1 && pm2 && pm2[1].eql?(part1) && VersionTagRecognizer.stable?(pm2[2])
 
@@ -211,7 +211,7 @@ class Versioncmp
       break if offsetz > cake.length()
 
       p = cake[ offset..offset + z ]
-      break if ( p.match(/^\w+\.$/) != nil )
+      break if ( p.to_s.match(/^\w+\.$/) != nil )
     end
 
     z = z - 1 if z > 0
@@ -222,7 +222,7 @@ class Versioncmp
 
   def self.timestamp? part
     return false if part.to_s.empty?
-    return part.length() == 9 && part.match(/^[0-9]+$/) != nil
+    return part.length() == 9 && part.to_s.match(/^[0-9]+$/) != nil
   end
 
 
@@ -247,19 +247,19 @@ class Versioncmp
   end
 
   def self.replace_groovy val
-    if val.match(/\-groovy\-/)
+    if val.to_s.match(/\-groovy\-/)
       val.gsub!("-groovy-", ".")
     end
   end
 
   def self.replace_snapshot val
-    if val.match(/\-SNAPSHOT/)
+    if val.to_s.match(/\-SNAPSHOT/)
       val.gsub!("-SNAPSHOT", "")
     end
   end
 
   def self.replace_redhatx val
-    if val.match(/\-redhat\-[0-9]+$/i)
+    if val.to_s.match(/\-redhat\-[0-9]+$/i)
       val.gsub!(/\-redhat\-[0-9]+$/i, "")
     end
   end
@@ -270,9 +270,9 @@ class Versioncmp
   # Ganz grosses Kino !
   #
   def self.replace_timestamps val
-    if val.match(/^[0-9]{8}$/)
+    if val.to_s.match(/^[0-9]{8}$/)
       val.gsub!(/^[0-9]{8}$/, "0.0.0")
-    elsif val.match(/^[0-9]{8}.[0-9]{6}$/)
+    elsif val.to_s.match(/^[0-9]{8}.[0-9]{6}$/)
       val.gsub!(/^[0-9]{8}.[0-9]{6}$/, "0.0.0")
     end
   end
@@ -280,7 +280,7 @@ class Versioncmp
 
   def self.replace_wildcards val
     new_val = String.new(val)
-    new_val = "9999999" if val.match(/\.\*$/)
+    new_val = "9999999" if val.to_s.match(/\.\*$/)
     new_val
   end
 
@@ -291,11 +291,11 @@ class Versioncmp
       new_val = "99999999999"
     elsif val.eql?("dev-develop")
       new_val = "9999999999"
-    elsif val.match(/\Adev-/i)
+    elsif val.to_s.match(/\Adev-/i)
       new_val = "9999999"
-    elsif val.match(/\.x-dev$/i)
+    elsif val.to_s.match(/\.x-dev$/i)
       new_val = val.gsub("x-dev", "9999999")
-    elsif val.match(/-dev$/)
+    elsif val.to_s.match(/-dev$/)
       new_val = val.gsub("-dev", ".9999999")
     end
     new_val
@@ -303,7 +303,7 @@ class Versioncmp
 
 
   def self.replace_leading_v val
-    val.gsub!(/^v/, "") if val.match(/^v[0-9]+/)
+    val.gsub!(/^v/, "") if val.to_s.match(/^v[0-9]+/)
   end
 
 
@@ -315,7 +315,7 @@ class Versioncmp
 
   def self.check_jquery_versioning(part1, part2)
     # --- START ---- special case for awesome jquery shitty verison numbers
-    if ( part1.match(/^[0-9]+[a-zA-Z]+[0-9]+$/) != nil && part2.match(/^[0-9]+$/) != nil )
+    if ( part1.to_s.match(/^[0-9]+[a-zA-Z]+[0-9]+$/) != nil && part2.to_s.match(/^[0-9]+$/) != nil )
       part1_1 = part1.match(/^[0-9]+/)
       result = Versioncmp.compare_int(part1_1[0], part2)
       if result != 0
@@ -324,8 +324,8 @@ class Versioncmp
       return -1
     end
 
-    if ( part2.match(/^[0-9]+[a-zA-Z]+[0-9]+$/) != nil && part1.match(/^[0-9]+$/) != nil )
-      part2_1 = part2.match(/^[0-9]+/)
+    if ( part2.to_s.match(/^[0-9]+[a-zA-Z]+[0-9]+$/) != nil && part1.to_s.match(/^[0-9]+$/) != nil )
+      part2_1 = part2.to_s.match(/^[0-9]+/)
       result = Versioncmp.compare_int(part1, part2_1[0])
       if result != 0
         return result
