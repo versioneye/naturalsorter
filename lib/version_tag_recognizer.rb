@@ -142,14 +142,14 @@ class VersionTagRecognizer
 
   def self.stable? value
     return true if value.to_s.empty?
-    return false if value.match(/\Adev-/i) || value.match(/-dev\z/i)
+    return false if value.to_s.match(/\Adev-/i) || value.match(/-dev\z/i)
     return false if self.preview?( value )
 
-    return true if value.match(/.+RELEASE.*/i)
-    return true if value.match(/.+FINAL.*/i)
-    return true if value.match(/.+SP.*/i)
-    return true if value.match(/.+GA.*/i)
-    return true if value.match(/.*patch.*/i)
+    return true if value.to_s.match(/.+RELEASE.*/i)
+    return true if value.to_s.match(/.+FINAL.*/i)
+    return true if value.to_s.match(/.+SP.*/i)
+    return true if value.to_s.match(/.+GA.*/i)
+    return true if value.to_s.match(/.*patch.*/i)
 
     !self.alpha?(value)    and !self.beta?(value)       and
     !self.dev?(value)      and !self.pre?(value)        and
