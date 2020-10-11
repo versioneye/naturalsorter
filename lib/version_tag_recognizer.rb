@@ -188,7 +188,7 @@ class VersionTagRecognizer
   end
 
   def self.pre? value
-    value.to_s.match(/.*pre.*$/i)
+    value.to_s.match(/.*pre.*$/i) || value.to_s.match(/.*insiders.*$/i)
   end
 
   def self.jbossorg? value

@@ -350,6 +350,9 @@ describe VersionTagRecognizer do
     expect( VersionTagRecognizer.does_it_fit_stability?( "2.2.1", "stable" )).to be_truthy
   end
   it "does not fit stability" do
+    expect( VersionTagRecognizer.does_it_fit_stability?( "3.9.2-insiders.20200509", "stable" )).to be_falsey
+  end
+  it "does not fit stability" do
     expect( VersionTagRecognizer.does_it_fit_stability?( "2.2.1-BETA", "stable" )).to be_falsey
   end
   it "does not fit stability" do
